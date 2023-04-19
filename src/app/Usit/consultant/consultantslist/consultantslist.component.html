@@ -1,0 +1,254 @@
+<main id="main" class="main">
+    <div class="pagetitle">
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/dashboard">Home</a></li>
+                <li class="breadcrumb-item">{{flag}}</li>
+                <li class="breadcrumb-item active">Consultants</li>
+                <li class="breadcrumb-item " ><a routerLink="/tree-grid/grid">tree-grid</a></li>
+                
+            </ol>
+        </nav>
+    </div>
+    <section class="section">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                            <div class="container-fluid">
+                                <h5 class="card-title">Consultants List</h5>
+                                <div class="navbar-nav ms-auto">
+                                    <div class="input-group mb-3"><!--flag=='presales' &&-->
+                                        <h5 class="card-title float-right"><a *ngIf=" hasAcces!='Manager'"
+                                                [routerLink]="['/add-consultants/',flag]"><i _ngcontent-vqa-c41=""
+                                                    class="bi bi-plus-square-dotted"></i>&nbsp;New Consultant</a></h5>
+                                                    
+                                        <form class="search-form d-flex align-items-center">
+                                            &nbsp;&nbsp;<input type="text" name="searchstring" class="form-control"
+                                                placeholder="Search" [(ngModel)]="searchstring"
+                                                title="Enter search keyword" aria-label="query">
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
+                        <div class="row">
+                            <table class="table table-sm  table-light table-bordered table-responsive">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th >Date</th>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Contact Number</th>
+                                        <th>Visa</th>
+                                        <th>city</th>
+                                        <th>State</th>
+                                        <th>Position</th>
+                                        <th>Exp</th>
+                                        <th>Relocation</th>
+                                        <th>Rate</th>
+                                        <th *ngIf="hasAcces!='Employee'">Added by</th>
+                                        <!-- <th>Priority</th> -->
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let s of consultant | filter:searchstring | paginate
+                                    : {
+                                        itemsPerPage: tableSize,
+                                        currentPage: page,
+                                        totalItems: count
+                                      }; " [ngClass]="{' color': (s.relocation =='' || s.relocation ==null || s.contactnumber =='' || s.contactnumber ==null|| s.hourlyrate =='' || s.hourlyrate ==null ||  s.createddate =='' || s.createddate ==null ||  s.consultantemail =='' || s.consultantemail ==null || s.visa_status =='' || s.visa_status ==null || s.city =='' || s.city ==null || s.state =='' || s.state ==null || s.position =='' || s.position ==null || s.experience =='' || s.experience ==null || s.fullname =='' || s.fullname ==null )}">
+                                    
+                                 
+                                        <td >{{s.createddate}}</td>
+                                        <td ><a
+                                                [routerLink]="['/consultant/','list',flag,s.consultantid]">{{s.consultantname}}</a>
+                                        </td>
+                                        <td >{{s.consultantemail}}</td>
+                                        <td >{{s.contactnumber}}</td>
+                                        <td >{{s.visa_status}}</td>
+                                        <td >{{s.city}}</td>
+                                        <td >{{s.state}}</td>
+                                        <td>{{s.position}}</td>
+                                        <td>{{s.experience}}</td>
+                                        <td  >{{s.relocation}}</td>
+                                        <td >{{s.hourlyrate  }}</td>
+                                      
+                                        <td *ngIf="hasAcces!='Employee'"  >
+                                            <ng-container
+                                                *ngIf="s.consultantflg === 'sales'  ; then true1 else else1"></ng-container>
+                                            <ng-template #true1>
+                                                <a
+                                                    [routerLink]="['/user/',flag+'-consultant',s.userid]">{{s.pseudoname}}</a>
+                                            </ng-template>
+                                            <ng-template #else1>
+                                                <a
+                                                    [routerLink]="['/user/',flag+'-consultant',s.userid]">{{s.fullname}}</a>
+                                            </ng-template>
+                                        </td>
+                                        <!-- <td [ngClass]="s.priority==  '' ?'red': 'nocolor'">{{s.priority}}</td> -->
+                                        <td>
+                                            <!-- <span *ngIf="s.status !== null " style="cursor:pointer"><i
+                                                    data-bs-target="#comment" aria-hidden="true" (click)="edit(s)"
+                                                    data-bs-toggle="modal" class="bi bi-card-list bi-5x"></i></span> -->
+                                            <ng-container
+                                                *ngIf="s.status == 'Rejected' ||  s.status == 'InActive'; then trueCondition else elseTemplate"></ng-container>
+                                            <ng-template #trueCondition>
+                                                <span (click)="edit(s)" class="badge bg-danger" data-bs-toggle="modal"
+                                                    data-bs-target="#comment">{{s.status}}</span>
+                                            </ng-template>
+                                            <ng-template #elseTemplate>
+                                                <span class="badge bg-info text-dark">{{s.status}}
+                                                </span>
+                                            </ng-template>
+                                        </td  >
+                                        <!-- <td style="width:5%"
+                                            *ngIf="hasAcces!='Employee' && hasAcces!='Team Lead' && flag!='presales'">
+                                            <ng-container
+                                                *ngIf="s.status == 'Active'  ; then trueCondition else elseTemplate"></ng-container>
+                                            <ng-template #trueCondition>
+                                                <span class="badge bg-info text-dark" (click)="edit(s)"
+                                                    data-bs-toggle="modal" data-bs-target="#verticle">Active</span>
+                                            </ng-template>
+                                            <ng-template #elseTemplate>
+                                                <span class="badge bg-danger" (click)="edit(s)" data-bs-toggle="modal"
+                                                    data-bs-target="#verticle">In Active
+                                                </span>
+                                            </ng-template>
+                                        </td> -->
+                                        <!-- <td style="width:5%" *ngIf="hasAcces=='Employee' || hasAcces=='Team Lead'">
+                                            <span class="badge bg-info text-dark">Active</span>
+                                        </td> (click)="moved(s.consultantid)"-->
+                                        <td ><a *ngIf="s.status!='Verified' || hasAcces!='Employee'" 
+                                                [routerLink]="['/modify-consultant/',flag,s.consultantid]"> <i
+                                                    data-bs-toggle="tooltip" data-bs-placement="left"
+                                                    data-bs-original-title="edit consultant" class="ri-edit-2-fill"></i>
+                                            </a>
+                                            &nbsp;
+                                            <!-- <span style="cursor:pointer" data-dismiss="modal"
+                                                *ngIf=" hasAcces!='Employee' && s.status=='Verified'" #closeModal
+                                                data-bs-toggle="modal" data-bs-placement="left" title="{{ttitle}}"
+                                                data-bs-target="#verticle" (click)="edit(s)">
+                                                <i class="{{tclass}}"></i></span>  -->
+                                            <ng-container
+                                                *ngIf="flag == 'presales'  ; then presales else sales"></ng-container>
+                                            <ng-template #presales>
+                                                <span style="cursor:pointer"
+                                                    *ngIf=" hasAcces!='Employee' && s.status=='Verified'"
+                                                    data-bs-placement="left" (click)="moveProfileToSales(s)">
+                                                    <i class="{{tclass}}"></i></span>
+                                            </ng-template>
+                                            <ng-template #sales>
+                                                <span style="cursor:pointer" data-dismiss="modal"
+                                                    *ngIf=" hasAcces!='Employee' && s.status=='Active'" #closeModal
+                                                    data-bs-toggle="modal" data-bs-placement="left" title="{{ttitle}}"
+                                                    data-bs-target="#verticle" (click)="edit(s)">
+                                                    <i class="{{tclass}}"></i></span>
+                                            </ng-template>&nbsp;&nbsp;
+                                            <a (click)="delete(s.consultantid)" data-bs-toggle="tooltip"
+                                                data-bs-placement="left" title="Delete consultant"
+                                                ng-confirm-click="You are about to overwrite your PUBLISHED content!! Are you SURE you want to publish?">
+                                                <i style="color:maroon" class="ri-delete-bin-fill "></i> </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                           
+                        </div>
+                        <div class="pagination justify-content-end">
+                            <pagination-controls previousLabel="Prev" nextLabel="Next"
+                                (pageChange)="onTableDataChange($event)">
+                            </pagination-controls>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+
+<!-- Modal -->
+<div class="modal fade" id="verticle" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Status Update</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="form" (ngSubmit)="updatestatus()">
+                    <fieldset>
+                        <div class="row">
+                            <div class="form-group">
+                                <label for="details">Reason for {{ttitle}} Consultant</label>
+                                <textarea id="details" class="form-control" rows="3" data-parsley-trigger="change"
+                                    formControlName="comment"
+                                    [ngClass]="{ 'is-invalid': submitted && f.comment.errors }"
+                                    [(ngModel)]="consultant2.comment" name="comment" maxlength="200"></textarea>
+                                <div *ngIf="submitted && f.comment.errors" class="invalid-feedback">
+                                    <div *ngIf="f.comment.errors.required">Please Enter Remarks</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer ">
+                            <input class="btn btn-info" type="submit" name="submit_reg" value="Update">
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="comment" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Consultant Track</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="form">
+                    <fieldset>
+                        <div class="row">
+                            <div class="form-group">
+                                <!-- <textarea id="details" class="form-control" rows="3" data-parsley-trigger="change"
+                                    formControlName="comment" [(ngModel)]="consultant2.comment" name="comment"
+                                    maxlength="200"></textarea> -->
+                                <table class="table table-sm  table-light table-bordered table-responsive">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>status</th>
+                                            <th>Remarks</th>
+                                            <th>Updated By</th>
+                                            <th>Updated Date</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let s of consultant_track ">
+                                            <td>{{s.createddate}}1</td>
+                                            <td>{{s.status}}</td>
+                                            <td>{{s.remarks}}</td>
+                                            <td>{{s.updatedby}}<br>{{s.updatedbysudo}}</td>
+                                            <td>{{s.updateddate}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="modal-footer ">
+                            <input class="btn btn-info" data-bs-dismiss="modal" type="button" name="submit_reg"
+                                value="Close">
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

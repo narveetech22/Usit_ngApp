@@ -1,0 +1,86 @@
+<main id="main" class="main">
+    <div class="pagetitle">
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/dashboard">Home</a></li>
+                <!-- <li class="breadcrumb-item">Mail Extract</li> -->
+            </ol>
+        </nav>
+    </div>
+
+    <section class="section">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <p class="text-center small danger" *ngIf="message!==''" style="color:rgb(73, 174, 85)">
+                            <b>{{message}}</b>
+                        </p>
+                        <p class="text-center small danger" *ngIf="errromsg!==''" style="color:rgb(205, 42, 42)">
+                            <b>{{errromsg}}</b>
+                        </p>
+                        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                            <div class=" col-md-12" style="margin-top:10px">
+                                <label for="userName"><strong>User Name</strong></label>
+                                <input maxlength="40" type="text" formControlName="userName"
+                                    class="form-control rounded-pill"
+                                    [ngClass]="{ 'is-invalid': submitted && f.userName.errors }" />
+                                <div *ngIf="submitted && f.userName.errors" class="invalid-feedback">
+                                    <div *ngIf="f.userName.errors.required">Email is required</div>
+                                    <div *ngIf="f.userName.errors.email">Please Enter a Valid Email Address</div>
+                                </div>
+                            </div>
+                            <div class=" col-md-12" style="margin-top:10px">
+                                <label for="userPwd"><strong>Pass Word</strong></label>
+                                <input maxlength="20" type="password" formControlName="userPwd"
+                                    class="form-control rounded-pill"
+                                    [ngClass]="{ 'is-invalid': submitted && f.userPwd.errors }" />
+                                <div *ngIf="submitted && f.userPwd.errors" class="invalid-feedback">
+                                    <div *ngIf="f.userPwd.errors.required">Please Enter Password</div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class=" col-md-6" style="margin-top:10px">
+                                    <label for="fromdate"><strong>From Date *</strong></label>
+                                    <input type="date" formControlName="fromdate"
+                                        class="form-control rounded-pill"
+                                        [ngClass]="{ 'is-invalid': submitted && f.fromdate.errors }" />
+                                    <div *ngIf="submitted && f.fromdate.errors" class="invalid-feedback">
+                                        <div *ngIf="f.fromdate.errors.required">Please Select Interview Date</div>
+                                    </div>
+                                </div>
+                                <div class=" col-md-6" style="margin-top:10px">
+                                    <label for="todate"><strong>TO Date *</strong></label>
+                                    <input type="date" formControlName="todate"
+                                        class="form-control rounded-pill"
+                                        [ngClass]="{ 'is-invalid': submitted && f.todate.errors }" />
+                                    <div *ngIf="submitted && f.todate.errors" class="invalid-feedback">
+                                        <div *ngIf="f.todate.errors.required">Please Select Interview Date</div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group text-center" style="margin-top: 20px;padding: 10px;">
+                                <a (click)="downloadExcel()" class="btn btn-warning rounded-pill">Download</a>
+                                &nbsp;
+                                <a (click)="form.reset()" class="btn btn-warning rounded-pill">Cancel</a>
+                                &nbsp;
+                                <ng-container *ngIf="hideSavebtn; then one else two"></ng-container>
+                                <ng-template #one>
+                                    <button type="submit" name="btnSubmit" class="btn btn-info rounded-pill"
+                                        value="Submit" disabled>Submit</button>
+                                </ng-template>
+                                <ng-template #two>
+                                    <button type="submit" name="btnSubmit" class="btn btn-info rounded-pill"
+                                        value="Submit">Submit</button>
+                                </ng-template>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>

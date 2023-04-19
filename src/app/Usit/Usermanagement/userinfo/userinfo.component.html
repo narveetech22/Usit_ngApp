@@ -1,0 +1,87 @@
+<main id="main" class="main">
+    <div class="pagetitle">
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/dashboard">Home</a></li>
+                <li class="breadcrumb-item">{{flag}}</li>
+                <li class="breadcrumb-item active">Consultant</li>
+            </ol>
+        </nav>
+    </div>
+    <section class="section">
+        <form [formGroup]="form" autocomplete="off">
+            <input [(ngModel)]="flag" id="consultantflg" name="consultantflg" class="form-control rounded-pill"
+                type="hidden" formControlName="consultantflg">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                                <div class="container-fluid">
+                                    <h5 class="card-title"> Employee Details</h5>
+                                </div>
+                            </nav>
+                            <hr>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div>
+                                        <table class="table table-bordered">
+                                            <tbody *ngFor="let vms of entity ">
+                                                <tr >
+
+                                                    <!-- [{"personalcontactnumber":"24124124124",
+                                                    "status":"Active","manager":"Raghav M1",
+                                                    "email":"e1@mail.com","userid":20,"department":"Bench Sales",
+                                                    "pseudoname":"emp one Tl1- M1","designation":"Sales Executive",
+                                                    "teamlead":"vibhav Tl1- M1"}] -->
+                                                    <td style="width:43%"><strong>Full Name</strong></td>
+                                                    <td>{{vms.pseudoname}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><strong>Mobile:</strong></td>
+                                                    <td>{{vms.personalcontactnumber}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><strong>Email:</strong></td>
+                                                    <td>{{vms.email}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><strong>Designation:</strong></td>
+                                                    <td>{{vms.designation}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><strong>Manager: </strong></td>
+                                                    <td>{{vms.manager}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><strong>Team Leader: </strong></td>
+                                                    <td>{{vms.teamlead}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-8">
+                                    <table class="table">
+                                        <tbody>
+                                            <tr>
+                                                <td>{{entity.skills}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div><!-- -->
+                                <div class="form-group text-center" style="margin-top: 20px;padding: 10px;">
+                                    <a [routerLink]="['/edit-employee',id]" class="btn btn-warning rounded-pill">Edit Employee</a>
+                                    &nbsp;
+                                    <button type="submit" name="btnSubmit" class="btn btn-info rounded-pill"
+                                        value="Submit" (click)="saveEntity()">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </section>
+</main>

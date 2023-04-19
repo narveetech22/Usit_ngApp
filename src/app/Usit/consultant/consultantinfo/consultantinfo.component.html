@@ -1,0 +1,220 @@
+<main id="main" class="main">
+    <div class="pagetitle">
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/dashboard">Home</a></li>
+                <li class="breadcrumb-item">{{flag}}</li>
+                <li class="breadcrumb-item active">Consultant</li>
+            </ol>
+        </nav>
+    </div>
+    <section class="section">
+        <form [formGroup]="form" autocomplete="off">
+            <input [(ngModel)]="flag" id="consultantflg" name="consultantflg" class="form-control rounded-pill"
+                type="hidden" formControlName="consultantflg">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                                <div class="container-fluid">
+                                    <h5 class="card-title">{{entity.consultantname}}</h5>
+                                </div>
+                            </nav>
+                            <hr>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    Basic Details
+                                    <div>
+                                        <table class="table table-bordered">
+                                            <tbody>
+                                                <tr>
+                                                    <td style="width:30%"><strong>Email</strong></td>
+                                                    <td>{{entity.consultantemail}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><strong>Contact Number</strong></td>
+                                                    <td>{{entity.contactnumber}}</td>
+                                                </tr>
+
+                                                <tr *ngIf="entity.linkedin!='' || entity.linkedin!=null">
+                                                    <td><strong>Linked In</strong></td>
+                                                    <td><a href="https://www.linkedin.com/in/{{entity.linkedin}}"
+                                                            target="_blank">{{entity.linkedin}}</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td><strong>Immigration Status</strong></td>
+                                                    <td>{{entity.visa.visastatus}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><strong>Current Location</strong></td>
+                                                    <td>{{entity.state}}, {{entity.city}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><strong>Relocation</strong></td>
+                                                    <td>{{entity.relocation}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    Work Details
+                                    <div>
+                                        <table class="table table-bordered">
+                                            <tbody>
+                                                <tr>
+                                                    <td style="width:30%"><strong>Experience</strong></td>
+                                                    <td>{{entity.experience}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><strong>Rate</strong></td>
+                                                    <td>{{entity.hourlyrate}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><strong>Technology</strong></td>
+                                                    <td>{{entity.technology.technologyarea}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    Sales Person Contact Details
+                                    <div>
+                                        <table class="table table-bordered">
+                                            <tbody>
+                                                <tr>
+                                                    <td style="width:30%"><strong>Employee Name</strong></td>
+                                                    <td>{{entity.salesemp}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><strong>Contact Number</strong></td>
+                                                    <td>{{entity.empcontact}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><strong>Email</strong></td>
+                                                    <td>{{entity.empemail}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    Upload Documents
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label for="resumepath" class="form-label">Upload Resume</label>
+                                            <input type="file" #resume
+                                                accept=".pdf,.doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                                                id="resumepath" (change)="uploaddoc($event)" name="resume"
+                                                class="form-control rounded-pill">
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <label for="h1bcopy" class="form-label">Upload Immigration Doc</label>
+                                            <input type="file" #h1b
+                                                accept=".pdf,.doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                                                id="h1bcopy" (change)="uploadH1B($event)" name="h1bcopy"
+                                                class="form-control rounded-pill">
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <label for="file" class="form-label">Upload DL</label>
+                                            <input type="file" #dl
+                                                accept=".pdf,.doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                                                id="dlcopy" (change)="uploadDL($event)" name="dlcopy"
+                                                class="form-control rounded-pill">
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label for="file" class="form-label">Other Documents</label>
+                                            <input id="file" #multifiles type="file" multiple
+                                            accept=".zip,.pdf,.doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                                                class="form-control rounded-pill" (change)="onFileChange($event)">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-8">
+                                    <strong>Skill Set</strong>
+                                    <table class="table  round">
+                                        <tbody>
+                                            <tr>
+                                                <td *ngIf="entity.skills!=null">{{entity.skills}}</td>
+                                                <td *ngIf="entity.skills==null">Skilss Not Available</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <strong>Summary</strong>
+                                    <table class="table  round">
+                                        <tbody>
+                                            <tr>
+                                                <td *ngIf="entity.summary!=null">{{entity.summary}}</td>
+                                                <td *ngIf="entity.summary==null">Summary Not Available</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+                            <div class="form-group text-center" style="margin-top: 20px;padding: 10px;">
+                                <a (click)="form.reset()" class="btn btn-warning rounded-pill">Cancel</a>
+                                &nbsp;
+                                <button type="submit" name="btnSubmit" class="btn btn-info rounded-pill" value="Submit"
+                                    (click)="saveEntity()">Submit</button>
+                            </div>
+                            <div class="row">
+                                <h5 style="margin-top: 20px;">List of document</h5>
+                                <hr>
+                                <table class="table table-sm  table-light table-bordered table-responsive">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Document Name</th>
+                                            <th>Delete</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td *ngIf="entity.resume !==null ">{{entity.createddate}}</td>
+                                            <td *ngIf="entity.resume !==null "><a class="ab" style="cursor:pointer"
+                                                    (click)="downloadfile(entity.consultantid,entity.resume,'resume')">{{entity.resume}}</a>
+                                            </td>
+                                            <td *ngIf="entity.resume !==null "><i style="color:maroon;cursor:pointer"
+                                                    class="ri-delete-bin-fill d-flex flex-column align-items-center justify-content-center"
+                                                    (click)="deletefile(entity.consultantid,'resume')"></i></td>
+                                        </tr>
+                                        <tr>
+                                            <td *ngIf="entity.h1bcopy !==null ">{{entity.createddate}}</td>
+                                            <td *ngIf="entity.h1bcopy !==null "><a class="ab" style="cursor:pointer"
+                                                    (click)="downloadfile(entity.consultantid,entity.h1bcopy,'h1b')">{{entity.h1bcopy}}</a>
+                                            </td>
+                                            <td *ngIf="entity.h1bcopy !==null "><i style="color:maroon;cursor:pointer"
+                                                    class="ri-delete-bin-fill d-flex flex-column align-items-center justify-content-center"
+                                                    (click)="deletefile(entity.consultantid,'h1b')"></i></td>
+                                        </tr>
+                                        <tr>
+                                            <td *ngIf="entity.dlcopy !==null ">{{entity.createddate}}</td>
+                                            <td *ngIf="entity.dlcopy !==null "><a class="ab"
+                                                    style="cursor:pointer;cursor:pointer"
+                                                    (click)="downloadfile(entity.consultantid,entity.dlcopy,'dl')">{{entity.dlcopy}}</a>
+                                            </td>
+                                            <td *ngIf="entity.dlcopy !==null "><i style="color:maroon;cursor:pointer"
+                                                    class="ri-delete-bin-fill d-flex flex-column align-items-center justify-content-center"
+                                                    (click)="deletefile(entity.consultantid,'dl')"></i></td>
+                                        </tr>
+                                        <tr *ngFor="let data of files">
+                                            <td>{{data.createddate}}</td>
+                                            <td><a class="ab" style="cursor:pointer"
+                                                    (click)="filedetails(data)">{{data.filename}}</a></td>
+                                            <td width="6%"><i style="color:maroon;cursor:pointer;text-align: center;"
+                                                    class="ri-delete-bin-fill d-flex flex-column align-items-center justify-content-center"
+                                                    (click)="deletemultiple(data.docid)"></i></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                           </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </section>
+</main>

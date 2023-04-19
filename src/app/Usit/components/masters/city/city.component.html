@@ -1,0 +1,58 @@
+<main id="main" class="main">
+   <div class="pagetitle">
+      <!-- <h1>Add New VMS</h1> -->
+      <nav>
+         <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a routerLink="/dashboard">Home</a></li>
+            <li class="breadcrumb-item">Masters</li>
+            <li class="breadcrumb-item">City</li>
+         </ol>
+      </nav>
+   </div>
+   <section class="section">
+      <div class="row">
+         <div class="col-md-4">
+            <div class="card">
+               <div class="card-body">
+                  <h5 class="card-title"> Add New City</h5>
+                  <p class="text-center small danger" *ngIf="message!==''" style="color:red"><b>{{message}}</b></p>
+                  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                     <div class="row">
+                        <!-- <div class="col-md-12">
+                                    <label for="cp_name">City Name  </label>
+                                    <input type="text"  maxlength="500" class="form-control rounded-pill"autocomplete="off" 
+                                    name="cityname" data-parsley-trigger="change" formControlName="cityname" required [ngClass]="{ 'is-invalid': submitted && f.cityname.errors }"/>
+                                    <div *ngIf="submitted && f.cityname.errors" class="invalid-feedback">
+                                        <div *ngIf="f.cityname.errors.required">City Name is required</div>
+                                    </div>
+                            </div> -->
+                        <div class="col-md-12">
+                           <label for="totexp" class="form-label"></label>
+                           <ngx-intl-tel-input [(ngModel)]="number" [cssClass]="'custom'" class="form-control rounded-pill"
+                                [searchCountryField]="[
+                                    SearchCountryField.Iso2,
+                                    SearchCountryField.Name]" [selectFirstCountry]="false"
+                              [selectedCountryISO]="CountryISO.India" [maxLength]="10" [phoneValidation]="true"
+                              [separateDialCode]="true" [numberFormat]="PhoneNumberFormat.National"
+                              formControlName="cityname" [ngClass]="{ 'is-invalid': submitted && f.cityname.errors }" >
+                           </ngx-intl-tel-input>
+                           <div *ngIf="submitted && f.cityname.errors" class="invalid-feedback">
+                              <div *ngIf="f.cityname.errors.required">Phone Number is required</div>
+                          </div>
+                        </div>
+                        
+                     </div>
+                     <div class="form-group text-center" style="margin-top: 20px;padding: 10px;">
+                        <a (click)="form.reset()" class="btn btn-warning rounded-pill">Cancel</a>
+                        &nbsp;
+                        &nbsp;
+                        <button type="submit" name="btnSubmit" class="btn btn-info rounded-pill"
+                           value="Submit">Submit</button>
+                     </div>
+                  </form>
+               </div>
+            </div>
+         </div>
+      </div>
+   </section>
+</main>

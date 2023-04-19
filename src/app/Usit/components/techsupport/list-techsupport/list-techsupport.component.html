@@ -1,0 +1,128 @@
+<p>list-techsupport works!</p>
+<main id="main" class="main">
+  <div class="pagetitle">
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/dashboard">Home</a></li>
+        <li class="breadcrumb-item">Tech & Support </li>
+        <li class="breadcrumb-item active">Tech Records </li>
+      </ol>
+    </nav>
+  </div>
+  <section class="section">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-body">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+              <div class="container-fluid">
+                <h5 class="card-title">Tech & Support Records</h5>
+                <div class="navbar-nav ms-auto">
+                  <div class="input-group mb-3">
+                    <h5 class="card-title float-right"><a [routerLink]="['/register-techsupport']"><i
+                          _ngcontent-vqa-c41="" class="bi bi-plus-square-dotted"></i>&nbsp; New Tech Support</a></h5>
+                    <span   class=" d-flex align-items-center" >
+                      &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+                      <input type="text" name="query" class="form-control" [(ngModel)]="query" 
+                        placeholder="Username" placeholder="Search"  title="Enter search keyword" aria-label="query"
+                        aria-describedby="basic-addon1">
+                        <!-- <div *ngIf="submitted && f.query.errors" class="invalid-feedback">
+                          <div *ngIf="f.query.errors.required">Enter Search string</div>
+                      </div> 
+                       [ngClass]="{ 'is-invalid': submitted && f.query.errors }"
+                    -->
+                      <!-- <span class="input-group-text" id="basic-addon1" (click)="search()"><i class="bi bi-search"></i></span> -->
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </nav>
+            <div class="row">
+              <table class="table table-sm  table-light table-bordered table-responsive">
+                <thead class="thead-light">
+                  <tr>
+                    <th>Name</th>
+                    <th>Experience</th>
+                    <th>Technology</th>
+                    <th>Skills</th>
+                    <th>Email</th>
+                    <th>Contact Number</th>
+                    <!-- <th>Status</th> -->
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let s of tech | filter:query | paginate
+                                    : {
+                                        itemsPerPage: tableSize,
+                                        currentPage: page,
+                                        totalItems: count
+                                      };">
+                    <td>{{s.name}}</td>
+                    <td>{{s.experience}}</td>
+                    <td>{{s.technology}}</td>
+                    <td>{{s.skills}}</td>
+                    <td>{{s.email}}</td>
+                    <td>{{s.mobile}}</td>
+                    <!-- <td>
+                                            <ng-container *ngIf="s.status == 'Active'; then trueCondition else elseTemplate"></ng-container>
+                                                <ng-template #trueCondition>
+                                                    <span class="badge bg-info text-dark"  (click)="edit(s)" data-bs-toggle="modal" data-bs-target="#verticle">Active</span>
+                                                </ng-template>
+                                                <ng-template #elseTemplate>
+                                                    <span class="badge bg-danger" (click)="edit(s)" data-bs-toggle="modal" data-bs-target="#verticle">In Active
+                                                    </span>
+                                                </ng-template>
+                                        </td> -->
+                    <td><a [routerLink]="['/edit-techsupport',s.id]"> <i class="ri-edit-2-fill"></i> </a>&nbsp;
+                      <a *ngIf="hasAcces=='Super Admin'  || hasAcces=='Admin' || hasAcces=='Manager'" (click)="deleteEntity(s.id)"
+                        ng-confirm-click="You are about to overwrite your PUBLISHED content!! Are you SURE you want to publish?">
+                        <i style="color:maroon" class="ri-delete-bin-fill "></i></a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="pagination justify-content-end">
+                <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)">
+                </pagination-controls>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+<!--
+<div class="modal fade" id="verticle" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Update Status</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="registerForm" (ngSubmit)="updatestatus()">
+          <fieldset>
+            <div class="row">
+              <div class="form-group">
+                <label for="details">Reason</label>
+                <textarea id="details" class="form-control" rows="3" data-parsley-trigger="change"
+                  formControlName="remarks" [ngClass]="{ 'is-invalid': submitted && f.remarks.errors }"
+                  [(ngModel)]="techent.remarks" name="remarks" maxlength="200"></textarea>
+                <div *ngIf="submitted && f.remarks.errors" class="invalid-feedback">
+                  <div *ngIf="f.remarks.errors.required">Please Enter Remarks</div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer ">
+              <input class="btn btn-info" type="submit" name="submit_reg" value="Update">
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+-->

@@ -1,0 +1,204 @@
+<p>edit-recruiter works!</p>
+<main id="main" class="main">
+    <div class="pagetitle">
+        <!-- <h1>Add New VMS</h1> -->
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/dashboard">Home</a></li>
+                <li class="breadcrumb-item">Recruiter</li>
+            </ol>
+        </nav>
+    </div>
+    <section class="section">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <p class="text-center small danger" *ngIf="message!==''" style="color:red"><b>{{message}}</b>
+                        </p>
+                        <h5 class="card-title"> Update Recruiter</h5>
+                        <form [formGroup]="form" (ngSubmit)="onSubmit()" autocomplete="off">
+                            <input type="hidden" [(ngModel)]="entity.recid" formControlName="recid" name="recid">
+                            <input type="hidden" [(ngModel)]="entity.status" formControlName="status" name="status">
+                            <input type="hidden" [(ngModel)]="entity.remarks" formControlName="remarks" name="remarks">
+                            <input type="hidden" [(ngModel)]="entity.role" formControlName="role" name="role">
+                            <input type="hidden" [(ngModel)]="entity.rec_stat" formControlName="rec_stat"
+                                name="rec_stat">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div formGroupName="vendor">
+                                        <div class="col-md-12">
+                                            <select required [(ngModel)]="entity.vendor.vmsid" name="vmsid" id="vendor"
+                                                class="form-select rounded-pill"
+                                                [ngClass]="{ 'is-invalid': submitted && form.get('vendor.vmsid').hasError('required') }"
+                                                formControlName="vmsid">
+                                                <option value="" selected>Select Company</option>
+                                                <option *ngFor="let obj of companydata" [value]="obj.id">{{obj.company}}
+                                                </option>
+                                            </select>
+                                            <div *ngIf="form.get('vendor.vmsid') && submitted" class="invalid-feedback">
+                                                <div *ngIf="form.get('vendor.vmsid').hasError('required')">
+                                                    <span>Vendor Company is required</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label for="cp_name"></label>
+                                        <input type="text" [(ngModel)]="entity.recruiter" maxlength="30"
+                                            class="form-control rounded-pill" autocomplete="off" name="recruiter"
+                                            data-parsley-trigger="change"
+                                            [ngClass]="{ 'is-invalid': submitted && f.recruiter.errors }"
+                                            formControlName="recruiter" placeholder="Recruiter Name *" />
+                                        <div *ngIf="submitted && f.recruiter.errors" class="invalid-feedback">
+                                            <div *ngIf="f.recruiter.errors.required">Recruiter Name is required</div>
+                                            <div *ngIf="f.recruiter.errors.pattern">Please enter alphabets</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <label for="cp_name"></label>
+                                        <input type="text" [(ngModel)]="entity.email" maxlength="38"
+                                            [ngClass]="{ 'is-invalid': submitted && f.email.errors }"
+                                            class="form-control rounded-pill" autocomplete="off" name="email"
+                                            data-parsley-trigger="change" formControlName="email" required
+                                            placeholder="Email *" />
+                                        <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                                            <div *ngIf="f.email.errors.required">Email is required</div>
+                                            <div *ngIf="f.email.errors.email">Please Enter a Valid Email Address</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <label for="cp_name"></label>
+                                        <input type="text" [(ngModel)]="entity.usnumber" maxlength="15"
+                                            [ngClass]="{ 'is-invalid': submitted && f.usnumber.errors }"
+                                            class="form-control rounded-pill" autocomplete="off" name="usnumber"
+                                            data-parsley-trigger="change" formControlName="usnumber" required
+                                            placeholder="Company Contact Number *" />
+                                        <div *ngIf="submitted && f.usnumber.errors" class="invalid-feedback">
+                                            <div *ngIf="f.usnumber.errors.required">Company Contact is required</div>
+                                            <!-- <div *ngIf="f.usnumber.errors.pattern">Enter only number.</div> -->
+                                            <!-- <div *ngIf="f.usnumber.errors.minlength">Number must be at least 10
+                                                characters</div>
+                                            <div *ngIf="f.usnumber.errors.maxlength">Number must not exceed 15
+                                                characters </div> -->
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <label for="cp_name"></label>
+                                        <input type="text" [(ngModel)]="entity.innumber" maxlength="10"
+                                            class="form-control rounded-pill" autocomplete="off" name="innumber"
+                                            data-parsley-trigger="change" formControlName="innumber"
+                                            placeholder="Personal contact Number" />
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+
+                                    <div class="col-md-12">
+                                        <input type="text" [(ngModel)]="entity.country" maxlength="20"
+                                            class="form-control rounded-pill" autocomplete="off"
+                                            [ngClass]="{ 'is-invalid': submitted && f.country.errors }" name="country"
+                                            data-parsley-trigger="change" formControlName="country"
+                                            placeholder="Country *" />
+                                        <div *ngIf="submitted && f.country.errors" class="invalid-feedback">
+                                            <div *ngIf="f.country.errors.required">Country is required</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div formGroupName="states">
+                                                <label for="cp_name"></label>
+                                                <select required [(ngModel)]="entity.states.id" name="id" id="id"
+                                                    class="form-select rounded-pill"
+                                                    [ngClass]="{ 'is-invalid': submitted && form.get('states.id').hasError('required') }"
+                                                    formControlName="id">
+                                                    <option value="" selected>Select State</option>
+                                                    <option *ngFor="let obj of statedata" [value]="obj[0]">{{obj[1]}}
+                                                    </option>
+                                                </select>
+                                                <div *ngIf="form.get('states.id') && submitted"
+                                                    class="invalid-feedback">
+                                                    <div *ngIf="form.get('states.id').hasError('required')">
+                                                        <span>State is required</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div formGroupName="city">
+                                                <label for="cp_name"></label>
+                                                <select required [(ngModel)]="entity.city.id" name="id" id="id"
+                                                    class="form-select rounded-pill"
+                                                    [ngClass]="{ 'is-invalid': submitted && form.get('city.id').hasError('required') }"
+                                                    formControlName="id">
+                                                    <option value="" selected>Select City</option>
+                                                    <option *ngFor="let obj of cityarr" [value]="obj[0]">{{obj[1]}}
+                                                    </option>
+                                                </select>
+                                                <div *ngIf="form.get('city.id') && submitted" class="invalid-feedback">
+                                                    <div *ngIf="form.get('city.id').hasError('required')">
+                                                        <span>City is required</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <label for="cp_name"></label>
+                                        <select required [(ngModel)]="entity.recruitertype" name="recruitertype"
+                                            formControlName="recruitertype" id="recruitertype"
+                                            class="form-select rounded-pill"
+                                            [ngClass]="{ 'is-invalid': submitted && f.recruitertype.errors }">
+                                            <option value="">select Designation</option>
+                                            <option value="Recruiting">Recruiting</option>
+                                            <option value="Bench Sales">Sales</option>
+                                            <option value="Both">Both</option>
+                                        </select>
+                                        <div *ngIf="submitted && f.recruitertype.errors" class="invalid-feedback">
+                                            <div *ngIf="f.recruitertype.errors.required">Designation is required</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <label for="cp_name"></label>
+                                        <input type="text" [(ngModel)]="entity.iplogin" maxlength="20"
+                                            class="form-control rounded-pill" autocomplete="off" name="iplogin"
+                                            data-parsley-trigger="change" formControlName="iplogin"
+                                            placeholder="Login IP Address" />
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <label for="cp_name"></label>
+                                        <input type="text" [(ngModel)]="entity.fedid" maxlength="20"
+                                            class="form-control rounded-pill" autocomplete="off" name="fedid"
+                                            data-parsley-trigger="change" formControlName="fedid"
+                                            placeholder="Fed Id" />
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <label for="details"></label>
+                                    <textarea id="details" [(ngModel)]="entity.details" class="form-control"
+                                        formControlName="details" rows="4" data-parsley-trigger="change" name="details"
+                                        maxlength="250" placeholder="Others Details "></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group text-center" style="margin-top: 20px;padding: 10px;">
+                                <a (click)="form.reset()" class="btn btn-warning rounded-pill">Cancel</a>
+                                &nbsp;
+                                &nbsp;
+                                <button type="submit" name="btnSubmit" class="btn btn-info rounded-pill"
+                                    value="Submit">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>

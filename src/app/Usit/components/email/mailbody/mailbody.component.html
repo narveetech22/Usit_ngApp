@@ -1,0 +1,53 @@
+<main id="main" class="main">
+    <div class="pagetitle">
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/dashboard">Home</a></li>
+                <li class="breadcrumb-item">Mail</li>
+            </ol>
+        </nav>
+    </div>
+    <section class="section">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div>
+                            <br>
+                            From :: <span>{{entity.from}}</span>
+                        </div>
+                        <hr>
+                        <div width="90%">
+                            To :: <span>{{entity.tomail}}</span>
+                        </div>
+                        <hr>
+                        <div width="60%">
+                            CC :: <span>{{entity.ccmail}}</span>
+                        </div>
+                        <hr>
+                        <div>
+                            Company :: <span>{{entity.company}}</span>
+                        </div>
+                        <hr>
+                        <div>
+                            Subject :: <span>{{entity.subject}}</span>
+                            <!-- <span class="text-left">{{entity.sentdate}}</span> -->
+                            <span  style="margin-left:530px">
+                                {{entity.sentdate}}
+                            </span>
+                        </div>
+                        <br>
+                        <div class="mail">
+                            {{entity.body}}
+                        </div>
+                        <br>
+                        <div>
+                            <!-- {{entity.attachment}} -->
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>

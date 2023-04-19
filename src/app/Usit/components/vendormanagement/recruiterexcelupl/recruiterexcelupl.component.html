@@ -1,0 +1,102 @@
+<main id="main" class="main" >
+    <div class="pagetitle">
+       <!-- <h1>Add New VMS</h1> -->
+       <nav>
+          <ol class="breadcrumb">
+             <li class="breadcrumb-item"><a routerLink="/dashboard">Home</a></li>
+             <li class="breadcrumb-item">Recruiter</li>
+          </ol>
+       </nav>
+    </div>
+    <section class="section">
+       <div class="row">
+           <div class="col-md-12">
+                <div class="card">
+                   <div class="card-body">
+                        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                            <div class="container-fluid">
+                                <h5 class="card-title"><input type="file" name="file" class="custom-file-input" id="inputGroupFile" required (change)="handleImport($event)"></h5>
+                                <div class="collapse navbar-collapse" id="navbarCollapse">
+                                     <div class="navbar-nav ms-auto" *ngIf="ROLEID != 2 ">
+                                        <div class="input-group mb-3" >
+                                          <h5 class="card-title file"  (click)="handleExport()" ><i class="ri-download-2-fill "></i>Download Sample</h5>
+                                           &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+                                          <h5 class="card-title file"  (click)="uploadfile()" ><i class="ri-upload-2-fill "></i>Upload</h5>
+                                           &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;<h5 class="card-title float-right" ><a   [routerLink]="['/register-recruiter']">( Add new Recruiter)</a></h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
+                        <div class="row" >
+                            <table class="table table-light table-bordered " oncopy="return false" onpaste="return false" oncut="return false" >
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th>Comapny Name</th>
+                                        <th>Recruiter Name</th>
+                                        <th>Phone Number</th>
+                                        <th>Email</th>
+                                        <th>Country</th>
+                                        <th>State</th>
+                                        <th>Designation</th>
+                                        <th>linkedIn</th>
+                                        <th>Fed Id</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="tbody">
+                                  <tr *ngFor="let data of excel" >
+                                    <td>{{data.CompanyName}}</td>
+                                    <td>{{data.RecruiterName}}</td>
+                                    <td>{{data.ContactNumber}}</td>
+                                    <td>{{data.Email}}</td>
+                                    <td>{{data.Country}}</td>
+                                    <td>{{data.State}}</td>
+                                    <td>{{data.Designation}}</td>
+                                    <td>{{data.LinkedIn}}</td>
+                                    <td>{{data.Fed_Id}}</td>
+                                  </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+       </div>
+    </section>
+ </main>
+    <!-- Modal -->
+    <div class="modal fade" id="upload" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+      <div class="modal-dialog modal-md">
+        <div class="modal-content" >
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Update Status</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form >
+              <fieldset>
+                <div class="row">
+                  <div class="custom-file rounded-pill">
+                    <input type="file" name="file" class="custom-file-input rounded-pill" id="inputGroupFile" required (change)="handleImport($event)">
+                </div>
+                    <!-- <div class="form-group">
+                        <label for="details">Reason</label>
+                          <textarea id="details" class="form-control"  rows="3" data-parsley-trigger="change" formControlName="remarks"
+                          [ngClass]="{ 'is-invalid': submitted && f.remarks.errors }"  [(ngModel)]="tech.remarks"
+                           name="remarks" maxlength="200"></textarea>
+                        <div *ngIf="submitted && f.remarks.errors" class="invalid-feedback">
+                          <div *ngIf="f.remarks.errors.required">Please Enter Remarks</div>
+                      </div>
+                    </div> -->
+                </div>
+                <div class="modal-footer ">
+                    <input class="btn btn-info" type="submit" name="submit_reg" value="Update" >
+                </div>
+              </fieldset>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+

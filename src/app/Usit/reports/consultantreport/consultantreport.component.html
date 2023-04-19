@@ -1,0 +1,203 @@
+<main id="main" class="main">
+    <div class="pagetitle">
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/dashboard">Home</a></li>
+                <li class="breadcrumb-item active">Consultant Report</li>
+            </ol>
+        </nav>
+    </div>
+    <section class="section">
+        <div class="card">
+            <div class="card-body">
+                <br>
+                <!-- <h5 class="card-title">No Labels / Placeholders as labels Form</h5> -->
+                <form class="row g-3" [formGroup]="form" (ngSubmit)="onSubmit()">
+                    <div class="col-md-2">
+                        <label for="startDate"><strong>From Date</strong></label>
+                        <input type="date" formControlName="startDate" name="startDate" class="form-control "
+                            [ngClass]="{ 'is-invalid': submitted && f.startDate.errors }" />
+                        <div *ngIf="submitted && f.startDate.errors" class="invalid-feedback">
+                            <div *ngIf="f.startDate.errors.required">Select From Date</div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="endDate"><strong>To Date</strong></label>
+                        <input type="date" formControlName="endDate" name="endDate" class="form-control "
+                            [ngClass]="{ 'is-invalid': submitted && f.endDate.errors }" />
+                        <div *ngIf="submitted && f.endDate.errors" class="invalid-feedback">
+                            <div *ngIf="f.endDate.errors.required">Select To Date</div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="groupby"><strong>Group By</strong></label>
+                        <select name="groupby" id="groupby" class="form-select " formControlName="groupby"
+                            [ngClass]="{ 'is-invalid': submitted && f.groupby.errors }">
+                            <option value="">Select GroupBy</option>
+                            <option value="date" selected>Date Wise</option>
+                            <option value="employee">Executive Wise</option>
+                            <option value="consultant">Consultant Wise</option>
+                        </select>
+                        <div *ngIf="submitted && f.groupby.errors" class="invalid-feedback">
+                            <div *ngIf="f.groupby.errors.required">Select GroupBy</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label></label>
+                        <button type="submit" style="margin-top: 20px;" class="btn btn-info">Submit</button>
+                        &nbsp;
+                        <button (click)="reset()" style="margin-top: 20px;" class="btn btn-secondary">Reset</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="row">
+            <table class="table table-sm  table-light table-bordered table-responsive">
+                <thead class="thead-light">
+                    <tr>
+                        <th>Date</th>
+                        <th>Initiated</th>
+                        <th>Completed</th>
+                        <th>Verified</th>
+                        <th>Active</th>
+                        <th>In Active</th>
+                        <th>Rejected</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of c_data |  paginate
+                    : {
+                        itemsPerPage: tableSize,
+                        currentPage: page,
+                        totalItems: count
+                      };">
+                        <td *ngIf="groupby=='date'">
+                            <a href (click)="drilldown(data.createddate,'status')" data-bs-toggle="modal"
+                                data-bs-target="#drilldown">{{data.createddate}} </a>
+                        </td>
+                        <td *ngIf="groupby=='employee'">
+                            <a href (click)="drilldown(data.userid,'employee')" data-bs-toggle="modal"
+                                data-bs-target="#drilldown">{{data.pseudoname}} </a>
+                        </td>
+
+                        <td *ngIf="groupby=='consultant'">
+                            <a href (click)="drilldown(data.consultantid,'consultant')" data-bs-toggle="modal"
+                                data-bs-target="#drilldown">{{data.consultantname}} </a>
+                        </td>
+                        <td>
+                            <a href (click)="drilldown(data.createddate,'Initiated')" data-bs-toggle="modal"
+                                data-bs-target="#drilldown">{{data.initiated}}</a>
+                        </td>
+                        <td>
+                            <a href (click)="drilldown(data.createddate,'Completed')" data-bs-toggle="modal"
+                                data-bs-target="#drilldown">{{data.completed}}</a>
+                        </td>
+                        <td>
+                            <a href (click)="drilldown(data.createddate,'Verified')" data-bs-toggle="modal"
+                                data-bs-target="#drilldown">{{data.verified}}</a>
+                        </td>
+                        <td>
+                            <a href (click)="drilldown(data.createddate ,'Active')" data-bs-toggle="modal"
+                                data-bs-target="#drilldown">{{data.active}}</a>
+                        </td>
+                        <td>
+                            <a href (click)="drilldown(data.createddate,'InActive')" data-bs-toggle="modal"
+                                data-bs-target="#drilldown">{{data.inActive}}</a>
+                        </td>
+                        <td>
+                            <a href (click)="drilldown(data.createddate,'Rejected')" data-bs-toggle="modal"
+                                data-bs-target="#drilldown">{{data.rejected}}</a>
+                        </td>
+                    </tr>
+                </tbody>
+                <!-- <tfoot>
+                    <tr>
+                        <td></td>
+                        <td>3</td>
+                        <td>3</td>
+                        <td>3</td>
+                        <td>{{Activecnt}}</td>
+                        <td>3</td>
+                        <td>3</td>
+                    </tr>
+                </tfoot>  -->
+            </table>
+            <div class="pagination justify-content-end">
+                <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)">
+                </pagination-controls>
+            </div>
+        </div>
+    </section>
+</main>
+
+<!-- Modal -->
+<div class="modal fade" id="drilldown" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">List Of Consultants</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row" oncopy="return false" onpaste="return false" oncut="return false">
+                    <table class="table table-light table-bordered ">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>Date</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Contact Number</th>
+                                <th>Exp</th>
+                                <th>Technology</th>
+                                <th>Visa</th>
+                                <th>Current Location</th>
+                                <th>Relocation</th>
+                                <th>Rate</th>
+                                <th>Added by</th>
+                                <th>Priority</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody class="tbody">
+                            <tr *ngFor="let s of consultant  | paginate
+                            : {
+                                itemsPerPage: tableSize,
+                                currentPage: page,
+                                totalItems: count
+                              };">
+                                <td>{{s.createddate}}</td>
+                                <td>{{s.consultantname}}
+                                </td>
+                                <td>{{s.consultantemail}}</td>
+                                <td>{{s.contactnumber}}</td>
+                                <td>{{s.experience}}</td>
+                                <td>{{s.technologyarea}}</td>
+                                <td>{{s.visa_status}}</td>
+                                <td>{{s.state}}</td>
+                                <td>{{s.relocation}}</td>
+                                <td>{{s.hourlyrate}}</td>
+                                <td> {{s.fullname}}
+                                    <!-- <ng-container
+                                        *ngIf="s.consultantflg === 'sales'  ; then true1 else else1"></ng-container>
+                                    <ng-template #true1>
+                                        {{s.pseudoname}}
+                                    </ng-template>
+                                    <ng-template #else1>
+                                       {{s.fullname}}
+                                    </ng-template> -->
+                                </td>
+                                <td>{{s.priority}}</td>
+                                <td>
+                                    {{s.status}}
+
+                                </td>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

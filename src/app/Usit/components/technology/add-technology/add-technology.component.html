@@ -1,0 +1,68 @@
+<main id="main" class="main">
+    <div class="pagetitle">
+       <nav>
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a routerLink="/dashboard">Home</a></li>
+            <li class="breadcrumb-item"><a routerLink="/list-technology">Technology</a> </li>
+            <!-- <li class="breadcrumb-item">Technology Tags</li> -->
+          </ol>
+       </nav>
+    </div>
+    <section class="section">
+       <div class="row">
+          <div class="col-md-12">
+             <div class="card">
+                <div class="card-body">
+                   <h5 class="card-title"> Add Technology </h5>
+                   <p class="text-center small danger" *ngIf="message!==''" style="color:red"><b>{{message}}</b></p>
+                   <form  [formGroup]="form" (ngSubmit)="onSubmit()">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="col-md-12"> 
+                                    <label for="cp_name">Technology  </label>
+                                    <input type="text"    maxlength="120" [ngClass]="{ 'is-invalid': submitted && f.technologyarea.errors }" class="form-control rounded-pill"autocomplete="off" 
+                                    name="technologyarea" data-parsley-trigger="change" formControlName="technologyarea" required />
+                                    <div *ngIf="submitted && f.technologyarea.errors" class="invalid-feedback">
+                                        <div *ngIf="f.technologyarea.errors.required">Technology is required</div>
+                                    </div>
+                                </div>
+
+                                <!-- <div class="col-md-12"> 
+                                    <label for="skillls">Skills</label>
+                                    <input type="text" maxlength="2000" formControlName="listofkeyword"  [ngClass]="{ 'is-invalid': submitted && f.listofkeyword.errors }"  
+                                    class="form-control rounded-pill" autocomplete="off" value="" placeholder="" name="listofkeyword" data-parsley-trigger="change" />
+                                    <div *ngIf="submitted && f.listofkeyword.errors" class="invalid-feedback">
+                                        <div *ngIf="f.listofkeyword.errors.required">Skills are required</div>
+                                    </div>
+                                </div> -->
+
+                                <div class="col-md-12"> 
+                                    <label for="details">Skills</label>
+                                    <textarea id="details" class="form-control" formControlName="listofkeyword"  rows="3" data-parsley-trigger="change" 
+                                    [ngClass]="{ 'is-invalid': submitted && f.listofkeyword.errors }"  name="listofkeyword" maxlength="2000"></textarea>
+                                    <div *ngIf="submitted && f.listofkeyword.errors" class="invalid-feedback">
+                                        <div *ngIf="f.listofkeyword.errors.required">Skills are required</div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12"> 
+                                    <label for="details">Comments</label>
+                                    <textarea id="details" class="form-control" formControlName="comments"  rows="3" data-parsley-trigger="change" 
+                                    name="comments" maxlength="250"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group text-center" style="margin-top: 20px;padding: 10px;">
+                            <a (click)="form.reset()" class="btn btn-warning rounded-pill">Cancel</a>
+                            &nbsp;
+                            &nbsp;
+                            <button type="submit" name="btnSubmit" class="btn btn-info rounded-pill" value="Submit" >Submit</button>
+                        </div>
+                   </form>
+                </div>
+             </div>
+          </div>
+       </div>
+    </section>
+ </main>

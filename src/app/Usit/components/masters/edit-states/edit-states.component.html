@@ -1,0 +1,45 @@
+<main id="main" class="main">
+    <div class="pagetitle">
+       <nav>
+          <ol class="breadcrumb">
+             <li class="breadcrumb-item"><a routerLink="/dashboard">Home</a></li>
+             <li class="breadcrumb-item">Masters</li>
+             <li class="breadcrumb-item">State</li>
+          </ol>
+       </nav>
+    </div>
+    <section class="section">
+       <div class="row">
+          <div class="col-md-4">
+             <div class="card">
+                <div class="card-body">
+                   <h5 class="card-title"> Update State</h5>
+                   <p class="text-center small danger" *ngIf="message!==''" style="color:red"><b>{{message}}</b></p>
+                   <form  [formGroup]="form" (ngSubmit)="onSubmit()">
+                    <input type="hidden" [(ngModel)]="tech.id" formControlName="id" name="id">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-12"> 
+                                    <label for="cp_name">State Name  </label>
+                                    <input type="text" [(ngModel)]="tech.statename" maxlength="500" class="form-control rounded-pill"autocomplete="off" 
+                                    name="statename" data-parsley-trigger="change" formControlName="statename" required [ngClass]="{ 'is-invalid': submitted && f.statename.errors }"/>
+                                    <div *ngIf="submitted && f.statename.errors" class="invalid-feedback">
+                                        <div *ngIf="f.statename.errors.required">State Name is required</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group text-center" style="margin-top: 20px;padding: 10px;">
+                            <a (click)="form.reset()" class="btn btn-warning rounded-pill">Cancel</a>
+                            &nbsp;
+                            &nbsp;
+                            <button type="submit" name="btnSubmit" class="btn btn-info rounded-pill" value="Submit" >Submit</button>
+                        </div>
+                   </form>
+                </div>
+             </div>
+          </div>
+       </div>
+    </section>
+ </main>

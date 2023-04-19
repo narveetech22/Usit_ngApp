@@ -1,0 +1,58 @@
+<main id="main" class="main">
+    <div class="pagetitle">
+        <!-- <h1>Add New VMS</h1> -->
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/dashboard">Home</a></li>
+                <li class="breadcrumb-item">Preciliges</li>
+            </ol>
+        </nav>
+    </div>
+    <section class="section">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title"> Add Previlige</h5>
+                        <p class="text-center small danger" *ngIf="message!==''" style="color:red"><b>{{message}}</b>
+                        </p>
+                        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-md-12">
+                                        <label for="cp_name">Type </label>
+                                        <input type="text" maxlength="50" class="form-control rounded-pill"
+                                            autocomplete="off" name="type" data-parsley-trigger="change"
+                                            formControlName="type" required
+                                            [ngClass]="{ 'is-invalid': submitted && f.type.errors }" />
+                                        <div *ngIf="submitted && f.type.errors" class="invalid-feedback">
+                                            <div *ngIf="f.type.errors.required">Type is required</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label for="cp_name">Name </label>
+                                        <input type="text" maxlength="50" class="form-control rounded-pill"
+                                            autocomplete="off" name="name" data-parsley-trigger="change"
+                                            formControlName="name" required
+                                            [ngClass]="{ 'is-invalid': submitted && f.name.errors }" />
+                                        <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                                            <div *ngIf="f.name.errors.required">Name is required</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group text-center" style="margin-top: 20px;padding: 10px;">
+                                <a (click)="form.reset()" class="btn btn-warning rounded-pill">Cancel</a>
+                                &nbsp;
+                                &nbsp;
+                                <button type="submit" name="btnSubmit" class="btn btn-info rounded-pill"
+                                    value="Submit">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>

@@ -1,0 +1,90 @@
+<main id="main" class="main">
+    <div class="pagetitle">
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/dashboard">Home</a></li>
+                <li class="breadcrumb-item">Master</li>
+                <li class="breadcrumb-item">State</li>
+            </ol>
+        </nav>
+    </div>
+    <section class="section">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                            <div class="container-fluid">
+                                <h5 class="card-title">State List</h5>
+                                <button type="button" class="navbar-toggler" data-bs-toggle="collapse"
+                                    data-bs-target="#navbarCollapse">
+                                    <span class="navbar-toggler-icon"></span>
+                                </button>
+                                <div class="collapse navbar-collapse" id="navbarCollapse">
+                                    <div class="navbar-nav ms-auto">
+                                        <div class="input-group mb-3">
+                                            <h5 class="card-title float-right"><a [routerLink]="['/register-state']"><i
+                                                        _ngcontent-vqa-c41=""
+                                                        class="bi bi-plus-square-dotted"></i>&nbsp; New State</a></h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
+                        <div class="clearfix"></div>
+                        <div class="row">
+                            <table class="table table-light table-bordered ">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <!-- <th>S No</th> -->
+                                        <th>State Name</th>
+                                        <!-- <th>Status</th> -->
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="tbody">
+                                    <tr *ngFor="
+                                      let vms of datarr
+                                        | paginate
+                                          : {
+                                              itemsPerPage: tableSize,
+                                              currentPage: page,
+                                              totalItems: count
+                                            };
+                                      let i = index
+                                    ">
+                                        <!-- <tr *ngFor="let vms of datarr; let i = index"> -->
+                                        <!-- <td style="width:80px">{{ i + 1 }}</td> -->
+                                        <td>{{vms.statename}}</td>
+                                        <!-- <td style="width:80px">
+                                       <ng-container *ngIf="vms.status == 'Active'; then trueCondition else elseTemplate"></ng-container>
+                                           <ng-template #trueCondition>
+                                               <span class="badge bg-info text-dark"  (click)="edit(vms)" data-bs-toggle="modal" data-bs-target="#verticle">Active</span>
+                                           </ng-template>
+                                           <ng-template #elseTemplate>
+                                               <span class="badge bg-danger" (click)="edit(vms)" data-bs-toggle="modal" data-bs-target="#verticle">In Active
+                                               </span>
+                                        </ng-template>
+                                     </td> -->
+                                     <td style="width:5%">
+                                            <a [routerLink]="['/edit-state',vms.id]"> <i class="ri-edit-2-fill"></i>
+                                            </a>&nbsp;
+                                            <a *ngIf="hasAcces!='Employee'" (click)="delete(vms.id)"
+                                                ng-confirm-click="You are about to overwrite your PUBLISHED content!! Are you SURE you want to publish?">
+                                                <i style="color:maroon" class="ri-delete-bin-fill "></i> </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="pagination justify-content-end">
+                                <pagination-controls previousLabel="Prev" nextLabel="Next"
+                                    (pageChange)="onTableDataChange($event)">
+                                </pagination-controls>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>

@@ -1,0 +1,227 @@
+<main id="main" class="main">
+    <div class="pagetitle">
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/dashboard">Home</a></li>
+                <li class="breadcrumb-item">Recruiting</li>
+                <li class="breadcrumb-item active">Requirements</li>
+            </ol>
+        </nav>
+    </div>
+    <section class="section">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Update Requirements</h5>
+                        <p class="text-center small danger" *ngIf="message!==''">{{message}}</p>
+                        <form [formGroup]="form" autocomplete="off">
+                             <input type="hidden" [(ngModel)]="entity.requirementid" formControlName="requirementid"
+                                name="requirementid"> 
+                             <!-- <input type="hidden" [(ngModel)]="upd" formControlName="updatedby" name="updatedby">  -->
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="col-md-12">
+                                        <input maxlength="120" [(ngModel)]="entity.reqnumber" id="reqnumber"
+                                            name="reqnumber" class="form-control rounded-pill" type="text"
+                                            formControlName="reqnumber" readonly>
+                                    </div>
+                                    <div class=" col-md-12">
+                                        <label for="totexp" class="form-label"></label>
+                                        <input type="date" [(ngModel)]="entity.postedon" formControlName="postedon"
+                                            class="form-control rounded-pill" readonly
+                                             />
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <label for="totexp" class="form-label"></label>
+                                        <input required [(ngModel)]="entity.vendor" maxlength="120" id="vendor"
+                                            name="vendor" placeholder="Implementation Partner / Vendor *"
+                                            class="form-control rounded-pill" type="text" formControlName="vendor"
+                                            [ngClass]="{ 'is-invalid': submitted && frm.vendor.errors }">
+                                        <div *ngIf="submitted && frm.vendor.errors" class="invalid-feedback">
+                                            <div *ngIf="frm.vendor.errors.required">Implementation Partner / Vendor is
+                                                required</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <label for="totexp" class="form-label"></label>
+                                        <input required [(ngModel)]="entity.jobtitle" maxlength="120" id="jobtitle"
+                                            name="jobtitle" placeholder="Job Title *" class="form-control rounded-pill"
+                                            type="text" formControlName="jobtitle"
+                                            [ngClass]="{ 'is-invalid': submitted && frm.jobtitle.errors }">
+                                        <div *ngIf="submitted && frm.jobtitle.errors" class="invalid-feedback">
+                                            <div *ngIf="frm.jobtitle.errors.required">Job Title is required</div>
+                                        </div>
+                                    </div>
+                                    <div formGroupName="technology">
+                                        <div class="col-md-12">
+                                            <label for="totexp" class="form-label"></label>
+                                            <select [(ngModel)]="entity.technology.id" required name="id" id="id"
+                                                class="form-select rounded-pill"  (change)="techskills($event)"
+                                                [ngClass]="{ 'is-invalid': submitted && form.get('technology.id').hasError('required') }"
+                                                formControlName="id">
+                                                <option value="" selected>Select Technology</option>
+                                                <option *ngFor="let obj of techdata" [value]="obj[0]">{{obj[1]}}
+                                                </option>
+                                            </select>
+                                            <div *ngIf="form.get('technology.id') && submitted"
+                                                class="invalid-feedback">
+                                                <div *ngIf="form.get('technology.id').hasError('required')">
+                                                    <span>Technology is required</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label for="totexp" class="form-label"></label>
+                                        <input [(ngModel)]="entity.email" id="email" maxlength="40" name="email"
+                                            placeholder="Email" class="form-control rounded-pill" type="text"
+                                            formControlName="email">
+                                    </div>
+
+
+                                    <div class="col-md-12">
+                                        <label for="totexp" class="form-label"></label>
+                                        <input [(ngModel)]="entity.mobile" id="mobile" maxlength="12" name="mobile"
+                                            placeholder="Phone number" class="form-control rounded-pill" type="text"
+                                            formControlName="mobile">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="col-md-12">
+                                        <input [(ngModel)]="entity.location" required maxlength="140" id="location"
+                                            name="location" placeholder="Location *" class="form-control rounded-pill"
+                                            type="text" formControlName="location"
+                                            [ngClass]="{ 'is-invalid': submitted && frm.location.errors }">
+                                        <div *ngIf="submitted && frm.location.errors" class="invalid-feedback">
+                                            <div *ngIf="frm.location.errors.required">Location is required</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <label for="totexp" class="form-label"></label>
+                                        <input [(ngModel)]="entity.jobexperience" maxlength="2" id="jobexperience"
+                                            name="jobexperience" placeholder="Job Experience"
+                                            class="form-control rounded-pill" type="text"
+                                            formControlName="jobexperience">
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <label for="totexp" class="form-label"></label>
+                                        <input [(ngModel)]="entity.jobskills" maxlength="200" id="jobskills"
+                                            name="jobskills" placeholder="Job skills" class="form-control rounded-pill"
+                                            type="text" formControlName="jobskills" [(ngModel)]="autoskills">
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label class="form-label">Employment type *</label> <br>
+                                        <input class="form-check-input" type="radio" name="employmenttype"
+                                            formControlName="employmenttype" [(ngModel)]="entity.employmenttype"
+                                            [ngClass]="{ 'is-invalid': submitted && frm.employmenttype.errors }"
+                                            value="C2C" checked>
+                                        <label class="form-check-label">&nbsp;C2C</label> &nbsp;&nbsp;&nbsp;&nbsp;
+                                        <input class="form-check-input" type="radio" name="employmenttype"
+                                            formControlName="employmenttype" [(ngModel)]="entity.employmenttype"
+                                            [ngClass]="{ 'is-invalid': submitted && frm.employmenttype.errors }"
+                                            value="1099">
+                                        <label class="form-check-label">&nbsp;1099</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <input class="form-check-input" type="radio" name="employmenttype"
+                                            formControlName="employmenttype" [(ngModel)]="entity.employmenttype"
+                                            [ngClass]="{ 'is-invalid': submitted && frm.employmenttype.errors }"
+                                            value="W2">
+                                        <label class="form-check-label">&nbsp;W2</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <input class="form-check-input" type="radio" name="employmenttype"
+                                            formControlName="employmenttype" [(ngModel)]="entity.employmenttype"
+                                            [ngClass]="{ 'is-invalid': submitted && frm.employmenttype.errors }"
+                                            value="Full Time">
+                                        <label class="form-check-label">&nbsp;Full Time</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <input class="form-check-input" type="radio" name="employmenttype"
+                                            formControlName="employmenttype" [(ngModel)]="entity.employmenttype"
+                                            [ngClass]="{ 'is-invalid': submitted && frm.employmenttype.errors }"
+                                            value="C2H">
+                                        <label class="form-check-label">&nbsp;C2H</label>
+
+                                        <div *ngIf="submitted && frm.employmenttype.errors" class="invalid-feedback">
+                                            <div *ngIf="frm.employmenttype.errors.required">Employement Type is required
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <label for="totexp" class="form-label"></label>
+                                        <input [(ngModel)]="entity.salary" maxlength="5" id="salary" name="salary"
+                                            placeholder="Salary/ hourly rate" class="form-control rounded-pill"
+                                            type="text" formControlName="salary">
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label for="totexp" class="form-label"></label>
+                                        <select formControlName="status" [(ngModel)]="entity.status" name="status"
+                                            id="status" class="form-select rounded-pill"
+                                            [ngClass]="{ 'is-invalid': submitted && frm.status.errors }">
+                                            <option value="">Select Status</option>
+                                            <option value="Active">Active</option>
+                                            <option value="on hold">on hold</option>
+                                            <option value="closed">closed</option>
+                                        </select>
+                                        <div *ngIf="submitted && frm.status.errors" class="invalid-feedback">
+                                            <div *ngIf="frm.status.errors.required">Choose Status</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <label for="othdet" class="form-label"></label>
+                                        <ng-multiselect-dropdown [settings]="dropdownSettings" [data]="dropdownList"
+                                            formControlName="empid"
+                                            [ngClass]="{ 'is-invalid': submitted && frm.empid.errors }">
+                                        </ng-multiselect-dropdown>
+                                        <div *ngIf="submitted && frm.empid.errors" class="invalid-feedback">
+                                            <div *ngIf="frm.empid.errors.required">Select Recruiter</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <label for="duration" class="form-label"></label>
+                                        <input maxlength="30" id="duration" name="duration"
+                                            placeholder="Project Duration" [(ngModel)]="entity.duration" class="form-control rounded-pill" type="text"
+                                            formControlName="duration"
+                                            [ngClass]="{ 'is-invalid': submitted && frm.duration.errors }">
+                                        <div *ngIf="submitted && frm.duration.errors" class="invalid-feedback">
+                                            <div *ngIf="frm.duration.errors.required">Project duration is required</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <label for="details"></label>
+                                <textarea id="jobdescription" [(ngModel)]="entity.jobdescription" class="form-control"
+                                    formControlName="jobdescription" rows="6" data-parsley-trigger="change"
+                                    name="jobdescription" maxlength="20000" placeholder="Job Description"></textarea>
+                            </div>
+
+                            <div class="form-group text-center" style="margin-top: 20px;padding: 10px;">
+                                <a (click)="form.reset()" class="btn btn-warning rounded-pill">Cancel</a>
+                                &nbsp;
+
+                                <ng-container
+                                    *ngIf="hidesavebtn; then trueCondition else elseTemplate"></ng-container>
+                                <ng-template #trueCondition>
+                                    <button type="submit" name="btnSubmit" class="btn btn-info rounded-pill"
+                                        value="Submit" (click)="saveEntity()" disabled>Submit</button>
+                                </ng-template>
+                                <ng-template #elseTemplate>
+                                    <button type="submit" name="btnSubmit" class="btn btn-info rounded-pill"
+                                        value="Submit" (click)="saveEntity()">Submit</button>
+                                </ng-template>
+
+                                <!-- <button type="submit" name="btnSubmit" class="btn btn-info rounded-pill" value="Submit"
+                                    (click)="saveEntity()">Submit</button> -->
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>

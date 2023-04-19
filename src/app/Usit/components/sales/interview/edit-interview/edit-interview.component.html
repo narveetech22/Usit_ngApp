@@ -1,0 +1,177 @@
+<main id="main" class="main">
+    <div class="pagetitle">
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/dashboard">Home</a></li>
+                <li class="breadcrumb-item">Sales</li>
+                <li class="breadcrumb-item active">Interview</li>
+            </ol>
+        </nav>
+    </div>
+    <section class="section">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Update Interview</h5>
+                        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                            <input type="hidden" [(ngModel)]="entity.intrid" formControlName="intrid" name="intrid">
+
+                            <div formGroupName="submission">
+                                <div class="col-md-12">
+                                    <select required [(ngModel)]="entity.submission.submissionid" name="submissionid" id="submissionid"
+                                        class="form-select rounded-pill"
+                                        [ngClass]="{ 'is-invalid': submitted && form.get('submission.submissionid').hasError('required') }"
+                                        formControlName="submissionid">
+                                        <option value="" selected>Select Submission</option>
+                                        <option *ngFor="let obj of submissiondata" [value]="obj[0]">{{obj[1]}} -
+                                            {{obj[3]}} - {{obj[2]}} ({{obj[5]}} - {{obj[4]}})  </option>
+                                    </select>
+                                    <div *ngIf="form.get('submission.submissionid') && submitted" class="invalid-feedback">
+                                        <div *ngIf="form.get('submission.submissionid').hasError('required')">
+                                            <span>Please Select Consultant is required</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class=" col-md-6" style="margin-top:10px">
+                                    <label for="interviewdate"><strong>Interview Date & Time *</strong></label>
+                                    <input type="datetime-local" [(ngModel)]="entity.interviewdate"
+                                        formControlName="interviewdate" class="form-control rounded-pill"
+                                        [ngClass]="{ 'is-invalid': submitted && f.interviewdate.errors }" />
+                                    <div *ngIf="submitted && f.interviewdate.errors" class="invalid-feedback">
+                                        <div *ngIf="f.interviewdate.errors.required">Please Select Interview Date</div>
+                                    </div>
+                                </div>
+
+                                <div class=" col-md-6" style="margin-top:10px">
+                                    <label for="interviewDate"><strong>Time Zone *</strong></label>
+                                    <select required formControlName="timezone" [(ngModel)]="entity.timezone"
+                                        name="timezone" id="timezone" class="form-select rounded-pill"
+                                        [ngClass]="{ 'is-invalid': submitted && f.timezone.errors }">
+                                        <option value="">Select TimeZone</option>
+                                        <option value="AST">AST</option>
+                                        <option value="EST">EST</option>
+                                        <option value="EDT">EDT</option>
+                                        <option value="CST" selected>CST</option>
+                                        <option value="CDT">CDT</option>
+                                        <option value="MST">MST</option>
+                                        <option value="MDT">MDT</option>
+                                        <option value="PST">PST</option>
+                                        <option value="PDT">PDT</option>
+                                        <option value="AKST">AKST</option>
+                                        <option value="AKDT">AKDT</option>
+                                        <option value="HST">HST</option>
+                                        <option value="HAST">HAST</option>
+                                        <option value="HADT">HADT</option>
+                                        <option value="SST">SST</option>
+                                        <option value="SDT">SDT</option>
+                                        <option value="CHST">CHST</option>
+                                    </select>
+                                    <div *ngIf="submitted && f.timezone.errors" class="invalid-feedback">
+                                        <div *ngIf="f.timezone.errors.required">Please Select TimeZone</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group" style="margin-top:10px">
+                                <label for="round"><strong>Round Of Interview:</strong></label>
+                                <div>
+                                    <input id="First" type="radio" value="First" name="round" [(ngModel)]="entity.round"
+                                        formControlName="round"
+                                        [ngClass]="{ 'is-invalid': submitted && f.round.errors }">
+                                    <label for="First">&nbsp;First</label>&nbsp;&nbsp;&nbsp;
+                                    <input id="Second" type="radio" value="Second" name="round"
+                                        [(ngModel)]="entity.round" formControlName="round"
+                                        [ngClass]="{ 'is-invalid': submitted && f.round.errors }">
+                                    <label for="Second">&nbsp;Second</label>&nbsp;&nbsp;&nbsp;
+                                    <input id="Third" type="radio" value="Third" name="round" [(ngModel)]="entity.round"
+                                        formControlName="round"
+                                        [ngClass]="{ 'is-invalid': submitted && f.round.errors }">
+                                    <label for="Third">&nbsp;Third</label>
+                                </div>
+                                <div *ngIf="submitted && f.round.errors">
+                                    <div *ngIf="f.round.errors.required" style="color:#dc3545;font-size: .875em">Please
+                                        Select Round of interview.</div>
+                                </div>
+                            </div>
+
+                            <div class="form-group" style="margin-top:10px">
+                                <label for="gender"><strong>Mode Of Interview:</strong></label>
+                                <div>
+                                    <input id="F2F" type="radio" value="F2F" name="mode" [(ngModel)]="entity.mode"
+                                        formControlName="mode">
+                                    <label for="F2F">&nbsp;F2F</label>&nbsp;&nbsp;&nbsp;
+                                    <input id="Skype" type="radio" value="Skype" name="mode" [(ngModel)]="entity.mode"
+                                        formControlName="mode">
+                                    <label for="Skype">&nbsp;Skype</label>&nbsp;&nbsp;&nbsp;
+                                    <input id="Telephonic" type="radio" value="Telephonic" [(ngModel)]="entity.mode"
+                                        name="mode" formControlName="mode">
+                                    <label for="Telephonic">&nbsp;Telephonic</label>&nbsp;&nbsp;&nbsp;
+                                    <input id="Webex" type="radio" value="Webex" name="mode" [(ngModel)]="entity.mode"
+                                        formControlName="mode">
+                                    <label for="Webex">&nbsp;Webex</label>
+                                </div>
+                                <div *ngIf="submitted && f.mode.invalid">
+                                    <div *ngIf="f.mode.errors.required" style="color:#dc3545;font-size: .875em">Mode Of
+                                        Interview is required.</div>
+                                </div>
+                            </div>
+
+                            <div class="form-group" style="margin-top:10px">
+                                <label for="feedback"><strong>Feed Back</strong></label>
+                                <textarea required formControlName="feedback" class="form-control rounded-2"
+                                    [(ngModel)]="entity.feedback" placeholder="Feed Back"
+                                    [ngClass]="{ 'is-invalid': submitted && f.feedback.errors }"
+                                    style="height: 100px;"></textarea>
+                                <div *ngIf="submitted && f.feedback.errors" class="invalid-feedback">
+                                    <div *ngIf="f.feedback.errors.required">Feed Back is required</div>
+                                </div>
+                            </div>
+
+                            <div class="form-group" style="margin-top:10px">
+                                <label for="interviewstatus"><strong>Status</strong></label>
+                                <div>
+                                    <input id="Schedule" type="radio" value="Schedule" name="interviewstatus"
+                                        [(ngModel)]="entity.interviewstatus" formControlName="interviewstatus">
+                                    <label for="Schedule">&nbsp;Schedule</label>&nbsp;&nbsp;&nbsp;
+                                    <input id="Closed" type="radio" value="Closed" name="interviewstatus"
+                                        [(ngModel)]="entity.interviewstatus" formControlName="interviewstatus">
+                                    <label for="Closed">&nbsp;Closed</label>&nbsp;&nbsp;&nbsp;
+                                    <input id="Hold" type="radio" value="Hold" name="interviewstatus"
+                                        [(ngModel)]="entity.interviewstatus" formControlName="interviewstatus">
+                                    <label for="Hold">&nbsp;Hold</label>&nbsp;&nbsp;&nbsp;
+                                    <input id="Rejected" type="radio" value="Rejected" name="interviewstatus"
+                                        [(ngModel)]="entity.interviewstatus" formControlName="interviewstatus">
+                                    <label for="Rejected">&nbsp;Rejected</label>
+                                </div>
+                                <div *ngIf="submitted && f.interviewstatus.invalid">
+                                    <div *ngIf="f.interviewstatus.errors.required"
+                                        style="color:#dc3545;font-size: .875em">Status is required.</div>
+                                </div>
+                            </div>
+                            <div class="form-group text-center" style="margin-top: 20px;padding: 10px;">
+                                <a (click)="form.reset()" class="btn btn-warning rounded-pill">Cancel</a>
+                                &nbsp;
+
+                                <ng-container *ngIf="hideSavebtn; then trueCondition else elseTemplate"></ng-container>
+                                <ng-template #trueCondition>
+                                    <button type="submit" name="btnSubmit" class="btn btn-info rounded-pill"
+                                        value="Submit" disabled>Submit</button>
+                                </ng-template>
+                                <ng-template #elseTemplate>
+                                    <button type="submit" name="btnSubmit" class="btn btn-info rounded-pill"
+                                        value="Submit">Submit</button>
+                                </ng-template>
+
+                                <!-- <button type="submit" name="btnSubmit" class="btn btn-info rounded-pill" 
+                        value="Submit" >Submit</button> -->
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>

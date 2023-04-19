@@ -1,0 +1,68 @@
+<main id="main" class="main">
+  <div class="pagetitle">
+    <!-- <h1>Add New VMS</h1> -->
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/dashboard">Home</a></li>
+        <li class="breadcrumb-item">Mail</li>
+      </ol>
+    </nav>
+  </div>
+  <section class="section">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-body">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+              <button class="btn btn-sm btn-outline-secondary" (click)="loadmails()"> Load Messages</button>&nbsp;
+              <button class="btn btn-sm btn-outline-secondary" (click)="deletemailsbyids()"> Delete
+                Messages</button>&nbsp;
+              <button class="btn btn-sm btn-outline-secondary" (click)="loadanddelete()"> Load And Delete
+                Messages</button>
+            </nav>
+            <div class="row">
+              <form name='signupForm'>
+                <table class="table table-light table-bordered ">
+                  <thead class="thead-light">
+                    <tr>
+                      <th width="2%"><input type="checkbox" [(ngModel)]="isMasterSel" name="list_name" value="h1"
+                          class="form-check-input" (change)="checkUncheckAll()" />
+                        <strong></strong>
+                      </th>
+                      <th width="8%">Date</th>
+                      <th>Subject/Job Role</th>
+                      <!-- <th>Category</th> -->
+                    </tr>
+                  </thead>
+                  <tbody class="tbody">
+                    <tr *ngFor="let vms of datarr  | paginate
+                    : {
+                        itemsPerPage: tableSize,
+                        currentPage: page,
+                        totalItems: count
+                      };">
+                      <td [formGroup]="form">
+                        <input type="checkbox" class="form-check-input" [(ngModel)]="vms.isSelected" value="{{vms.id}}"
+                          formControlName="ids" name="ids" (change)="isAllSelected()" />
+                      </td>
+                      <td>{{vms.sentdate}}</td>
+                      <td>
+                        <a [routerLink]="['/mail-content',vms.id]"> {{vms.subject}}</a>&nbsp;
+                      </td>
+                      <!-- <td> <button (click)="movemail()">{{vms.subjectcategory}}</button> </td> -->
+                    </tr>
+                  </tbody>
+                </table>
+                <div class="pagination justify-content-end">
+                  <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)">
+                  </pagination-controls>
+                </div>
+                
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>

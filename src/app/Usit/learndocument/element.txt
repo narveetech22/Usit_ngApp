@@ -1,0 +1,19 @@
+
+<a  #closeModal class="text-white" data-dismiss="modal" aria-label="Close" (click)="hideModel();">
+   <i class="ti-close"></i>
+</a>
+@ViewChild('closeModal') private closeModal: ElementRef;
+public hideModel() {
+        this.closeModal.nativeElement.click();      
+}
+
+
+ROute Guard
+1. create service
+  ng g s auth
+  AuthService it should inmlement CanActivate(I)
+
+  implement CanActivate(boolean b) {
+
+    return true;
+  }

@@ -1,0 +1,275 @@
+<main id="main" class="main">
+    <section class="section">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title form">Joining Form </h5>
+                        
+                        <h5 class="card-title">Personal Details </h5>
+                        <form [formGroup]="allfileds">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="col">
+                                            <label class="form-label"></label>
+                                            <input type="text" class="form-control rounded-pill"
+                                                placeholder="First name" formControlName="fristname" autofocus
+                                                [ngClass]="{ 'is-invalid': submitted && f.fristname.errors }">
+                                            <div *ngIf="submitted && f.fristname.errors" class="invalid-feedback">
+                                                <div *ngIf="f.fristname.errors.required">Frist Name is required</div>
+                                                <div *ngIf="f.fristname.errors.pattern">Please enter alphabets </div>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <label class="form-label"></label>
+                                            <input type="text" class="form-control rounded-pill" placeholder="Last name"
+                                                formControlName="lastname"
+                                                [ngClass]="{ 'is-invalid': submitted && f.lastname.errors }">
+                                            <div *ngIf="submitted && f.lastname.errors" class="invalid-feedback">
+                                                <div *ngIf="f.lastname.errors.required">Last Name is required</div>
+                                                <div *ngIf="f.lastname.errors.pattern">Please enter alphabets </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <label class="form-label"></label>
+                                        <input type="tel" value="" class="form-control rounded-pill"
+                                            placeholder="Mobile Number" formControlName="contactnumber" maxlength="12"
+                                            [ngClass]="{ 'is-invalid': submitted && f.contactnumber.errors }">
+                                        <div *ngIf="submitted && f.contactnumber.errors" class="invalid-feedback">
+                                            <div *ngIf="f.contactnumber.errors.required"> Contact Number is required
+                                            </div>
+                                            <div *ngIf="f.contactnumber.errors.pattern">Please enter numeric digits
+                                                without space.</div>
+                                            <div *ngIf="f.contactnumber.errors.minlength">Number must be at least 10
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label class="form-label"></label>
+                                        <select class="form-select rounded-pill" placeholder=" Select Number"
+                                            formControlName="selectnumber"
+                                            [ngClass]="{ 'is-invalid': submitted && f.selectnumber.errors }">
+                                            <option value="">Marital Status</option>
+                                            <option>Single</option>
+                                            <option>Married</option>
+                                            <option>Widowed</option>
+                                            <option>Divorced</option>
+                                        </select>
+                                        <div *ngIf="submitted && f.selectnumber.errors" class="invalid-feedback">
+                                            <div *ngIf="f.selectnumber.errors.required">Marital Status is required
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label class="form-label"></label>
+                                        <input type="email" class="form-control rounded-pill" placeholder="Email"
+                                            formControlName="email"
+                                            [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
+                                        <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                                            <div *ngIf="f.email.errors.required">Email is required</div>
+                                            <div *ngIf="f.email.errors.email">Please Enter a Valid Email
+                                                Address</div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="col-md-12">
+                                        <label class="form-label"></label>
+                                        <input type="text" class="form-control rounded-pill" placeholder="Full Name"
+                                            formControlName="fullname"
+                                            [ngClass]="{ 'is-invalid': submitted && f.fullname.errors }">
+                                        <div *ngIf="submitted && f.fullname.errors" class="invalid-feedback">
+                                            <div *ngIf="f.fullname.errors.required">full name is required</div>
+                                            <div *ngIf="f.fullname.errors.pattern">Please enter alphabets </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <label class="form-label"></label>
+                                        <textarea class="form-control rounded-pill" placeholder="Full Address"
+                                            formControlName="Address"
+                                            [ngClass]="{ 'is-invalid': submitted && f.Address.errors }">
+                                        </textarea>
+                                        <div *ngIf="submitted && f.Address.errors" class="invalid-feedback">
+                                            <div *ngIf="f.Address.errors.required">Address is required</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12 sty">
+                                        <label class="form-label"></label>
+                                        <input class="form-control rounded-pill" type="date" formControlName="date"
+                                            [ngClass]="{ 'is-invalid': submitted && f.date.errors }">
+                                        <div *ngIf="submitted && f.date.errors" class="invalid-feedback">
+                                            <div *ngIf="f.date.errors.required">Date is required</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <input type="number" maxlength="15" class="form-control"
+                                            class="form-control rounded-pill" placeholder="Aadhar Card Number"
+                                            formControlName="aadhar"
+                                            [ngClass]="{ 'is-invalid': submitted && f.aadhar.errors }">
+                                        <div *ngIf="submitted && f.aadhar.errors" class="invalid-feedback">
+                                            <div *ngIf="f.aadhar.errors.required">Aadhar Card Number is required</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <h5 class="card-title">Other Details </h5>
+                                                <hr>
+                                                <div class="col-md-6">
+                                                    <div class="col-md-12">
+                                                        <label class="form-label"></label>
+                                                        <input type="text" class="form-control rounded-pill"
+                                                            placeholder="Privious Company" formControlName="prvcompany"
+                                                            [ngClass]="{ 'is-invalid': submitted && f.prvcompany.errors }">
+                                                        <div *ngIf="submitted && f.prvcompany.errors"
+                                                            class="invalid-feedback">
+                                                            <div *ngIf="f.prvcompany.errors.required">Privious Company
+                                                                is required</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <label class="form-label"></label>
+                                                        <input placeholder="Graduation college Name "
+                                                            class="form-control rounded-pill"
+                                                            formControlName="grdcollege"
+                                                            [ngClass]="{ 'is-invalid': submitted && f.grdcollege.errors }">
+                                                        <div *ngIf="submitted && f.grdcollege.errors"
+                                                            class="invalid-feedback">
+                                                            <div *ngIf="f.grdcollege.errors.required">Graduation College
+                                                                Name is required</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <label for="skills" class="form-label"></label>
+                                                        <input class="form-control rounded-pill"
+                                                            placeholder="Intermediate College"
+                                                            formControlName="intermediate"
+                                                            [ngClass]="{ 'is-invalid': submitted && f.intermediate.errors }">
+                                                        <div *ngIf="submitted && f.intermediate.errors"
+                                                            class="invalid-feedback">
+                                                            <div *ngIf="f.intermediate.errors.required">Intermediate
+                                                                College Name is required</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12 sty">
+                                                        <label for="skills" class="form-label"></label>
+                                                        <input type="text" placeholder="School Name"
+                                                            class="form-control rounded-pill"
+                                                            formControlName="sscPercentage"
+                                                            [ngClass]="{ 'is-invalid': submitted && f.sscPercentage.errors }">
+                                                        <div *ngIf="submitted && f.sscPercentage.errors"
+                                                            class="invalid-feedback">
+                                                            <div *ngIf="f.sscPercentage.errors.required">School Name is
+                                                                required</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <br>
+                                                    <div class="col-md-12 sty">
+                                                        <div class="form-check form-check-inline ">
+
+                                                            <input class="form-check-input" type="checkbox"
+                                                                formControlName="checkbox" value="Frontend"
+                                                                [ngClass]="{ 'is-invalid': submitted && f.checkbox.errors }">
+                                                            <label class="form-check-label">Frontend</label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="checkbox"
+                                                                formControlName="checkbox" value="Backend"
+                                                                [ngClass]="{ 'is-invalid': submitted && f.checkbox.errors }">
+                                                            <label class="form-check-label">Backend</label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="checkbox"
+                                                                value="Fullstack" formControlName="checkbox"
+                                                                [ngClass]="{ 'is-invalid': submitted && f.checkbox.errors }">
+                                                            <label class="form-check-label">Fullstack</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12 sty">
+                                                        <input class=" form-control rounded-pill" type="text"
+                                                            placeholder=" Graduation Percentage " maxlength="2"
+                                                            formControlName="GrPercentage"
+                                                            [ngClass]="{ 'is-invalid': submitted && f.GrPercentage.errors }">
+                                                        <div *ngIf="submitted && f.GrPercentage.errors"
+                                                            class="invalid-feedback">
+                                                            <div *ngIf="f.GrPercentage.errors.required"> Graduation
+                                                                Percentage is required</div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-12 sty">
+                                                        <input class=" form-control rounded-pill" type="text"
+                                                            placeholder="Intermediate Percentage " maxlength="2"
+                                                            formControlName="InPercentage"
+                                                            [ngClass]="{ 'is-invalid': submitted && f.InPercentage.errors }">
+                                                        <div *ngIf="submitted && f.InPercentage.errors"
+                                                            class="invalid-feedback">
+                                                            <div *ngIf="f.InPercentage.errors.required">Intermediate
+                                                                Percentage is required</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12 sty">
+                                                        <input class=" form-control rounded-pill" type="text"
+                                                            placeholder=" SSC Percentage " maxlength="2"
+                                                            formControlName="sscPercentage"
+                                                            [ngClass]="{ 'is-invalid': submitted && f.sscPercentage.errors }">
+                                                        <div *ngIf="submitted && f.sscPercentage.errors"
+                                                            class="invalid-feedback">
+                                                            <div *ngIf="f.sscPercentage.errors.required">SSC Percentage
+                                                                is required</div>
+                                                                <div *ngIf="f.sscPercentage.errors.pattern">Please enter numeric 2 digits
+                                                                    without space</div>
+                                                                
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12 sty">
+                                                    <div class="form-check form-check-inline ">
+                                                        <label class="form-label">Accept Company Rules :-</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline ">
+                                                        <input class="form-check-input" type="radio" value="yes" checked
+                                                            formControlName="radiotype"
+                                                            [ngClass]="{ 'is-invalid': submitted && f.radiotype.errors }">
+                                                        <label class="form-check-label">Yes</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline ">
+                                                        <input class="form-check-input" type="radio" value="no"
+                                                            formControlName="radiotype"
+                                                            [ngClass]="{ 'is-invalid': submitted && f.radiotype.errors }">
+                                                        <label class="form-check-label">NO</label>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group text-center" style="margin-top: 20px;padding: 10px;">
+                                &nbsp;
+                                <input type="submit" class="btn btn-primary rounded-pill" value="Submit"
+                                    (click)="allfiled()">
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+</main>

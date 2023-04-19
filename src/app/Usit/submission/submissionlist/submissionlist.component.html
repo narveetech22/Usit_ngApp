@@ -1,0 +1,108 @@
+<main id="main" class="main">
+    <div class="pagetitle">
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/dashboard">Home</a></li>
+                <li class="breadcrumb-item"><a routerLink="/list-submissions">Recruiting</a></li>
+                <li class="breadcrumb-item active">Submissions</li>
+            </ol>
+        </nav>
+    </div>
+    <section class="section">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                            <div class="container-fluid">
+                                <h5 class="card-title"> Submissions List</h5>
+                                <div class="navbar-nav ms-auto">
+                                    <div class="input-group mb-3">
+                                        <h5 class="card-title float-right"><a
+                                                [routerLink]="['/submission-entry',flag]"><i _ngcontent-vqa-c41=""
+                                                    class="bi bi-plus-square-dotted"></i>&nbsp;New Submission</a></h5>
+                                        <form class="search-form d-flex align-items-center">
+                                            &nbsp;&nbsp;<input type="text" name="searchstring"
+                                                [(ngModel)]="searchstring" class="form-control" placeholder="Search"
+                                                title="Enter search keyword" aria-label="query">
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
+                        <div class="clearfix"></div>
+                        <div class="row">
+                            <table class="table table-sm  table-light table-bordered table-responsive">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th>DOS</th>
+                                        <th>Consultant</th>
+                                        <th>Requirement</th>
+                                        <th>Ip/Vendor</th>
+                                        <th>End Client</th>
+                                        <th>Sub. Rate</th>
+                                        <th>Submitted By</th>
+                                        <th>Sub Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let data of entity | filter:searchstring | paginate
+                                    : {
+                                        itemsPerPage: tableSize,
+                                        currentPage: page,
+                                        totalItems: count
+                                      };">
+                                        <td>{{data.createddate}}</td>
+                                        <td>
+                                            <a
+                                                [routerLink]="['/consultant/','sub',flag,data.consultantid]">{{data.consultantname}}</a>
+
+                                        </td>
+                                        <td>
+                                            <ng-container
+                                                *ngIf="data.flg == 'Recruiting'  ; then trueCondition else elseTemplate"></ng-container>
+                                            <ng-template #trueCondition>
+                                                {{data.reqnumber}}
+                                            </ng-template>
+                                            <ng-template #elseTemplate>
+                                                {{data.position}}
+                                            </ng-template>
+                                        </td>
+                                        <td>{{data.vendor}}</td>
+                                        <td>{{data.endclient}}</td>
+                                        <td>{{data.submissionrate}}</td>
+                                        <td>
+                                            <ng-container
+                                                *ngIf="data.flg === 'sales'  ; then trueCondition1 else elseTemplate1"></ng-container>
+                                            <ng-template #trueCondition1>
+                                                <a [routerLink]="['/user/',flag+'-submission',data.userid]">{{data.pseudoname}}</a>
+                                            </ng-template>
+                                            <ng-template #elseTemplate1>
+                                                <a [routerLink]="['/user/',flag+'-submission',data.userid]">{{data.fullname}}</a>
+                                            </ng-template>
+                                        </td>
+                                        <td>{{data.substatus}}</td>
+                                        <td style="width:5%">
+                                            <a [routerLink]="['/modify-submission',flag,data.submissionid]"> <i
+                                                    class="ri-edit-2-fill"></i> </a>&nbsp;
+                                            <a *ngIf="hasAcces!='Employee'  && hasAcces!='Team Lead'"
+                                                (click)="delete(data.submissionid)"
+                                                ng-confirm-click="You are about to overwrite your PUBLISHED content!! Are you SURE you want to publish?">
+                                                <i style="color:maroon" class="ri-delete-bin-fill "></i> </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="pagination justify-content-end">
+                                <pagination-controls previousLabel="Prev" nextLabel="Next"
+                                    (pageChange)="onTableDataChange($event)">
+                                </pagination-controls>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>

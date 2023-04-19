@@ -1,0 +1,71 @@
+<main>
+    <div class="container">
+       <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
+          <div class="container">
+             <div class="row justify-content-center">
+                <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
+                   <!-- <div class="d-flex justify-content-center py-4"> <a href="https://narvee.com/"
+                         class="logo d-flex align-items-center w-auto">
+                         <img width="200px" height="450px" src="assets/img/narvee-logo.png" alt="">
+                         </a></div> -->
+                   <div class="card mb-3">
+                      <div class="card-body">
+                        <!-- <div class="d-flex justify-content-center ">  -->
+                        <!-- </div> -->
+                         <div class="pt-4 pb-2">
+                          <a href="https://narvee.com/" style="margin-left:100px"
+                           class="logo d-flex  align-items-center w-auto">
+                           <img  src="assets/img/narvee-logo.png" alt="">
+                           </a>
+                            <h5 class="card-title text-center pb-0 fs-4">Login to Your Account</h5>
+                            <p class="text-center small danger" *ngIf="message!==''" style="color:red"><b>{{message}}</b></p>
+                            <div class="text-center small danger" *ngIf="message==''"><br><br></div>
+                            <!-- pb-0 fs-4 <p class="text-center small">Enter your username & password to login</p> -->
+                         </div>
+                         <form class="row g-3 "  [formGroup]="form" (ngSubmit)="userLogin()">
+                            <div class="col-12">
+                               <label for="yourUsername" class="form-label">Username</label>
+                               <div class="input-group has-validation">
+                                  <!-- <span class="input-group-text" id="inputGroupPrepend">@</span>  -->
+                                  <input type="text" name="email" maxlength="100" class="form-control"
+                                     formControlName="email" id="yourUsername" 
+                                     [ngClass]="{ 'is-invalid': submitted && f.email.errors }" required>
+                                  <!-- <div class="invalid-feedback">Please enter your username.</div> -->
+                                  <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                                     <div *ngIf="f.email.errors.required">Please enter username</div>
+                                     <div *ngIf="f.email.errors.email">Please Enter a Valid Email Address</div>
+                                  </div>
+                               </div>
+                            </div>
+                            <div class="col-12">
+                               <label for="yourPassword" class="form-label">Password</label>
+                               <input type="password"  maxlength="25" name="password" class="form-control" 
+                                  id="yourPassword" formControlName="password" 
+                                  [ngClass]="{ 'is-invalid': submitted && f.password.errors }" >
+                             
+                               <!-- [(ngModel)]="psw" <div class="invalid-feedback">Please enter your password!</div> -->
+                               <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                                  <div *ngIf="f.password.errors.required">Password is required</div>
+                               </div>
+                            </div>
+                            <div class="col-12">
+                               <div class="form-check"> <input class="form-check-input" type="checkbox" value="rememberMe" id="rememberMe" formControlName="rememberMe" checked="checked" [checked]="true"  > 
+                                  <label class="form-check-label" for="rememberme" >Remember me</label></div>
+                            </div>
+                            <div class="col-12"> <button class="btn btn-primary w-100" type="submit" > Login</button></div>
+                            <div class="col-12">
+                               <p class="small mb-0"><a routerLink="/forgot-password" >Forgot Password ?</a> || <a
+                                     routerLink="/user-register">Create an account</a></p>
+                            </div>
+                         </form>
+                      </div>
+                   </div>
+                </div>
+             </div>
+          </div>
+       </section>
+    </div>
+ </main>
+
+
+

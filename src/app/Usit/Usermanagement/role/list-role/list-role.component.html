@@ -1,0 +1,116 @@
+<main id="main" class="main">
+  <div class="pagetitle">
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/dashboard">Home</a></li>
+        <li class="breadcrumb-item">Role</li>
+      </ol>
+    </nav>
+  </div>
+  <section class="section">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-body">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+              <div class="container-fluid">
+                <h5 class="card-title">Roles List</h5>
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                  <div class="navbar-nav ms-auto">
+                    <div class="input-group mb-3">
+                      <h5 class="card-title float-right"><a [routerLink]="['/register-roles']"><i _ngcontent-vqa-c41=""
+                            class="bi bi-plus-square-dotted"></i>&nbsp;New Role</a></h5>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </nav>
+            <div class="clearfix"></div>
+            <div class="row">
+              <table class="table table-light table-bordered ">
+                <thead class="thead-light">
+                  <tr>
+                    <!-- <th>Role Number</th> -->
+                    <th>Role Name</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody class="tbody">
+                  <tr *ngFor="let vms of datarr | paginate
+                                    : {
+                                        itemsPerPage: tableSize,
+                                        currentPage: page,
+                                        totalItems: count
+                                      };">
+                    <!-- <td style="width:120px">{{vms.roleno}}</td> -->
+                    <td>{{vms.rolename}}<a class="text-right" [routerLink]="['/list-privilage',vms.roleid]"><i
+                          class="bi bi-unlock-fill text-right"></i></a> </td>
+                    <td style="width:80px">
+                      <ng-container *ngIf="vms.status == 'Active'; then trueCondition else elseTemplate"></ng-container>
+                      <ng-template #trueCondition>
+                        <span data-dismiss="modal" #closeModal class="badge bg-info text-dark" (click)="edit(vms)" data-bs-toggle="modal"
+                          data-bs-target="#verticle">Active</span>
+                      </ng-template>
+                      <ng-template #elseTemplate>
+                        <span data-dismiss="modal" #closeModal class="badge bg-danger" (click)="edit(vms)" data-bs-toggle="modal"
+                          data-bs-target="#verticle">In Active
+                        </span>
+                      </ng-template>
+                    </td>
+                    <td style="width:100px">
+                      <a [routerLink]="['/edit-roles',vms.roleid]"> <i class="ri-edit-2-fill"></i> </a>&nbsp;
+                      <a (click)="deletevms(vms.roleid)"
+                        ng-confirm-click="You are about to overwrite your PUBLISHED content!! Are you SURE you want to publish?">
+                        <i style="color:maroon" class="ri-delete-bin-fill "></i> </a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="pagination justify-content-end">
+                <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)">
+                </pagination-controls>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+
+<!-- Modal -->
+<div class="modal fade" id="verticle" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Status Update</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="form" (ngSubmit)="updatestatus()">
+          <fieldset>
+            <div class="row">
+              <div class="form-group">
+                <label for="details">Reason for {{togglestatus}} Role</label>
+                <textarea id="details" class="form-control" rows="3" data-parsley-trigger="change"
+                  formControlName="remarks" [ngClass]="{ 'is-invalid': submitted && f.remarks.errors }"
+                  [(ngModel)]="tech.remarks" name="remarks" maxlength="200"></textarea>
+                <div *ngIf="submitted && f.remarks.errors" class="invalid-feedback">
+                  <div *ngIf="f.remarks.errors.required">Please Enter Remarks</div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer ">
+              <input class="btn btn-info" type="submit" name="submit_reg" value="Submit">
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

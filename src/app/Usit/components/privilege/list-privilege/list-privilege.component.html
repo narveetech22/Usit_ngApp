@@ -1,0 +1,68 @@
+<main id="main" class="main">
+   <div class="pagetitle">
+      <!-- <h1>Add New VMS</h1> -->
+      <nav>
+         <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a routerLink="/dashboard">Home</a></li>
+            <li class="breadcrumb-item">Role</li>
+         </ol>
+      </nav>
+   </div>
+   <section class="section">
+      <div class="row">
+         <div class="col-md-12">
+            <div class="card">
+               <div class="card-body">
+                  <h5 class="card-title">{{RoleName}}
+                     <input type='hidden' name='RoleName' [(ngModel)]="RoleName">
+                     <span style="font-size: 18px;">pemrission</span>
+                  </h5>
+                  <p class="text-center small danger" *ngIf="message!==''" style="color:red"><b>{{message}}</b></p>
+                  <form name='signupForm' (submit)="addprevilages()">
+                     <table class="table table-light table-bordered " width="50%" style="width: 50%;">
+                        <thead class="thead-light">
+                           <tr>
+                              <th>Type</th>
+                              <th>Name</th>
+                              <th>Permission</th>
+                           </tr>
+                        </thead>
+                        <tbody class="tbody">
+                           <tr *ngFor="let vms of entity">
+                              <td>{{vms.type}}</td>
+                              <td>{{vms.name}}</td>
+                              <td style="width:70px;" class="text-center">
+                                 <input [(ngModel)]="vms.privid" name="{{ vms.name }}" type="checkbox" id="{{vms.name}}"
+                                    (change)="onChangeCategory($event, vms)">
+                                 <input type="hidden" name="type" [(ngModel)]="vms.privid">
+                                 <!-- <input class="form-check-input"  type="checkbox" name="{{vms.name}}"
+                                    (click)="onChange(vms.previd)" [checked]="vms.previd" (change)="changeEvent()" [(ngModel)]="vms.isselected"
+                                     id="flexCheckDefault" formControlName="vms.name"> -->
+                                 <!-- <input type="checkbox" formControlName="hello" class="custom-control-input" (change)="AddOrRemoveUser (vms.previd, $event)" />  -->
+                              </td>
+                              <!--(click)="onChange2(vms.checking)" [(ngModel)]="vms.checking"<td style="width:70px;" class="text-center">
+                                 <input class="form-check-input" [value]="vms.previd" type="checkbox"
+                                    (click)="onChange(vms.previd)" (click)="onChange2(vms.checking)"
+                                    [checked]="vms.checking" id="flexCheckDefault" (change)="changeevent($event)"
+                                    formControlName="permiarr" name="permiarr">
+                              </td> -->
+                           </tr>
+                        </tbody>
+                        <tfoot>
+                           <tr>
+                              <td colspan="3">
+                                 <div class="form-group text-right">
+                                    <button type="submit" name="btnSubmit" class="btn btn-info "
+                                       value="Submit">Submit</button>
+                                 </div>
+                              </td>
+                           </tr>
+                        </tfoot>
+                     </table>
+                  </form>
+               </div>
+            </div>
+         </div>
+      </div>
+   </section>
+</main>

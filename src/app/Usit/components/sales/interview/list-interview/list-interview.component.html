@@ -1,0 +1,102 @@
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/dashboard">Home</a></li>
+                <li class="breadcrumb-item">{{flag}}</li>
+                <li class="breadcrumb-item active">Interview</li>
+            </ol>
+        </nav>
+    </div>
+    <section class="section">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                            <div class="container-fluid">
+                                <h5 class="card-title">Interview List</h5>
+                                <div class="navbar-nav ms-auto">
+                                    <div class="input-group mb-3">
+                                        <h5 class="card-title float-right"><a
+                                                [routerLink]="['/interview-entry/',flag]"><i _ngcontent-vqa-c41=""
+                                                    class="bi bi-plus-square-dotted"></i>&nbsp;New Interview</a></h5>
+                                        <form class="search-form d-flex align-items-center" method="POST" action="#">
+                                            &nbsp;&nbsp;<input type="text" name="searchstring" class="form-control"
+                                                placeholder="Username" placeholder="Search" title="Enter search keyword"
+                                                aria-label="query" [(ngModel)]="searchstring">
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
+                        <div class="clearfix"></div>
+                        <div class="row">
+                            <table class="table table-sm  table-light table-bordered table-responsive">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th>Consultant Name</th>
+                                        <th>Date & Time Of Interview</th>
+                                        <th>Round</th>
+                                        <th>Mode</th>
+                                        <th>Vendor</th>
+                                        <th>Client</th>
+                                        <th>Date Of Submission</th>
+                                        <th>Employer Name</th>
+                                        <th>Interview Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- "consid":368,"consname":null,"interview_date":"2022-11-30T14:12:00","created_date":"2022-12-24","time_zone":"CST",
+                                    "userid":1,"vendor":"Tech Systems","interview_status":"Hold","subid":389,"fullname":"Super Admin","round":"Second",
+                                    "intrid":399,"mode":"Webex"}, -->
+                                    <tr *ngFor="let data of entity | filter:searchstring | paginate
+                                    : {
+                                        itemsPerPage: tableSize,
+                                        currentPage: page,
+                                        totalItems: count
+                                      };">
+                                        <td>
+                                            <a [routerLink]="['/consultant/','interview',flag,data.consid]">{{data.name}}</a>
+                                        </td>
+                                        <td>{{data.interview_date}} ({{data.time_zone}}) </td>
+                                        <td>{{data.round}}</td>
+                                        <td>{{data.mode}}</td>
+                                        <td>{{data.vendor}}</td>
+                                        <td>{{data.endclient}}</td>
+                                        <td>{{data.created_date}} </td>
+                                        <td>
+                                            <ng-container
+                                                *ngIf="data.flg === 'sales'  ; then true1 else else1"></ng-container>
+                                            <ng-template #true1>
+                                                <a [routerLink]="['/user/',flag+'-interview',data.userid]">{{data.pseudoname}}</a>
+                                            </ng-template>
+                                            <ng-template #else1>
+                                                <a [routerLink]="['/user/',flag+'-interview',data.userid]">{{data.fullname}}</a>
+                                            </ng-template>
+                                        </td>
+                                        <td>{{data.interview_status}}</td>
+                                        <td><a [routerLink]="['/modify-interview',flag,data.intrid]"> <i
+                                                    class="ri-edit-2-fill"></i> </a>&nbsp;
+                                            <a *ngIf="hasAcces!='Team Lead' && hasAcces!='Employee'"
+                                                (click)="delete(data.intrid)"
+                                                ng-confirm-click="You are about to overwrite your PUBLISHED content!! Are you SURE you want to publish?">
+                                                <i style="color:maroon" class="ri-delete-bin-fill "></i> </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="pagination justify-content-end">
+                                <pagination-controls previousLabel="Prev" nextLabel="Next"
+                                    (pageChange)="onTableDataChange($event)">
+                                </pagination-controls>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>

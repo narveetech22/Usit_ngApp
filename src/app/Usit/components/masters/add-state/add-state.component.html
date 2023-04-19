@@ -1,0 +1,61 @@
+<main id="main" class="main">
+    <div class="pagetitle">
+       <nav>
+          <ol class="breadcrumb">
+             <li class="breadcrumb-item"><a routerLink="/dashboard">Home</a></li>
+             <li class="breadcrumb-item">Masters</li>
+             <li class="breadcrumb-item">State</li>
+          </ol>
+       </nav>
+    </div>
+    <section class="section">
+       <div class="row">
+          <div class="col-md-4">
+             <div class="card">
+                <div class="card-body">
+                   <h5 class="card-title"> Add New State</h5>
+                   <p class="text-center small danger" *ngIf="message!==''" style="color:red"><b>{{message}}</b></p>
+                   <form  [formGroup]="form" (ngSubmit)="onSubmit()">
+                        <div class="row">
+                                <div class="col-md-12" > 
+                                    <label for="cp_name">State Name  </label>
+                                    <input type="text"  maxlength="1000" class="form-control rounded-pill" ngx-google-places-autocomplete
+                                    [options]='options'
+                                    placeholder="Enter a location"
+                                    autocomplete="on"
+                                    (onAddressChange)="handleAddressChange($event)"  [(ngModel)]="statename"
+                                    name="statename" data-parsley-trigger="change" formControlName="statename" required [ngClass]="{ 'is-invalid': submitted && f.statename.errors }"/>
+                                    <div *ngIf="submitted && f.statename.errors" class="invalid-feedback">
+                                        <div *ngIf="f.statename.errors.required">State Name is required</div>
+                                        <!-- <div *ngIf="f.statename.errors.minlength">Number must be at least 6 characters</div> -->
+                                        <!-- <div *ngIf="f.statename.errors.pattern">Enter Alphabets only.</div> -->
+                                    </div>
+                                </div>
+                            
+                        </div>
+
+                        <div class="form-group text-center" style="margin-top: 20px;padding: 10px;">
+                            <a (click)="form.reset()" class="btn btn-warning rounded-pill">Cancel</a>
+                            &nbsp;
+                            &nbsp;
+                            <button type="submit" name="btnSubmit" class="btn btn-info rounded-pill" value="Submit" >Submit</button>
+                        </div>
+                   </form>
+                </div>
+             </div>
+          </div>
+       </div>
+    </section>
+ </main>
+ 
+
+ <!-- <form class="example-form">
+   <mat-form-field class="example-full-width">
+     <input type="text" placeholder="Pick one" aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto">
+     <mat-autocomplete #auto="matAutocomplete">
+       <mat-option *ngFor="let autocom of autocom" [value]="autocom">
+         {{ autocom }}
+       </mat-option>
+     </mat-autocomplete>
+   </mat-form-field>
+ </form> -->

@@ -1,0 +1,143 @@
+<main id="main" class="main">
+    <div class="pagetitle">
+        <!-- <h1>Add New VMS</h1> -->
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/dashboard">Home</a></li>
+                <li class="breadcrumb-item">Tech & Support </li>
+                <!-- <li class="breadcrumb-item active">Tech & Support Entry</li> -->
+            </ol>
+        </nav>
+    </div>
+    <section class="section">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <p class="text-center small danger" *ngIf="message!==''" style="color:red"><b>{{message}}</b>
+                        </p>
+                        <h5 class="card-title">Tech & Support </h5>
+                        <form [formGroup]="registerForm" autocomplete="off">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="col-md-12">
+                                        <input type="text" class="form-control rounded-pill" [(ngModel)]="entity.name"
+                                            id="name" placeholder="Full Name *" name="name" formControlName="name"
+                                            maxlength="35" [ngClass]="{ 'is-invalid': submitted && f.name.errors }">
+                                        <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                                            <div *ngIf="f.name.errors.required">Full Name is Required</div>
+                                            <div *ngIf="f.name.errors.pattern">Please enter alphabets</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label for="pseudoname" class="form-label"></label>
+                                        <input required [(ngModel)]="entity.pseudoname" maxlength="30" id="pseudoname"
+                                            placeholder="Pseudo Name *" name="pseudoname"
+                                            class="form-control rounded-pill" type="text" formControlName="pseudoname"
+                                            [ngClass]="{ 'is-invalid': submitted && f.pseudoname.errors }">
+                                        <div *ngIf="submitted && f.pseudoname.errors" class="invalid-feedback">
+                                            <div *ngIf="f.pseudoname.errors.required">Pseudo Name is Required</div>
+                                            <div *ngIf="f.pseudoname.errors.pattern">Please enter alphabets</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <label for="inputName5" class="form-label"></label>
+                                        <input required [(ngModel)]="entity.email" maxlength="30" name="email"
+                                            id="email" placeholder="Email *" class="form-control rounded-pill"
+                                            type="text" formControlName="email"
+                                            [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
+                                        <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                                            <div *ngIf="f.email.errors.required">Email is Required</div>
+                                            <div *ngIf="f.email.errors.email">Email must be a valid email address</div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class=" col-md-6" style="margin-top:10px">
+                                            <label for="mobile"></label>
+                                            <input type="text" placeholder="Primary Number *" maxlength="10"
+                                                formControlName="mobile" class="form-control rounded-pill"
+                                                [(ngModel)]="entity.mobile"
+                                                [ngClass]="{ 'is-invalid': submitted && f.mobile.errors }" />
+                                            <div *ngIf="submitted && f.mobile.errors" class="invalid-feedback">
+                                                <div *ngIf="f.mobile.errors.required">Primary Number Is Required</div>
+                                                <!-- <div *ngIf="f.mobile.errors.pattern">Enter only number.</div> -->
+                                            </div>
+                                        </div>
+
+                                        <div class=" col-md-6" style="margin-top:10px">
+                                            <label for="secmobile"></label>
+                                            <input type="text" placeholder="Secondary Number *" maxlength="10"
+                                                formControlName="secmobile" class="form-control rounded-pill"
+                                                [(ngModel)]="entity.secmobile"
+                                                [ngClass]="{ 'is-invalid': submitted && f.secmobile.errors }" />
+                                            <div *ngIf="submitted && f.secmobile.errors" class="invalid-feedback">
+                                                <div *ngIf="f.secmobile.errors.required">Secondory Number Is Required
+                                                </div>
+                                                <!-- <div *ngIf="f.secmobile.errors.pattern">Enter only number.</div> -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label for="inputName5" class="form-label"></label>
+                                        <input required [(ngModel)]="entity.experience" maxlength="2" name="experience"
+                                            id="experience" placeholder="Experience *" class="form-control rounded-pill"
+                                            type="text" formControlName="experience"
+                                            [ngClass]="{ 'is-invalid': submitted && f.experience.errors }">
+                                        <div *ngIf="submitted && f.experience.errors" class="invalid-feedback">
+                                            <div *ngIf="f.experience.errors.required">Experience is Required</div>
+                                            <div *ngIf="f.experience.errors.pattern">Enter only number.</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="col-md-12">
+                                        <input [(ngModel)]="entity.location" maxlength="100" id="location"
+                                            formControlName="location" name="location" placeholder="Current Location"
+                                            class="form-control rounded-pill" type="text">
+                                    </div>
+                                   
+                                    <div class="col-md-12">
+                                        <div formGroupName="technology">
+                                            <label for="skills" class="form-label"></label>
+                                            <select required name="id" id="id" class="form-select rounded-pill"
+                                                [ngClass]="{ 'is-invalid': submitted && registerForm.get('technology.id').hasError('required') }"
+                                                formControlName="id" (change)="techskills($event)">
+                                                <option value="" selected>Select Technology</option>
+                                                <option *ngFor="let obj of techdata" [value]="obj[0]">{{obj[1]}}
+                                                </option>
+                                            </select>
+                                            <div *ngIf="registerForm.get('technology.id') && submitted" class="invalid-feedback">
+                                                <div *ngIf="registerForm.get('technology.id').hasError('required')">
+                                                    <span>Technology is required</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <label for="skills" class="form-label"></label>
+                                        <textarea required [(ngModel)]="entity.skills" [(ngModel)]="autoskills"
+                                            class="form-control rounded-2" placeholder="Add Skills *" id="skills"
+                                            style="height: 100px;" maxlength="2000" formControlName="skills"
+                                            [ngClass]="{ 'is-invalid': submitted && f.skills.errors }"></textarea>
+                                        <div *ngIf="submitted && f.skills.errors" class="invalid-feedback">
+                                            <div *ngIf="f.skills.errors.required">Skills Required</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group text-center" style="margin-top: 20px;padding: 10px;">
+                                <a (click)="registerForm.reset()" class="btn btn-warning rounded-pill">Cancel</a>
+                                &nbsp;
+                                <button type="submit" name="btnSubmit" class="btn btn-info rounded-pill" value="Submit"
+                                    (click)="saveVendor()">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>

@@ -1,0 +1,29 @@
+
+  .form-group input {
+    display: inline-block;
+    width: auto;
+    
+  }
+
+  .example-form {
+    min-width: 150px;
+    max-width: 500px;
+    width: 100%;
+  }
+  
+  .example-full-width {
+    width: 100%;
+  }
+  .sty{
+ 
+   
+      max-height: 256px;
+
+  }
+  /* .list-group-item{
+    overflow-y: auto;
+  } */
+.crdsty{
+  border: none;
+   cursor: pointer;
+}

@@ -1,0 +1,81 @@
+<main id="main" class="main" >
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <div class="pagetitle">
+       <nav>
+          <ol class="breadcrumb">
+             <li class="breadcrumb-item"><a routerLink="/dashboard">Home</a></li>
+             <li class="breadcrumb-item">Recruiting</li>
+             <li class="breadcrumb-item active">Interview</li>
+          </ol>
+       </nav>
+    </div>
+    <section class="section">
+       <div class="row">
+           <div class="col-md-12">
+                <div class="card">
+                   <div class="card-body">
+
+                    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                        <div class="container-fluid">
+                            <h5 class="card-title">All Interviewrtrtgtrg</h5>
+                            <div class="navbar-nav ms-auto" >
+                                <div class="input-group mb-3" >
+                                  <h5 class="card-title float-right" ><a   [routerLink]="['/add-interview']">( Add new Interview)</a></h5>
+                                   <form class="search-form d-flex align-items-center" method="POST" action="#"> 
+                                    &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;<input type="text" #query name="query" class="form-control" placeholder="Username"  placeholder="Search" title="Enter search keyword"
+                                    aria-label="query" aria-describedby="basic-addon1">
+                                    <span class="input-group-text" id="basic-addon1"  ><i class="bi bi-search"></i></span> 
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </nav>
+                        <div class="clearfix"></div>
+                        <div class="row">
+                            <table class="table table-light table-bordered ">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th>Consultant Name</th>
+                                        <th>Date & Time Of Interview</th>
+                                        <th>Round</th>
+                                        <th>Mode</th>
+                                        <th>Job Title</th>
+                                        <th>Date Of Submission</th>
+                                        <th>Employer Name</th>
+                                        <th>Interview Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let data of entity | paginate
+                                    : {
+                                        itemsPerPage: tableSize,
+                                        currentPage: page,
+                                        totalItems: count
+                                      };">
+                                        <td>{{data.name}}</td>
+                                        <td>{{data.interview_date}} ({{data.timezone}}) </td>
+                                        <td>{{data.round}}</td>
+                                        <td>{{data.mode}}</td>
+                                        <td>{{data.jobtitle}}</td>
+                                        <td>{{data.createddate}} </td>
+                                        <td>{{data.fullname}}</td>
+                                        <td>{{data.interview_status}}</td>
+                                        <td > <a [routerLink]="['/edit-interviews',data.id]"> <i class="ri-edit-2-fill"></i> </a>&nbsp;
+                                            <a *ngIf="hasAcces=='Manager' || hasAcces=='Super Admin' || hasAcces=='Admin'" (click)="delete(data.id)" ng-confirm-click="You are about to overwrite your PUBLISHED content!! Are you SURE you want to publish?"> <i style="color:maroon" class="ri-delete-bin-fill "></i> </a>
+                                        </td>
+                                        </tr>
+                                </tbody>
+                            </table>
+                            <div class="pagination justify-content-end">
+                                <pagination-controls previousLabel="Prev" nextLabel="Next"
+                                    (pageChange)="onTableDataChange($event)">
+                                </pagination-controls>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+       </div>
+    </section>
+ </main>

@@ -1,0 +1,64 @@
+<main id="main" class="main">
+   <div class="pagetitle">
+      <nav>
+         <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a routerLink="/dashboard">Home</a></li>
+            <li class="breadcrumb-item">Role</li>
+         </ol>
+      </nav>
+   </div>
+   <section class="section">
+      <div class="row">
+         <div class="col-md-12">
+            <div class="card">
+               <div class="card-body">
+                  <h5 class="card-title"> Add New Role</h5>
+                  <p class="text-center small danger" *ngIf="message!==''" style="color:red"><b>{{message}}</b></p>
+                  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                     <div class="row">
+                        <div class="col-md-6">
+                           <div class="col-md-12">
+                              <label for="cp_name">Role Name </label>
+                              <input type="text" [(ngModel)]="roleent.rolename" maxlength="500"
+                                 [ngClass]="{ 'is-invalid': submitted && f.rolename.errors }"
+                                 class="form-control rounded-pill" autocomplete="off" name="rolename"
+                                 data-parsley-trigger="change" formControlName="rolename" required />
+                              <div *ngIf="submitted && f.rolename.errors" class="invalid-feedback">
+                                 <div *ngIf="f.rolename.errors.required">Role Name is required</div>
+                              </div>
+                           </div>
+
+                           <!-- <div class="col-md-12">
+                              <label for="cp_name">Role Number </label>
+                              <input type="text" [(ngModel)]="roleent.roleno" maxlength="500"
+                                 [ngClass]="{ 'is-invalid': submitted && f.roleno.errors }"
+                                 class="form-control rounded-pill" autocomplete="off" name="roleno"
+                                 data-parsley-trigger="change" formControlName="roleno" required />
+                              <div *ngIf="submitted && f.roleno.errors" class="invalid-feedback">
+                                 <div *ngIf="f.roleno.errors.required">Role Number is required</div>
+                              </div>
+                           </div> -->
+
+                           <div class="col-md-12">
+                              <label for="details">Description</label>
+                              <textarea id="details" [(ngModel)]="roleent.description" class="form-control"
+                                 formControlName="description" rows="3" data-parsley-trigger="change" name="description"
+                                 maxlength="2000"></textarea>
+                           </div>
+                        </div>
+                     </div>
+
+                     <div class="form-group text-center" style="margin-top: 20px;padding: 10px;">
+                        <a (click)="form.reset()" class="btn btn-warning rounded-pill">Cancel</a>
+                        &nbsp;
+                        &nbsp;
+                        <button type="submit" name="btnSubmit" class="btn btn-info rounded-pill"
+                           value="Submit">Submit</button>
+                     </div>
+                  </form>
+               </div>
+            </div>
+         </div>
+      </div>
+   </section>
+</main>

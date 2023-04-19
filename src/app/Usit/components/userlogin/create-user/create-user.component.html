@@ -1,0 +1,132 @@
+<main>
+    <div class="container">
+       <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
+          <div class="container">
+             <div class="row justify-content-center">
+                <div class="col-lg-6 col-md-6 d-flex flex-column align-items-center justify-content-center">
+                   <div class="d-flex justify-content-center py-4"> <a routerLink="/" class="logo d-flex align-items-center w-auto"> <img src="assets/img/logo.png" alt=""> <span class="d-none d-lg-block">Admin</span> </a></div>
+                   <div class="card mb-3">
+                      <div class="card-body">
+                         <div class="pt-4 pb-2">
+                            <h5 class="card-title text-center pb-0 fs-4">Create an Account</h5>
+                            <p class="text-center small">Enter your personal details to create account</p>
+                            <p class="text-center small danger" *ngIf="message!==''" style="color:rgb(29, 189, 37)"><b>{{message}}</b></p>
+                         </div>
+                         <!--needs-validation // showing green colour if validate it is a class-->
+                         <form class="row g-3 " novalidate [formGroup]="form" (ngSubmit)="userLogin()" autocomplete="off">
+                           <input type="hidden" name="status" formControlName="status" >
+                            <div formGroupName="role">
+                                <div class="col-md-12"> 
+                                    <label for="cp_name"></label>
+                                    <input type="hidden" name="roleid" formControlName="roleid" value="5">
+                                </div> 
+                            </div>
+                            <div class="col-12">
+                               <label for="yourName" class="form-label">Your Full Name</label> <input type="text"  [ngClass]="{ 'is-invalid': submitted && f.fullname.errors }" name="fullname" formControlName="fullname"  class="form-control" id="yourName" 
+                               required>
+                               <div *ngIf="submitted && f.fullname.errors" class="invalid-feedback">
+                                   <div *ngIf="f.fullname.errors.required">fullname Name is required</div>
+                                   <div *ngIf="f.fullname.errors.minlength">fullname Name must be at least 6 characters</div>
+                                   <div *ngIf="f.fullname.errors.maxlength">fullname Name must not exceed 100 characters </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <label for="yourName" class="form-label">Contact Number</label> <input type="text"  [ngClass]="{ 'is-invalid': submitted && f.personalcontactnumber.errors }" name="personalcontactnumber" formControlName="personalcontactnumber"  class="form-control" id="yourName" 
+                                required>
+                                <div *ngIf="submitted && f.personalcontactnumber.errors" class="invalid-feedback">
+                                    <div *ngIf="f.personalcontactnumber.errors.required">Personal Contact is required</div>
+                                        <div *ngIf="f.personalcontactnumber.errors.pattern">Enter only number.</div>
+                                        <div *ngIf="f.personalcontactnumber.errors.minlength">Number must be at least 10 characters</div>
+                                        <div *ngIf="f.personalcontactnumber.errors.maxlength">Number Name must not exceed 12 characters </div>
+                                 </div>
+                             </div>
+                            <div class="col-12">
+                               <label for="yourUsername" class="form-label">Your Email</label>
+                               <div class="input-group has-validation">
+                                  <span class="input-group-text" id="inputGroupPrepend">@</span> <input [ngClass]="{ 'is-invalid': submitted && f.email.errors }" type="text" name="email" formControlName="email"  class="form-control" id="yourUsername" required>
+                                  <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                                    <div *ngIf="f.email.errors.required">Email is required</div>
+                                    <div *ngIf="f.email.errors.email">Please Enter a Valid Email Address</div>
+                                </div>
+                               </div>
+                            </div>
+
+                            <div class="col-md-12"> 
+                              <label for="cp_name">Type of Account</label>
+                              <select required  name="designation" formControlName="designation" id="designation" class="form-select" [ngClass]="{ 'is-invalid': submitted && f.designation.errors }">
+                               <option  value="">Select Account Type</option>
+                               <option  value="Technical Recruiter">Technical Recruiter</option>
+                               <option  value="Sales Recruiter">Bench Sales Recruiter</option>
+                               <option  value="Jobseeker">Job Seeker</option>
+                               <option  value="Freelancer">Freelancer</option>
+                               <option  value="Accounts">Accounts</option>
+                               <option  value="BGV">BGV</option>
+                               <option  value="Sourcing">Sourcing(Opt Recruiter's)</option>
+                               <option  value="Consultant">Consultant (Looking for Job)</option>
+                               <option  value="Recruiter">Recruiter</option>
+                               <option  value="Bench Sales">Bench Sales</option>
+                               <option  value="Third Party">Third Party</option>
+                                </select>
+                              <div *ngIf="submitted && f.designation.errors" class="invalid-feedback">
+                                  <div *ngIf="f.designation.errors.required">Account Type is required</div>
+                              </div>
+                          </div> 
+                          <span *ngIf="consultant">
+                           <div class="col-12">
+                             <label for="yourName" class="form-label">Technology</label> <input type="text"  [ngClass]="{ 'is-invalid': submitted && f.technology.errors }" name="technology" formControlName="technology"  class="form-control" id="yourName" 
+                             required>
+                              <div *ngIf="submitted && f.technology.errors" class="invalid-feedback">
+                                 <div *ngIf="f.technology.errors.required">Technology  is required</div>
+                              </div>
+                           </div>
+
+                           <div class="col-12">
+                              <label for="yourName" class="form-label">Years Of Experience</label> <input maxlength="2" type="text"  [ngClass]="{ 'is-invalid': submitted && f.experience.errors }" name="experience" formControlName="experience"  class="form-control" id="yourName" 
+                              required>
+                               <div *ngIf="submitted && f.experience.errors" class="invalid-feedback">
+                                  <div *ngIf="f.experience.errors.required">fullname Name is required</div>
+                                  <div *ngIf="f.experience.errors.pattern">Enter only number.</div>
+                               </div>
+                            </div>
+
+                            <div class="col-12">
+                              <label for="yourName" class="form-label">Location</label> <input type="text"  [ngClass]="{ 'is-invalid': submitted && f.location.errors }" name="location" formControlName="location"  class="form-control" id="yourName" 
+                              required>
+                               <div *ngIf="submitted && f.location.errors" class="invalid-feedback">
+                                  <div *ngIf="f.location.errors.required">location Name is required</div>
+                                  <div *ngIf="f.location.errors.minlength">location Name must be at least 6 characters</div>
+                                  <div *ngIf="f.location.errors.maxlength">location Name must not exceed 100 characters </div>
+                               </div>
+                            </div>
+                            </span>
+                            <div class="col-12">
+                               <label for="yourPassword" class="form-label">Password</label> <input [ngClass]="{ 'is-invalid': submitted && f.password.errors }" type="password" name="password" formControlName="password" class="form-control" id="yourPassword" required>
+                               <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                                    <div *ngIf="f.password.errors.required">Password is required</div>
+                                    <div *ngIf="f.password.errors.pattern">Password should be at between 8 - 15 characters long and should contain one number,one upper and lower case character and one special character</div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                               <!-- <div class="form-check">
+                                  <input class="form-check-input" name="terms" type="checkbox" value="" id="acceptTerms" required> <label class="form-check-label" for="acceptTerms">I agree and accept the <a href="#">terms and conditions</a></label>
+                                  <div class="invalid-feedback">You must agree before submitting.</div>
+                               </div> -->
+                            </div>
+                            <div class="col-12"> <button class="btn btn-primary w-100" type="submit">Create Account</button></div>
+                            <div class="col-12">
+                               <p class="small mb-0">Already have an account? <a routerLink="/">Log in</a></p>
+                            </div>
+                         </form>
+                      </div>
+                   </div>
+                </div>
+             </div>
+          </div>
+       </section>
+
+
+
+       
+    </div>
+ </main>

@@ -1,0 +1,232 @@
+<main id="main" class="main">
+    <div class="pagetitle">
+
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/dashboard">Home</a></li>
+                <li class="breadcrumb-item">Tech & Support </li>
+
+            </ol>
+        </nav>
+    </div>
+    <section class="section">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+
+                        <h5 class="card-title">H1B Employeeinfo </h5>
+                        <form [formGroup]="registerForm" autocomplete="off">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="col-md-12" style="margin-bottom: 25px;">
+                                        <label class="form-label">Name of the Beneficiary</label>
+                                        <input type="text" class="form-control rounded-pill" id="name"
+                                            placeholder="name of the Beneficiary *" name="name" maxlength="35"
+                                            formControlName="beneficiaryname"
+                                            [ngClass]="{ 'is-invalid': submitted && f.beneficiaryname.errors }">
+                                        <div *ngIf="submitted && f.beneficiaryname.errors" class="invalid-feedback">
+                                            <div *ngIf="f.beneficiaryname.errors.required"> name is Required</div>
+                                          
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12" style="margin-bottom: 25px;">
+                                        <label class="form-label">Email</label>
+                                        <input placeholder="Email *" class="form-control rounded-pill" type="text"
+                                            formControlName="email"
+                                            [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
+                                        <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                                            <div *ngIf="f.email.errors.required">email is Required</div>
+                                           
+                                        </div>
+                                    </div>
+                                    <div class="row" style="margin-bottom: 25px;">
+                                        <!-- <label  class="form-label">Current work author</label> -->
+                                        <div class=" col-md-6">
+                                            <label for="mobile">valid from date</label>
+                                            <input type="date" placeholder="valid from date"
+                                                class="form-control rounded-pill" formControlName="validfromdate"
+                                                [ngClass]="{ 'is-invalid': submitted && f.validfromdate.errors }" />
+                                            <div *ngIf="submitted && f.validfromdate.errors" class="invalid-feedback">
+                                                <div *ngIf="f.validfromdate.errors.required">date Is Required</div>
+                                        
+                                            </div>
+                                        </div>
+
+                                        <div class=" col-md-6">
+                                            <label for="">valid todate</label>
+                                            <input type="date" placeholder="valid todate"
+                                                class="form-control rounded-pill" formControlName="validtodate"
+                                                [ngClass]="{ 'is-invalid': submitted && f.validtodate.errors }" />
+                                            <div *ngIf="submitted && f.validtodate.errors" class="invalid-feedback">
+                                                <div *ngIf="f.validtodate.errors.required">date Is Required
+                                                </div>
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row" style="margin-bottom: 25px;">
+                                        <div class=" col-md-6">
+                                            <label for="">Everify date</label>
+                                            <input type="date" placeholder="everify date"
+                                                class="form-control rounded-pill" formControlName="everifydate"
+                                                [ngClass]="{ 'is-invalid': submitted && f.everifydate.errors }" />
+                                            <div *ngIf="submitted && f.everifydate.errors" class="invalid-feedback">
+                                                <div *ngIf="f.everifydate.errors.required">date Is Required</div>
+                                        
+                                            </div>
+                                        </div>
+
+                                        <div class=" col-md-6">
+                                            <label for="secmobile">last date</label>
+                                            <input type="date" placeholder="lasti9 date*"
+                                                class="form-control rounded-pill" formControlName="lasti9date"
+                                                [ngClass]="{ 'is-invalid': submitted && f.lasti9date.errors }" />
+                                            <div *ngIf="submitted && f.lasti9date.errors" class="invalid-feedback">
+                                                <div *ngIf="f.lasti9date.errors.required"> date Is Required
+                                                </div>
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12" style="margin-bottom: 25px;">
+                                        <label for="inputName5" class="form-label"> Consulate/POE</label>
+                                        <input name="Consulate/POE" id="Consulate/POE" placeholder="Consulate/POE *"
+                                            class="form-control rounded-pill" type="text" formControlName="consulatepoe"
+                                            [ngClass]="{ 'is-invalid': submitted && f.consulatepoe.errors }">
+                                        <div *ngIf="submitted && f.consulatepoe.errors" class="invalid-feedback">
+                                            <div *ngIf="f.consulatepoe.errors.required">Consulate is Required</div>
+                                           
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12" style="margin-bottom: 25px;">
+                                        <label for="inputName5" class="form-label">Service Center</label>
+                                        <input required  name="Service Center" id="Service Center"
+                                            placeholder="Service Center *" class="form-control rounded-pill" type="text"
+                                            formControlName="servicecenter"
+                                            [ngClass]="{ 'is-invalid': submitted && f.servicecenter.errors }">
+                                        <div *ngIf="submitted && f.servicecenter.errors" class="invalid-feedback">
+                                            <div *ngIf="f.servicecenter.errors.required">servicecenter is Required</div>
+                                    
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12" style="margin-bottom: 25px;">
+                                        <label for="inputName5" class="form-label">LCA number</label>
+                                        <input required  name="lcanumber"
+                                            [ngClass]="{ 'is-invalid': submitted && f.lcanumber.errors }" id="lcanumber"
+                                            placeholder=" LCA number" class="form-control rounded-pill" type="text"
+                                            formControlName="lcanumber">
+                                        <div *ngIf="submitted && f.lcanumber.errors" class="invalid-feedback">
+                                            <div *ngIf="f.lcanumber.errors.required">localnumber is Required</div>
+                                      
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="col-md-12" style="margin-bottom: 25px;">
+                                        <label class="form-label">contact number</label>
+                                        <input maxlength="12" id="contactnumber" name="contactnumber"
+                                            placeholder="contact number" class="form-control rounded-pill" type="text"
+                                            formControlName="contactnumber"
+                                            [ngClass]="{ 'is-invalid': submitted && f.contactnumber.errors }">
+                                    </div>
+                                    <div *ngIf="submitted && f.contactnumber.errors" class="invalid-feedback">
+                                        <div *ngIf="f.contactnumber.errors.required">contactnumber is Required</div>
+                                  
+                                    </div>
+
+                                    <div class="col-md-12" style="margin-bottom: 25px;">
+
+
+                                        <label for="skills" class="form-label">Notice Type</label>
+                                        <select required name="id" id="id" class="form-select rounded-pill"
+                                            formControlName="noticetype"
+                                            [ngClass]="{ 'is-invalid': submitted && f.noticetype.errors }">
+                                            <option value="" selected>Notice Type</option>
+                                            <option>
+                                                Approved
+                                            </option>
+                                            <option>
+                                                pending
+                                            </option>
+                                            <option>
+                                                preprocess
+                                            </option>
+                                        </select>
+                                        <!-- <div >
+                                                <div >
+                                                    <span>Technology is required</span>
+                                                </div>
+                                            </div> -->
+
+                                    </div>
+
+                                    <div class="col-md-12" style="margin-bottom: 25px;">
+                                        <label for="skills" class="form-label">Current Work Author</label>
+                                        <div class="col-md-12">
+                                            <input maxlength="100" id="receipt number" name="currentworkauthor"
+                                                placeholder="currentworkauthor" class="form-control rounded-pill"
+                                                type="text" formControlName="currentworkauthor"
+                                                [ngClass]="{ 'is-invalid': submitted && f.currentworkauthor.errors }">
+                                        </div>
+                                        <div *ngIf="submitted && f.currentworkauthor.errors" class="invalid-feedback">
+                                            <div *ngIf="f.currentworkauthor.errors.required">currentworkauthor Required</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12" style="margin-bottom: 25px;">
+                                        <label for="skills" class="form-label">receipt number</label>
+                                        <div class="col-md-12">
+                                            <input maxlength="100" id="receipt number" name="receipt number"
+                                                placeholder="receipt number" class="form-control rounded-pill"
+                                                type="text" formControlName="receiptnumber"
+                                                [ngClass]="{ 'is-invalid': submitted && f.receiptnumber.errors }">
+                                        </div>
+                                        <div *ngIf="submitted && f.receiptnumber.errors" class="invalid-feedback">
+                                            <div *ngIf="f.receiptnumber.errors.required">receiptnumber Required</div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-md-12" style="margin-bottom: 25px;">
+                                        <label for="skills" class="form-label">Location</label>
+                                        <div class="col-md-12">
+                                            <input maxlength="100" id="Location" name="Location" placeholder="Location"
+                                                class="form-control rounded-pill" type="text" formControlName="location"
+                                                [ngClass]="{ 'is-invalid': submitted && f.location.errors }">
+                                        </div>
+                                        <div *ngIf="submitted && f.location.errors" class="invalid-feedback">
+                                            <div *ngIf="f.location.errors.required">location Required</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12" style="margin-bottom: 25px;">
+                                        <label for="skills" class="form-label">Petitioner Singular/Narvee</label>
+                                        <div class="col-md-12">
+                                            <input maxlength="100" id="Petitioner Singular/Narvee"
+                                                name="Petitioner Singular/Narvee"
+                                                placeholder="Petitioner Singular/Narvee"
+                                                class="form-control rounded-pill" type="text"
+                                                formControlName="petitione"
+                                                [ngClass]="{ 'is-invalid': submitted && f.petitione.errors }">
+                                        </div>
+                                        <div *ngIf="submitted && f.petitione.errors" class="invalid-feedback">
+                                            <div *ngIf="f.petitione.errors.required">petitione Required</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group text-center" style="margin-top: 20px;padding: 10px;">
+                                <a class="btn btn-warning rounded-pill">Cancel</a>
+                                &nbsp;
+                                <button type="submit" name="btnSubmit" class="btn btn-info rounded-pill" value="Submit"
+                                    (click)="H1Binfo()">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>

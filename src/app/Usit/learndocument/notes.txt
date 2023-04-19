@@ -1,0 +1,114 @@
+ this.service.uploadexcel(formData).subscribe(
+      (data) => {
+        //console.log(data)
+      },
+      (error) => {
+        //console.log(error)
+      }
+    );
+user-select: none;
+
+
+return repository.findAll(Sort.by(Sort.Direction.ASC, "statename"));
+
+
+*ngIf="hasAcces!='Employee' && hasAcces!='Team Lead'"
+
+cd /var/www/html/usit/
+cd /var/www/html/usitapp/
+
+pwd
+
+ls -rlt
+
+chmod 777 usitapp.jar
+
+sudo systemctl status uita.startup.service
+
+sudo systemctl stop uita.startup.service
+
+sudo systemctl status uita.startup.service
+
+sudo systemctl start uita.startup.service
+
+progress bar 
+NgxUiLoaderModule
+import { NgxUiLoaderModule } from "ngx-ui-loader";
+NgxUiLoaderModule
+
+<ngx-ui-loader></ngx-ui-loader> 
+
+import { NgxUiLoaderService } from "ngx-ui-loader";   
+private ngxService: NgxUiLoaderService
+
+this.ngxService.start();
+this.ngxService.stop();
+
+ this.ngxService.startBackground("do-background-things");
+    // Do something here...
+    this.ngxService.stopBackground("do-background-things");
+
+setTimeout(() => {
+      this.ngxService.stop(); 
+ }, 5000);
+ 
+<i _ngcontent-vqa-c41="" class="bi bi-plus-square"></i>&nbsp;
+<i _ngcontent-vqa-c41="" class="bi bi-plus-square-dotted"></i>&nbsp;
+   <div *ngIf="f.recruiter.errors.pattern">Please enter alphabets</div>
+        recruiter: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
+
+ empemail: new FormControl(this.form.empemail, [
+        Validators.email,
+        Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')
+      ]),
+
+
+         <label for="totexp" class="form-label"></label>
+                                            <input id="empemail" maxlength="40" name="empemail" placeholder="Email"
+                                                class="form-control rounded-pill" type="text"
+                                                formControlName="empemail"  [ngClass]="{ 'is-invalid': frm.empemail.invalid && (frm.empemail.dirty || frm.empemail.touched) }">
+                                                <div *ngIf="frm.empemail.invalid && (frm.empemail.dirty || frm.empemail.touched)"
+                                                class="invalid-feedback">
+                                                <div *ngIf="frm.empemail.errors?.['pattern']">
+                                                    Please enter valid email
+                                                </div>
+                                            </div>
+
+
+pagination
+<div class="pagination justify-content-end">
+                                <pagination-controls previousLabel="Prev" nextLabel="Next"
+                                    (pageChange)="onTableDataChange($event)">
+                                </pagination-controls>
+                            </div>
+
+
+
+                            <tr *ngFor="
+                                      let vms of datarr
+                                        | paginate
+                                          : {
+                                              itemsPerPage: tableSize,
+                                              currentPage: page,
+                                              totalItems: count
+                                            };
+                                      let i = index
+                                    ">
+
+  // pagination code
+  page: number = 1;
+  count: number = 0;
+  tableSize: number = 10;
+  tableSizes: any = [3, 6, 9, 12];
+
+  onTableDataChange(event: any) {
+    this.page = event;
+    this.getall();
+  }
+  onTableSizeChange(event: any): void {
+    this.tableSize = event.target.value;
+    this.page = 1;
+    this.getall();
+  }
+
+

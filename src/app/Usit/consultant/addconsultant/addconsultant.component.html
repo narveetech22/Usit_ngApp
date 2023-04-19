@@ -1,0 +1,702 @@
+<main id="main" class="main">
+    <div class="pagetitle">
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/dashboard">Home</a></li>
+                <li class="breadcrumb-item">{{flag}}</li>
+                <li class="breadcrumb-item active">Consultant</li>
+            </ol>
+        </nav>
+    </div>
+    <section class="section">
+        <form [formGroup]="form" autocomplete="off">
+            <input [(ngModel)]="flag" id="consultantflg" name="consultantflg" class="form-control rounded-pill"
+                type="hidden" formControlName="consultantflg">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                                <div class="container-fluid">
+                                    <h5 class="card-title">New Consultant</h5>
+                                    <div class=" col-md-3">
+                                        <!-- <label for="status" class="form-label"></label> -->
+                                        <select #stat name="status" id="status" class="form-select rounded-pill"
+                                            formControlName="status"
+                                            [ngClass]="{ 'is-invalid': submitted && frm.status.errors }">
+                                            <option value="">Select Status</option>
+                                            <option value="Tagged">Tagged</option>
+                                            <option value="Initiated">Initiated</option>
+                                        </select>
+                                        <div *ngIf="submitted && frm.status.errors" class="invalid-feedback ">
+                                            <div *ngIf="frm.status.errors.required">Status is required</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </nav>
+                            <p class="text-center small danger" *ngIf="message!==''" style="color: red">
+                                <b>{{message}}</b>
+                            </p>
+                            <div class="row">
+                                <h5>Basic Details
+                                </h5>
+                                <hr>
+                                <div class="col-md-4">
+                                    <!-- <div formGroupName="requirements" *ngIf="flag!=='sales' && flag!=='presales'">
+                                        <div class="col-md-12">
+                                            <label class="form-label"></label>
+                                            <select required name="requirementid" id="id"
+                                                class="form-select rounded-pill"
+                                                [ngClass]="{ 'is-invalid': submitted && form.get('requirements.requirementid').hasError('required') }"
+                                                formControlName="requirementid">
+                                                <option value="" selected>Select Requirement</option>
+                                                <option *ngFor="let obj of requirementdata" [value]="obj[0]">{{obj[3]}}
+                                                    - {{obj[1]}} ({{obj[2]}}) </option>
+                                            </select>
+                                            <div *ngIf="form.get('requirements.requirementid') && submitted"
+                                                class="invalid-feedback">
+                                                <div
+                                                    *ngIf="form.get('requirements.requirementid').hasError('required')">
+                                                    <span>Requirement is required</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                    <div class="col-md-12">
+                                        <label for="firstname" class="form-label"
+                                            *ngIf="flag!=='sales' && flag!=='presales'"></label>
+                                        <input required maxlength="34" id="firstname" name="firstname"
+                                            placeholder="First Name *" class="form-control rounded-pill" type="text"
+                                            formControlName="firstname"
+                                            [ngClass]="{ 'is-invalid': submitted && frm.firstname.errors }">
+                                        <div *ngIf="submitted && frm.firstname.errors" class="invalid-feedback">
+                                            <div *ngIf="frm.firstname.errors.required">Please Enter First Name
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label for="cp_name"></label>
+                                        <input type="text" maxlength="50"
+                                            [ngClass]="{ 'is-invalid': submitted && frm.consultantemail.errors }"
+                                            class="form-control rounded-pill" autocomplete="off" name="consultantemail"
+                                            data-parsley-trigger="change" formControlName="consultantemail" required
+                                            placeholder="Email *" (change)="emailDuplicate($event)" />
+                                        <div *ngIf="submitted && frm.consultantemail.errors" class="invalid-feedback">
+                                            <div *ngIf="frm.consultantemail.errors.required">Email is required</div>
+                                            <div *ngIf="frm.consultantemail.errors.email">Please Enter a Valid Email
+                                                Address</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label for="projectavailabity" class="form-label"></label>
+                                        <input type="text" maxlength="3"
+                                            [ngClass]="{ 'is-invalid': submitted && frm.projectavailabity.errors }"
+                                            class="form-control rounded-pill" autocomplete="off"
+                                            name="projectavailabity" data-parsley-trigger="change"
+                                            formControlName="projectavailabity" required
+                                            placeholder="Project Availability (In days) *" />
+                                        <div *ngIf="submitted && frm.projectavailabity.errors" class="invalid-feedback">
+                                            <div *ngIf="frm.projectavailabity.errors.required">Project Availability
+                                                is
+                                                required</div>
+                                            <div *ngIf="frm.projectavailabity.errors.pattern">Enter numeric data.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="col-md-12">
+                                        <label for="lastname" class="form-label"
+                                            *ngIf="flag!=='sales' && flag!=='presales'"></label>
+                                        <input required maxlength="35" id="lastname" name="lastname"
+                                            placeholder="Last Name *" class="form-control rounded-pill" type="text"
+                                            formControlName="lastname"
+                                            [ngClass]="{ 'is-invalid': submitted && frm.lastname.errors }">
+                                        <div *ngIf="submitted && frm.lastname.errors" class="invalid-feedback">
+                                            <div *ngIf="frm.lastname.errors.required">Please Enter Last Name
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label></label>
+                                        <input id="linkedin" maxlength="250" name="linkedin" placeholder="LinkedIn "
+                                            class="form-control rounded-pill" type="text" formControlName="linkedin">
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label for="totexp" class="form-label"></label>
+                                        <select required name="availabilityforinterviews" id="availabilityforinterviews"
+                                            class="form-select rounded-pill"
+                                            [ngClass]="{ 'is-invalid': submitted && frm.availabilityforinterviews.errors }"
+                                            formControlName="availabilityforinterviews">
+                                            <option value="" selected>Availabity for the interviews *</option>
+                                            <option value="Anytime">Anytime</option>
+                                            <option value="Morning session">Morning session</option>
+                                            <option value="Morning session">afternoon session
+                                            </option>
+                                        </select>
+                                        <div *ngIf="submitted && frm.availabilityforinterviews.errors"
+                                            class="invalid-feedback">
+                                            <div *ngIf="frm.availabilityforinterviews.errors.required">Availability for
+                                                the Interviews is
+                                                required
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="col-md-12">
+                                        <input type="text" maxlength="14"
+                                            [ngClass]="{ 'is-invalid': submitted && frm.contactnumber.errors }"
+                                            class="form-control rounded-pill" autocomplete="off" name="contactnumber"
+                                            data-parsley-trigger="change" formControlName="contactnumber" required
+                                            placeholder="+19876543210 / +919876543210" (change)="changeFn($event)" />
+                                        <div *ngIf="submitted && frm.contactnumber.errors" class="invalid-feedback">
+                                            <div *ngIf="frm.contactnumber.errors.required"> Contact Number is required
+                                            </div>
+                                            <div *ngIf="frm.contactnumber.errors.pattern">Number must be at least 10
+                                                characters with country code</div>
+                                        </div>
+                                    </div>
+                                    <div formGroupName="visa">
+                                        <div class="col-md-12">
+                                            <label for="cp_name"></label>
+                                            <select required name="vid" id="id" class="form-select rounded-pill"
+                                                [ngClass]="{ 'is-invalid': submitted && form.get('visa.vid').hasError('required') }"
+                                                formControlName="vid">
+                                                <option value="" selected>Immigration Status</option>
+                                                <option *ngFor="let obj of visadata" [value]="obj[0]">{{obj[1]}}
+                                                </option>
+                                            </select>
+                                            <div *ngIf="form.get('visa.vid') && submitted" class="invalid-feedback">
+                                                <div *ngIf="form.get('visa.vid').hasError('required')">
+                                                    <span>Immigration status is required</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <label class="form-label"></label>
+                                        <input type="text" maxlength="30"
+                                            [ngClass]="{ 'is-invalid': submitted && frm.position.errors }"
+                                            class="form-control rounded-pill" autocomplete="off" name="position"
+                                            data-parsley-trigger="change" formControlName="position" required
+                                            placeholder="Position *" />
+                                        <div *ngIf="submitted && frm.position.errors" class="invalid-feedback">
+                                            <div *ngIf="frm.position.errors.required">Position is required</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12"
+                                        *ngIf="flag=='sales' || flag=='presales' && role!='Employee'">
+                                        <label class="form-label"></label>
+                                        <select required name="priority" id="id" class="form-select rounded-pill"
+                                            [ngClass]="{ 'is-invalid': submitted && frm.priority.errors }"
+                                            formControlName="priority">
+                                            <option value="" selected>Select Priority</option>
+                                            <option value="P1">P1 - Our h1 w2 consultant not on the job</option>
+                                            <option value="P2">P2 - our h1 consultant whose project is ending in 4
+                                                weeks</option>
+                                            <option value="P3">P3 - new visa transfer consultant looking for a job
+                                            </option>
+                                            <option value="P4">P4 - our h1 consultant on a project looking for a
+                                                high rate </option>
+                                            <option value="P5">P5 - OPT /CPT visa looking for a job</option>
+                                            <option value="P6">P6 - independent visa holder looking for a job
+                                            </option>
+                                            <option value="P7">P7 - independent visa holder project is ending in 4
+                                                weeks</option>
+                                            <option value="P8">P8 - independent visa holder project looking for a
+                                                high rate </option>
+                                            <option value="P9">P9 - 3rd party consultant</option>
+                                            <option value="P10">P10</option>
+                                        </select>
+                                        <div *ngIf="submitted && frm.priority.errors" class="invalid-feedback">
+                                            <div *ngIf="frm.priority.errors.required">Priority is required</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <h5 style="margin-top: 20px;">Work Details</h5>
+                                <hr>
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <input required maxlength="2" id="experience" name="experience"
+                                                placeholder="Total Experience *" class="form-control rounded-pill"
+                                                type="text" formControlName="experience"
+                                                [ngClass]="{ 'is-invalid': submitted && frm.experience.errors }">
+                                            <div *ngIf="submitted && frm.experience.errors" class="invalid-feedback">
+                                                <div *ngIf="frm.experience.errors.required">Experience is required</div>
+                                                <div *ngIf="frm.experience.errors.pattern">Enter only number.</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input maxlength="5" id="hourlyrate" name="hourlyrate"
+                                                placeholder="Hourly Rate" class="form-control rounded-pill" type="text"
+                                                formControlName="hourlyrate">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label class="form-label" style="margin-top: 10px;">Rate</label> <br>
+                                        <input class="form-check-input" type="radio" name="ratetype"
+                                            [ngClass]="{ 'is-invalid': submitted &&  frm.ratetype.errors }"
+                                            formControlName="ratetype" value="C2C" [checked]="true">
+                                        <label class="form-check-label">&nbsp;C2C</label> &nbsp;&nbsp;&nbsp;&nbsp;
+                                        <input class="form-check-input" type="radio" name="ratetype"
+                                            [ngClass]="{ 'is-invalid': submitted &&  frm.ratetype.errors }"
+                                            formControlName="ratetype" value="1099">
+                                        <label class="form-check-label">&nbsp;1099</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <input class="form-check-input" type="radio" name="ratetype"
+                                            [ngClass]="{ 'is-invalid': submitted &&  frm.ratetype.errors }"
+                                            formControlName="ratetype" value="W2">
+                                        <label class="form-check-label">&nbsp;W2</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <input class="form-check-input" type="radio" name="ratetype"
+                                            [ngClass]="{ 'is-invalid': submitted &&  frm.ratetype.errors }"
+                                            formControlName="ratetype" value="Full Time">
+                                        <label class="form-check-label">&nbsp;Full Time</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <input class="form-check-input" type="radio" name="ratetype"
+                                            [ngClass]="{ 'is-invalid': submitted &&  frm.ratetype.errors }"
+                                            formControlName="ratetype" value="C2H">
+                                        <label class="form-check-label">&nbsp;C2H</label>
+                                        <div *ngIf="submitted && frm.ratetype.errors" class="invalid-feedback">
+                                            <div *ngIf="frm.ratetype.errors.required">Rate Type is required</div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label for="totexp" class="form-label"></label>
+                                            <input type="text" maxlength="250" 
+                                            class="form-control rounded-pill" [(ngModel)]="address"  autocomplete="off" name="currentlocation"
+                                            ngx-google-places-autocomplete [options]="options" [ngClass]="{ 'is-invalid': submitted && frm.currentlocation.errors }"
+                                            data-parsley-trigger="change" formControlName="currentlocation"
+                                            (onAddressChange)="handleAddressChange($event)" />
+                                            <div *ngIf="submitted && frm.currentlocation.errors" class="invalid-feedback">
+                                                <div *ngIf="frm.currentlocation.errors.required">Current Location is required</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <br>
+                                            <label class="form-label">Relocation</label> <br>
+                                            <input class="form-check-input" formControlName="relocation" type="radio"
+                                                name="relocation" value="Open" checked="true">
+                                            <label class="form-check-label">&nbsp;Open</label> &nbsp;&nbsp;&nbsp;&nbsp;
+                                            <input class="form-check-input" formControlName="relocation" type="radio"
+                                                name="relocation" value="No">
+                                            <label class="form-check-label">&nbsp;No</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <input class="form-check-input" type="radio" formControlName="relocation"
+                                                name="relocation" value="Other">
+                                            <label class="form-check-label">&nbsp;Other</label>
+                                        </div>
+                                        <div class="col-md-12" *ngIf="other">
+                                            <label for="details"></label>
+                                            <textarea id="details" class="form-control" formControlName="relocatOther"
+                                                rows="2" data-parsley-trigger="change" name="relocatOther"
+                                                maxlength="250" placeholder="Others Details "
+                                                [ngClass]="{ 'is-invalid': submitted && frm.relocatOther.errors }"></textarea>
+                                            <div *ngIf="submitted && frm.relocatOther.errors" class="invalid-feedback">
+                                                <div *ngIf="frm.relocatOther.errors.required">Enter Your Preferred
+                                                    location</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div formGroupName="technology">
+                                        <div class="col-md-12">
+                                            <select required name="id" id="id" class="form-select rounded-pill"
+                                                [ngClass]="{ 'is-invalid': submitted && form.get('technology.id').hasError('required') }"
+                                                formControlName="id" (change)="techskills($event)">
+                                                <option value="" selected>Select Technology</option>
+                                                <option *ngFor="let obj of techdata" [value]="obj[0]">{{obj[1]}}
+                                                </option>
+                                            </select>
+                                            <div *ngIf="form.get('technology.id') && submitted"
+                                                class="invalid-feedback">
+                                                <div *ngIf="form.get('technology.id').hasError('required')">
+                                                    <span>Technology is required</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label for="details"></label>
+                                        <textarea id="skills" class="form-control" formControlName="skills" rows="3"
+                                            data-parsley-trigger="change" name="skills" maxlength="2000"
+                                            placeholder="Skill Set " [(ngModel)]="autoskills"></textarea>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label for="details"></label>
+                                        <textarea id="summary" class="form-control" formControlName="summary" rows="7"
+                                            data-parsley-trigger="change" name="summary" maxlength="20000"
+                                            placeholder="Summary "></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <h5 style="margin-top: 20px;">Educational Qualifications </h5>
+                            <hr>
+                            <div class="row">
+                                <div class="col-md-4">
+
+                                    <div formGroupName="qualification">
+                                        <div class="col-md-12">
+                                            <select required name="id" id="id" class="form-select rounded-pill"
+                                                [ngClass]="{ 'is-invalid': submitted && form.get('qualification.id').hasError('required') }"
+                                                formControlName="id" >
+                                                <option value="" selected>Select Qualification</option>
+                                                <option *ngFor="let obj of QualArr" [value]="obj.id">{{obj.name}}
+                                                </option>
+                                            </select>
+                                            <div *ngIf="form.get('qualification.id') && submitted"
+                                                class="invalid-feedback">
+                                                <div *ngIf="form.get('qualification.id').hasError('required')">
+                                                    <span>Qualification is required</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- <select required name="qualification" id="qualification"
+                                        class="form-select rounded-pill"
+                                        [ngClass]="{ 'is-invalid': submitted && frm.qualification.errors }"
+                                        formControlName="qualification">
+                                        <option value="" selected>Select Qualification</option>
+                                        <option *ngFor="let obj of QualArr" [value]="obj.id">{{obj.name}}
+                                        </option>
+                                    </select>
+                                    <div *ngIf="submitted && frm.qualification.errors" class="invalid-feedback">
+                                        <div *ngIf="frm.qualification.errors.required">Qualification is required
+                                        </div>
+                                    </div> -->
+<!-- 
+                                  <div  >
+                                    <mat-form-field   class="form-control rounded-pill" >
+                                        <input 
+                                          matInput
+                                          placeholder="Search"
+                                          [matAutocomplete]="auto"
+                                          formControlName="state" />
+                                        <mat-autocomplete #auto="matAutocomplete">
+                                          <mat-option *ngFor="let obj of techdata " [value]="obj[0]">{{obj[1]}}</mat-option>
+                                        </mat-autocomplete>
+                                      </mat-form-field>
+                                  </div> -->
+                                  <!-- <div class="col-md-6">
+                                    <label for="totexp" class="form-label"></label>
+                                    <select required name="city" id="city" class="form-select rounded-pill"
+                                        [ngClass]="{ 'is-invalid': submitted && frm.city.errors }"
+                                        formControlName="city">
+                                        <option value="" selected>Select City</option>
+                                        <option *ngFor="let obj of techdata" [value]="obj[0]">{{obj[1]}}
+                                        </option>
+                                    </select>
+                                    <div *ngIf="submitted && frm.city.errors" class="invalid-feedback">
+                                        <div *ngIf="frm.city.errors.required">City is required</div>
+                                    </div>
+                                </div> -->
+                                <!-- <div style="  cursor : pointer; overflow: auto;  ">
+                                    <label for="details"></label>
+                                    <input type="text" class=" form-select rounded-pill"
+                                        formControlName="state" id="state" placeholder="Select Your Address"
+                                        (keyup)="credentialsSearchFilter($event)" (blur)="hideList()"
+                                        [(ngModel)]="nameDisplayModel" (click)="toggle($event)"
+                                        [ngClass]="{ 'is-invalid': submitted && frm.state.errors }">
+                                    <ul *ngIf="records.length "  class="list-group list-group-flush sty">
+                                        <li class="list-group-item" *ngFor="let record of records" (mousedown)="getNameValue(record)">{{record[1]}}</li>
+                                    </ul>
+                                    <div *ngIf="submitted && frm.state.errors" class="invalid-feedback">
+                                        <div *ngIf="frm.state.errors.required">State is required</div>
+                                    </div>
+                                </div> -->
+
+                            
+                                    <!-- <div class="label">
+                                      <label for="car">Search :</label>
+                                    </div> -->
+                                    <div formGroupName="state">
+                                    <div>
+                                        <label  class="form-label"></label>
+                                      <input type="text" class=" form-select rounded-pill"
+                                      formControlName="id" name="id" id="id" placeholder="Select Your Address"
+                                      (keyup)="credentialsSearchFilter($event)" (blur)="hideList()" 
+                                      [(ngModel)]="nameDisplayModel" type="text" 
+                                       [ngClass]="{ 'is-invalid': submitted && form.get('state.id').hasError('required') }" value="records[0]"  >
+                                       <div class="card crdsty" >
+                                        <div class="search">
+                                          <div *ngFor="let record of records" (mousedown)="getNameValue(record)" class="search-result list-group-item" >
+                                           {{record[1]}}
+                                          </div> 
+                                          <!-- <div>
+                                            <option *ngFor="let record of records;index as i"  (mousedown)="getNameValue(record)" class="search-result list-group-item"  [value]="record[0]" > {{record[1]}}
+                                            </option>
+                                          </div> -->
+                                        </div>
+                                      </div>
+                                    </div>
+                                      <div *ngIf="form.get('state.id') && submitted"
+                                      class="invalid-feedback">
+                                      <div *ngIf="form.get('state.id').hasError('required')">
+                                          <span>state is required</span>
+                                      </div>
+                                  </div>
+                                    </div>
+                                 </div>
+                                <div class="col-md-4">
+                                    <input id="university" maxlength="80" name="university" placeholder="University *"
+                                        class="form-control rounded-pill" type="text" formControlName="university"
+                                        [ngClass]="{ 'is-invalid': submitted && frm.university.errors }">
+                                    <div *ngIf="submitted && frm.university.errors" class="invalid-feedback">
+                                        <div *ngIf="frm.university.errors.required">University is required</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <input id="yop" maxlength="4" name="yop" maxlength="4"
+                                        placeholder="Year of Passing *" class="form-control rounded-pill" type="text"
+                                        formControlName="yop" [ngClass]="{ 'is-invalid': submitted && frm.yop.errors }">
+                                    <div *ngIf="submitted && frm.yop.errors" class="invalid-feedback">
+                                        <div *ngIf="frm.yop.errors.required">Year of Pass is required</div>
+                                        <div *ngIf="frm.yop.errors.pattern">Enter year.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <span>
+                                <h5 style="margin-top: 20px;">Current Employer</h5>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <input id="companyname" maxlength="40" name="companyname"
+                                            placeholder="Company Name" class="form-control rounded-pill" type="text"
+                                            formControlName="companyname">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label"></label>
+                                        <input id="refname" maxlength="30" name="refname" placeholder="Reference Name"
+                                            class="form-control rounded-pill" type="text" formControlName="refname">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label"></label>
+                                        <input id="refemail" maxlength="20" name="refemail" placeholder="Email"
+                                            class="form-control rounded-pill" type="text" formControlName="refemail"
+                                            [ngClass]="{ 'is-invalid': frm.refemail.invalid && (frm.refemail.dirty || frm.refemail.touched) }">
+                                        <div *ngIf="frm.refemail.invalid && (frm.refemail.dirty || frm.refemail.touched)"
+                                            class="invalid-feedback">
+                                            <div *ngIf="frm.refemail.errors?.['pattern']">
+                                                Please enter valid email
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label"></label>
+                                        <input id="refcont" maxlength="10" name="refcont" placeholder="Contact Number"
+                                            class="form-control rounded-pill" type="text" formControlName="refcont"
+                                            [ngClass]="{ 'is-invalid': frm.refcont.invalid && (frm.refcont.dirty || frm.refcont.touched) }">
+                                        <div *ngIf="frm.refcont.invalid && (frm.refcont.dirty || frm.refcont.touched)"
+                                            class="invalid-feedback">
+                                            <div *ngIf="frm.refcont.errors?.['minlength']">
+                                                Contact Number must be at least 10 characters long.
+                                            </div>
+                                            <div *ngIf="frm.refcont.errors.pattern">Please enter numeric digits
+                                                without space.</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label"></label>
+                                        <input id="refname1" maxlength="30" name="refname1" placeholder="Reference Name"
+                                            class="form-control rounded-pill" type="text" formControlName="refname1">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label"></label>
+                                        <input id="refemail1" maxlength="20" name="refemail1" placeholder="Email"
+                                            class="form-control rounded-pill" type="text" formControlName="refemail1"
+                                            [ngClass]="{ 'is-invalid': frm.refemail1.invalid && (frm.refemail1.dirty || frm.refemail1.touched) }">
+                                        <div *ngIf="frm.refemail1.invalid && (frm.refemail1.dirty || frm.refemail1.touched)"
+                                            class="invalid-feedback">
+                                            <div *ngIf="frm.refemail1.errors?.['pattern']">
+                                                Please enter valid email
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label"></label>
+                                        <input id="refcont1" maxlength="10" name="refcont1" placeholder="Contact Number"
+                                            class="form-control rounded-pill" type="text" formControlName="refcont1"
+                                            [ngClass]="{ 'is-invalid': frm.refcont1.invalid && (frm.refcont1.dirty || frm.refcont1.touched) }">
+                                        <div *ngIf="frm.refcont1.invalid && (frm.refcont1.dirty || frm.refcont1.touched)"
+                                            class="invalid-feedback">
+                                            <div *ngIf="frm.refcont1.errors?.['minlength']">
+                                                Contact Number must be at least 10 characters long.
+                                            </div>
+                                            <div *ngIf="frm.refcont1.errors.pattern">Please enter numeric digits
+                                                without space.</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <!-- <div class="col-md-12">
+                                            <input id="empcontact" maxlength="10" name="empcontact"
+                                                placeholder="Contact Number" class="form-control rounded-pill"
+                                                type="text" formControlName="empcontact" pattern="[0-9]+"
+                                                [ngClass]="{ 'is-invalid': frm.empcontact.invalid && (frm.empcontact.dirty || frm.empcontact.touched) }">
+                                            <div *ngIf="frm.empcontact.invalid && (frm.empcontact.dirty || frm.empcontact.touched)"
+                                                class="invalid-feedback">
+                                                <div *ngIf="frm.empcontact.errors?.['minlength']">
+                                                    Contact Number must be at least 10 characters long.
+                                                </div>
+                                                <div *ngIf="frm.empcontact.errors.pattern">Please enter numeric digits
+                                                    without space.</div>
+                                            </div>
+                                        </div> -->
+                                        <!-- <div class="col-md-12">
+                                            <label for="totexp" class="form-label"></label>
+                                            <input id="empemail" maxlength="40" name="empemail" placeholder="Email"
+                                                class="form-control rounded-pill" type="text" formControlName="empemail"
+                                                [ngClass]="{ 'is-invalid': frm.empemail.invalid && (frm.empemail.dirty || frm.empemail.touched) }">
+                                            <div *ngIf="frm.empemail.invalid && (frm.empemail.dirty || frm.empemail.touched)"
+                                                class="invalid-feedback">
+                                                <div *ngIf="frm.empemail.errors?.['pattern']">
+                                                    Please enter valid email
+                                                </div>
+                                            </div>
+                                        </div> -->
+                                    </div>
+                                </div>
+                            </span>
+                            <h5 style="margin-top: 20px;">Upload Documents</h5>
+                            <hr>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label for="file" class="form-label">Upload Resume</label>
+                                    <input type="file" #resume
+                                        accept=".pdf,.doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                                        id="resumepath" (change)="uploaddoc($event)" name="resume"
+                                        class="form-control rounded-pill">
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="h1bcopy" class="form-label">Upload Immigration Doc</label>
+                                    <input type="file" #h1b
+                                        accept=".pdf,.doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                                        id="h1bcopy" (change)="uploadH1B($event)" name="h1bcopy"
+                                        class="form-control rounded-pill">
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="dlcopy" class="form-label">Upload DL</label>
+                                    <input type="file" #dl
+                                        accept=".pdf,.doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                                        id="dlcopy" (change)="uploadDL($event)" name="dlcopy"
+                                        class="form-control rounded-pill">
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="file" class="form-label">Other Documents</label>
+                                    <input id="file" type="file" multiple class="form-control rounded-pill"
+                                        (change)="onFileChange($event)" #multifiles
+                                        accept=".zip,.pdf,.doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+                                </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                                
+                            </nav>
+                         
+                            <div class="row">
+                                <h5>Other Documents</h5>
+                                <hr>
+                                <div >
+                                
+                                      <!-- First Row............................ -->
+                            <div>
+                                
+                                <form [formGroup]="form">
+                                    <div class="row" formGroupName="otherfile"  >
+                                  
+                                        <div class="col-md-5" >
+                                            <label class="form-label"> Documents Name </label>
+                                            <input type="text" placeholder="Enter Your Documents Name"
+                                                class="form-control rounded-pill" formControlName="username" >
+                                        </div>
+                                   
+                                        <div class="col-md-5">
+                                            <label for="file" class="form-label">Other Documents</label>
+                                            <input id="file" type="file" multiple class="form-control rounded-pill"
+                                                (change)="onFileChange($event)" #multifiles
+                                                accept=".zip,.pdf,.doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                                                formControlName="attachment">
+                                        </div>
+                                
+                                        <div class="col-md-2" style="margin-top: 34px;">
+                                            <button (click)="addDocuments()" class="btn btn-primary rounded-pill">NewAdd</button>
+                                        </div>
+                                       
+                                   
+                                    </div>
+                                <!-- Dynamic Row added  Implementation..................... -->
+                               
+                                    <div  formArrayName="otherDocuments" *ngFor="let product of form.get('otherDocuments')['controls']; let i = index;" >
+                                   <div class="row" [formGroupName]="i" >
+                                        <div class="col-md-5">
+                                            <label class="form-label"> Documents Name </label>
+                                            <input type="text" placeholder="Enter Your Documents Name"
+                                                class="form-control rounded-pill" formControlName="username" >
+                                        </div>
+                                   
+                                        <div class="col-md-5">
+                                            <label for="file" class="form-label">Other Documents</label>
+                                            <input id="file" type="file" multiple class="form-control rounded-pill"
+                                                (change)="onFileChange($event)" #multifiles
+                                                accept=".zip,.pdf,.doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                                                formControlName="attachment">
+                                        </div>
+                                        
+                                
+                                        <div class="col-md-2" style="margin-top: 34px;     ">
+                                            <button (click)="removeDocuments(i)" class="btn btn-danger rounded-pill "> Remove</button>
+                                        </div>
+    
+                                        </div>
+                                   
+                                    </div>
+    
+                                    <br>
+                                    <!-- <div>
+                                        <button (click)="addDocuments()">Add new Documents</button>
+                                    </div> -->
+    
+    
+                                   
+                                </form>
+                            </div>  
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                            </div>
+                            
+                            <div class="row">
+                            
+                            </div>
+                            <div class="form-group text-center" style="margin-top: 20px;padding: 10px;">
+                                <a (click)="backTo()" class="btn btn-warning rounded-pill">Cancel</a>
+                                &nbsp;
+                                <a (click)="form.reset()" class="btn btn-warning rounded-pill">Reset</a>
+                                &nbsp;
+                                <button type="submit" name="btnSubmit" class="btn btn-info rounded-pill" value="Submit"
+                                    (click)="saveEntity()">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </section>
+</main>

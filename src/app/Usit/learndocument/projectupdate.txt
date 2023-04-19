@@ -1,0 +1,231 @@
+
+second deployment zip files complete application 
+separate entities fole consultant, submission, interviews
+in D/Updated Work Space folder
+
+import { Employee } from "./employee";
+import { RecrutingConsultant } from "./recruting-consultant";
+import { Requirements } from "./requirements";
+
+export class RecSubmissions {
+    submissionid!:number;
+	ratetype!:string;
+	rate!:number;
+	relocate!:string;
+	expenses!:string;
+	benefits!:string;
+	relocationAssistance!:string;
+	substatus!:string;
+	status = "Active";
+	requirements = new Requirements();
+	consultant = new RecrutingConsultant();
+	users =  new Employee();
+	submittedby = new Employee();
+	updatedby =localStorage.getItem('userid');
+	createddate!:string;
+	endclient!:string;
+}
+
+import { Requirements } from "./requirements";
+import { Technologies } from "./technologies";
+import { Visa } from "./visa";
+
+export class RecrutingConsultant {
+
+	id!: number
+	name!: string;
+	mobile!: string;
+	email!: string;
+	experience!: string;
+	ratetype!: string;
+	rate!: string;
+	location!: string;
+	skills!: string;
+	summary!: string;
+	resume!: string;
+	companyname!: string;
+	salespersonname!: string;
+	companymobile!: string;
+	companyemail!: string;
+	technology = new Technologies();
+	visa = new Visa();
+	remarks!: string;
+	linkedin!: string;
+	passportnumber!: string;
+	projectavailabity!: string;
+	dayone!: string;
+	daytwo!: string;
+	daythree!: string;
+	requirements = new Requirements();
+	availability!: string;
+	qualification!: string;
+	qualification1!: string;
+	specialization1!: string;
+	specialization!: string;
+	university!: string;
+	university1!: string;
+	yop1!: string;
+	yop!: string;
+	city!: string;
+	state!: string;}
+
+    import { Employee } from "./employee";
+import { Visa } from "./visa";
+import { Technologies } from "./technologies";
+export class SalesConsultant {
+    sid!:number;
+    name!:string;
+    email!:string;
+    mobile!:string;
+    //number!:number;
+    experience!:string;
+    location!:string;
+    relocate!:string;
+    skills!:string;
+    ratetype!:string;
+    hourlyrate!:string;
+    summary!:string;
+    resumepath!:string;
+    h1bcopy!:string;
+    dlcopy!:string;
+    priority!:string;
+    relocateVal!:string;
+    restriction!:string;
+    status!:string;
+    remarks!:string;
+    updateddate!:string;
+    createddate!:string;
+	users = new Employee();
+    visa = new Visa();
+	technology = new Technologies();
+}
+
+
+import { Employee } from "./employee";
+import { SalesConsultant } from "./sales-consultant";
+import { Vendor } from "./vendor";
+
+export class SalesSubmission {
+    subid!:number;
+    submissionid!:number;
+    position!:string;
+    projectlocation!:string;
+    submissionrate!:number;
+    endclient!:string;
+    partner!:string;
+    vendor!:string;
+    ratetype!:string;
+    cpname!:string;
+    cpmobile!:string;
+    cpemail!:string;
+    status!:string;
+    remarks!:string;
+    createddate!:string;
+	user = new Employee();
+    consultant = new SalesConsultant();
+    updatedby = localStorage.getItem('userid');
+
+    vendorcompany = new Vendor();
+
+}
+
+
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class RecruitingSubmissionsService {
+
+  //private baseUrl = "http://69.216.19.140:8080/usit/"; 
+  //private baseUrl = "http://localhost:8090/usit/";
+  private baseUrl : any = environment.API_BASE_URL;
+  constructor(private http: HttpClient) { }
+
+  //register vms
+  public getrequirements() {
+    return this.http.get(this.baseUrl + "recruiting/requirement/getrequirements");
+  }
+  public getconsultants() {
+    return this.http.get(this.baseUrl + "recruiting/consultant/getconsultants");
+  }
+
+  public getconsultantsbyid(id: number) {
+    return this.http.get(this.baseUrl + "recruiting/consultant/getconsultantsbyId/" + id);
+  }
+
+  public getrecruiter() {
+    return this.http.get(this.baseUrl + "users/getrecruiter");
+  }
+
+  //register vms
+  public registerSubmission(entity: any) {
+    return this.http.post(this.baseUrl + "recruiting/submission/save", entity);
+  }
+}
+
+
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class SalesSubService {
+
+   //private baseUrl = "http://69.216.19.140:8080/usit/"; 
+   //private baseUrl = "http://localhost:8090/usit/";
+   private baseUrl : any = environment.API_BASE_URL;
+  constructor(private http: HttpClient) { }
+
+  getconsultantdropdown1() {
+    return this.http.get(this.baseUrl + "consultant/consultantinfo");
+  }
+
+
+
+  //used for create the resource
+  // createEntity(sales: SalesSubmission) {
+  //   return this.http.post(this.baseUrl + "sales/submission/addSubmission", sales);
+  // }
+
+  //used for get the resource
+  getlist() {
+    return this.http.get(this.baseUrl + "sales/submission/all");
+  }
+
+  //used for update the resource
+  // updateEntity(sales: SalesSubmission) {
+  //   return this.http.post(this.baseUrl + "sales/addSubmission", sales);
+  // }
+  //used for get one resource
+  getEntity(id: number) {
+    return this.http.get(this.baseUrl + "sales/submission/getbyid/" + id);
+  }
+
+  getconsultantdropdown() {
+    return this.http.get(this.baseUrl + "sales/consultant/consultantinfo");
+  }
+
+  //used for delete the resource
+  deleteEntity(id: number) {
+    return this.http.delete(this.baseUrl + "sales/submission/delete/" + id);
+  }
+
+  //used for get the resource
+  getConsultant() {
+    return this.http.get(this.baseUrl + "sales/getConsultant");
+  }
+
+  //used for get the resource
+  dupcheck(id: number, location: string, client: string) {
+    return this.http.get(this.baseUrl + "usit/sales/dupcheck?id=" + id + "&location=" + location + "&client=" + client);
+  }
+
+  getCompanies() {
+    return this.http.get(this.baseUrl + "recruiter/getall");
+  }
+}

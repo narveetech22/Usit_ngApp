@@ -1,0 +1,224 @@
+<main id="main" class="main">
+    <div class="pagetitle">
+        <!-- <h1>Add New VMS</h1> -->
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/dashboard">Home</a></li>
+                <li class="breadcrumb-item">Sales</li>
+                <li class="breadcrumb-item active">Submissions</li>
+            </ol>
+        </nav>
+    </div>
+    <section class="section">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">New Submission</h5>
+                        <p class="text-center small danger" *ngIf="message!==''" style="color:rgb(122, 31, 31)">
+                            {{message}}</p>
+
+                        <form [formGroup]="form" autocomplete="off">
+                            <input [(ngModel)]="flag" id="flg" name="flg" class="form-control rounded-pill"
+                                type="hidden" formControlName="flg">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div formGroupName="requirement" *ngIf="flag!=='sales'">
+                                        <div class="col-md-12">
+                                            <select required name="requirementid" id="id"
+                                                class="form-select rounded-pill" [(ngModel)]="entity.requirement.requirementid" 
+                                                [ngClass]="{ 'is-invalid': submitted && form.get('requirement.requirementid').hasError('required') }"
+                                                formControlName="requirementid">
+                                                <option value="" selected>Select Requirement</option>
+                                                <option *ngFor="let obj of requirementdata" [value]="obj[0]">{{obj[3]}}
+                                                    - {{obj[1]}} ({{obj[2]}}) </option>
+                                            </select>
+                                            <div *ngIf="form.get('requirement.requirementid') && submitted"
+                                                class="invalid-feedback">
+                                                <div *ngIf="form.get('requirement.requirementid').hasError('required')">
+                                                    <span>Requirement is required</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div formGroupName="consultant">
+                                        <div class="col-md-12">
+                                            <label for="totexp" class="form-label"  *ngIf="flag!=='sales'"></label>
+                                            <select required name="consultantid" id="consultantid"
+                                                class="form-select rounded-pill"  [(ngModel)]="entity.consultant.consultantid"
+                                                [ngClass]="{ 'is-invalid': submitted && form.get('consultant.consultantid').hasError('required') }"
+                                                formControlName="consultantid">
+                                                <option value="" selected>Select Consultant</option>
+                                                <option *ngFor="let obj of consultdata" [value]="obj[0]">{{obj[1]}} (
+                                                    {{obj[2]}} with {{obj[3]}}) </option>
+                                            </select>
+                                            <div *ngIf="form.get('consultant.consultantid') && submitted"
+                                                class="invalid-feedback">
+                                                <div *ngIf="form.get('consultant.consultantid').hasError('required')">
+                                                    <span>Please Select Consultant is required</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <label for="totexp" class="form-label"></label>
+                                        <input required maxlength="80" id="position" name="position"
+                                            placeholder="Position Title *" class="form-control rounded-pill" type="text"
+                                            formControlName="position" [(ngModel)]="entity.position"
+                                            [ngClass]="{ 'is-invalid': submitted && frm.position.errors }">
+                                        <div *ngIf="submitted && frm.position.errors" class="invalid-feedback">
+                                            <div *ngIf="frm.position.errors.required">Position Title is required</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <label for="totexp" class="form-label"></label>
+                                        <input required maxlength="140" id="projectlocation" name="projectlocation"
+                                            placeholder="Project Location *" class="form-control rounded-pill"
+                                            type="text" formControlName="projectlocation" [(ngModel)]="entity.projectlocation"
+                                            [ngClass]="{ 'is-invalid': submitted && frm.projectlocation.errors }">
+                                        <div *ngIf="submitted && frm.projectlocation.errors" class="invalid-feedback">
+                                            <div *ngIf="frm.projectlocation.errors.required">Project Location * is
+                                                required</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12" style="margin-top:10px">
+                                        <label for="totexp" class="form-label">Rate Type *</label> <br>
+                                        <input class="form-check-input" type="radio" name="ratetype"
+                                            [ngClass]="{ 'is-invalid': submitted && frm.ratetype.errors }" [(ngModel)]="entity.ratetype"
+                                            formControlName="ratetype" value="C2C">
+
+                                        <label class="form-check-label">&nbsp;C2C</label> &nbsp;&nbsp;&nbsp;&nbsp;
+                                        <input class="form-check-input" type="radio" name="ratetype" [(ngModel)]="entity.ratetype"
+                                            [ngClass]="{ 'is-invalid': submitted && frm.ratetype.errors }"
+                                            formControlName="ratetype" value="1099">
+
+                                        <label class="form-check-label">&nbsp;1099</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <input class="form-check-input" type="radio" name="ratetype" [(ngModel)]="entity.ratetype"
+                                            [ngClass]="{ 'is-invalid': submitted && frm.ratetype.errors }"
+                                            formControlName="ratetype" value="W2">
+
+                                        <label class="form-check-label">&nbsp;W2</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <input class="form-check-input" type="radio" [(ngModel)]="sales.ratetype" [(ngModel)]="entity.ratetype"
+                                            name="ratetype"
+                                            [ngClass]="{ 'is-invalid': submitted && frm.ratetype.errors }" 
+                                            formControlName="ratetype" value="Full Time">
+
+                                        <label class="form-check-label">&nbsp;Full Time</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <input class="form-check-input" type="radio" [(ngModel)]="entity.ratetype"
+                                            name="ratetype"
+                                            [ngClass]="{ 'is-invalid': submitted && frm.ratetype.errors }"
+                                            formControlName="ratetype" value="C2H">
+                                        <label class="form-check-label">&nbsp;C2H</label>
+                                        <div *ngIf="submitted && frm.ratetype.errors" class="invalid-feedback">
+                                            <div *ngIf="frm.ratetype.errors.required">Submission Rate Type is required
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <label for="totexp" class="form-label"></label>
+                                        <input required maxlength="5" [(ngModel)]="entity.submissionrate" id="submissionrate" name="submissionrate"
+                                            placeholder="Submission rate *" class="form-control rounded-pill"
+                                            type="text" formControlName="submissionrate"
+                                            [ngClass]="{ 'is-invalid': submitted && frm.submissionrate.errors }">
+                                        <div *ngIf="submitted && frm.submissionrate.errors" class="invalid-feedback">
+                                            <div *ngIf="frm.submissionrate.errors.required">Submission Rate is required
+                                            </div>
+                                            <!-- <div *ngIf="frm.submissionrate.errors.pattern">Enter only number.</div> -->
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <label for="totexp" class="form-label"></label>
+                                        <input required maxlength="60" id="endclient" name="endclient" [(ngModel)]="entity.endclient" 
+                                            placeholder="End Client *" class="form-control rounded-pill" type="text"
+                                            formControlName="endclient"
+                                            [ngClass]="{ 'is-invalid': submitted && frm.endclient.errors }">
+                                        <div *ngIf="submitted && frm.endclient.errors" class="invalid-feedback">
+                                            <div *ngIf="frm.endclient.errors.required">End Client is required</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="col-md-12">
+                                        <input id="implpartner" maxlength="60" name="implpartner" [(ngModel)]="entity.implpartner" 
+                                            placeholder="Implementation Partner / Vendor "
+                                            class="form-control rounded-pill" type="text" formControlName="implpartner">
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label for="totexp" class="form-label"></label>
+                                        <select name="vendor" id="vendor" class="form-select rounded-pill"
+                                            formControlName="vendor" [(ngModel)]="entity.vendor" [ngClass]="{ 'is-invalid': submitted && frm.vendor.errors }">
+                                            <option value="" selected>Select Vendor Company</option>
+                                            <option *ngFor="let obj of vendordata" [value]="obj.company">{{obj.company}}
+                                            </option>
+                                        </select>
+                                       
+                                            <div *ngIf="submitted && frm.vendor.errors" class="invalid-feedback">
+                                            <div *ngIf="frm.vendor.errors.required">Vendor is required</div>
+                                        </div> 
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label for="totexp" class="form-label"></label>
+                                        <input required maxlength="50" id="emplname" name="emplname" [(ngModel)]="entity.emplname" 
+                                            placeholder="Contact Person Name *" class="form-control rounded-pill"
+                                            type="text" formControlName="emplname"
+                                            [ngClass]="{ 'is-invalid': submitted && frm.emplname.errors }">
+                                        <div *ngIf="submitted && frm.emplname.errors" class="invalid-feedback">
+                                            <div *ngIf="frm.emplname.errors.required">Contact Person Name is required
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <label for="totexp" class="form-label"></label>
+                                        <input id="empcontact" maxlength="15" name="empcontact" [(ngModel)]="entity.empcontact" 
+                                            placeholder="Contact Number" class="form-control rounded-pill" type="text"
+                                            formControlName="empcontact">
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <label for="totexp" class="form-label"></label>
+                                        <input required id="empmail" maxlength="40" name="empmail" [(ngModel)]="entity.empmail" 
+                                            placeholder="Email *" class="form-control rounded-pill" type="text"
+                                            formControlName="empmail"
+                                            [ngClass]="{ 'is-invalid': submitted && frm.empmail.errors }">
+                                        <div *ngIf="submitted && frm.empmail.errors" class="invalid-feedback">
+                                            <div *ngIf="frm.empmail.errors.required">Email is required</div>
+                                            <div *ngIf="frm.empmail.errors.email">Please Enter a Valid Email Address
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label for="totexp" class="form-label"></label>
+                                        <input id="relocationassistance" maxlength="50" [(ngModel)]="entity.relocationassistance"  name="relocationassistance"
+                                            placeholder="Relocation Assistance" class="form-control rounded-pill"
+                                            type="text" formControlName="relocationassistance">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group text-center" style="margin-top: 20px;padding: 10px;">
+                                <a (click)="form.reset()" class="btn btn-warning rounded-pill">Cancel</a>
+                                &nbsp;
+                                <ng-container *ngIf="hideSavebtn; then trueCondition else elseTemplate"></ng-container>
+                                <ng-template #trueCondition>
+                                    <button type="submit" name="btnSubmit" class="btn btn-info rounded-pill"
+                                        value="Submit" (click)="saveEntity()" disabled>Submit</button>
+                                </ng-template>
+                                <ng-template #elseTemplate>
+                                    <button type="submit" name="btnSubmit" class="btn btn-info rounded-pill"
+                                        value="Submit" (click)="saveEntity()">Submit</button>
+                                </ng-template>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>

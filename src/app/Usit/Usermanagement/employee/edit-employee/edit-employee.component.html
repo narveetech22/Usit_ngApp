@@ -1,0 +1,150 @@
+<main id="main" class="main">
+    <div class="pagetitle">
+       <nav>
+          <ol class="breadcrumb">
+             <li class="breadcrumb-item"><a routerLink="/dashboard">Home</a></li>
+             <li class="breadcrumb-item"><a routerLink="/list-employees">Employees</a> </li>
+             <li class="breadcrumb-item">Update Employees</li>
+          </ol>
+       </nav>
+    </div>
+    <section class="section">
+       <div class="row">
+          <div class="col-md-12">
+             <div class="card">
+                <div class="card-body">
+                   <h5 class="card-title"> Update Employee</h5>
+                   <p class="text-center small danger" *ngIf="message!==''" style="color:red"><b>{{message}}</b></p>
+                   <form  [formGroup]="form" (ngSubmit)="onSubmit()">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <input type="hidden" [(ngModel)]="tech.userid" formControlName="userid" name="userid">
+                                <input type="hidden" [(ngModel)]="tech.status" formControlName="status" name="status">
+                                <input type="hidden" [(ngModel)]="tech.password" formControlName="password" name="password">
+                                <div class="col-md-12"> 
+                                    <input type="text" [(ngModel)]="tech.fullname"   maxlength="100" [ngClass]="{ 'is-invalid': submitted && f.fullname.errors }" class="form-control rounded-pill"autocomplete="off" 
+                                    name="fullname" data-parsley-trigger="change" formControlName="fullname" required placeholder="First Name *"/>
+                                    <div *ngIf="submitted && f.fullname.errors" class="invalid-feedback">
+                                        <div *ngIf="f.fullname.errors.required">fullname Name is required</div>
+                                        <div *ngIf="f.fullname.errors.minlength">fullname Name must be at least 6 characters</div>
+                                        <div *ngIf="f.fullname.errors.maxlength">fullname Name must not exceed 100 characters </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12"> 
+                                    <label for="cp_name"></label>
+                                    <input type="text"    maxlength="100" [(ngModel)]="tech.pseudoname" [ngClass]="{ 'is-invalid': submitted && f.pseudoname.errors }" class="form-control rounded-pill"autocomplete="off" 
+                                    name="pseudoname" data-parsley-trigger="change" formControlName="pseudoname" required placeholder="Psuedo Name "/>
+                                    <div *ngIf="submitted && f.pseudoname.errors" class="invalid-feedback">
+                                        <div *ngIf="f.pseudoname.errors.required">Psuedo Name is required</div>
+                                        <div *ngIf="f.pseudoname.errors.minlength">Psuedo Name must be at least 6 characters</div>
+                                        <div *ngIf="f.pseudoname.errors.maxlength">Psuedo Name must not exceed 100 characters </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12"> 
+                                    <label for="cp_name"></label>
+                                    <input type="text"    maxlength="50" [(ngModel)]="tech.email" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" class="form-control rounded-pill"autocomplete="off" 
+                                    name="email" data-parsley-trigger="change" formControlName="email" required placeholder="Email *"/>
+                                    <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                                        <div *ngIf="f.email.errors.required">Email is required</div>
+                                        <div *ngIf="f.email.errors.email">Please Enter a Valid Email Address</div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12"> 
+                                    <label for="cp_name"></label>
+                                    <input type="text"    maxlength="15" [(ngModel)]="tech.personalcontactnumber" [ngClass]="{ 'is-invalid': submitted && f.personalcontactnumber.errors }" class="form-control rounded-pill"autocomplete="off" 
+                                    name="personalcontactnumber" data-parsley-trigger="change" formControlName="personalcontactnumber" required placeholder="Personal Contact Number *"/>
+                                    <div *ngIf="submitted && f.personalcontactnumber.errors" class="invalid-feedback">
+                                        <div *ngIf="f.personalcontactnumber.errors.required">Personal Contact is required</div>
+                                        <div *ngIf="f.personalcontactnumber.errors.pattern">Number must be at least 10
+                                            characters with country code</div>
+                                        <!-- <div *ngIf="f.personalcontactnumber.errors.pattern">Enter only number.</div>
+                                        <div *ngIf="f.personalcontactnumber.errors.minlength">Number must be at least 12 characters</div>
+                                        <div *ngIf="f.personalcontactnumber.errors.maxlength">Number Name must not exceed 12 characters </div> -->
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12"> 
+                                    <label for="cp_name"></label>
+                                    <input type="text" maxlength="13" [(ngModel)]="tech.companycontactnumber" class="form-control rounded-pill"autocomplete="off" 
+                                    name="companycontactnumber" data-parsley-trigger="change" formControlName="companycontactnumber"  placeholder="Company Contact Number"/>
+                                </div>
+                            </div>
+
+                             <div class="col-md-6">
+                                 <div class="col-md-12"> 
+                                    <input type="text"    maxlength="50" [(ngModel)]="tech.designation" class="form-control rounded-pill" autocomplete="off" 
+                                    name="designation" data-parsley-trigger="change" formControlName="designation"  placeholder="Designation"/>
+                                </div>
+
+                                <div class="col-md-12"> 
+                                    <label for="totexp" class="form-label"></label> 
+                                    <select  formControlName="department" [(ngModel)]="tech.department" name="department" id="department" class="form-select rounded-pill" [ngClass]="{ 'is-invalid': submitted && f.department.errors }">
+                                        <option  value=""  >Select Department</option>
+                                        <option  value="Administration">Administration</option>
+                                        <option  value="Recruiting">Recruiting</option>
+                                        <option  value="Bench Sales" >Bench Sales</option>
+                                    </select>
+                                    <div *ngIf="submitted && f.department.errors" class="invalid-feedback">
+                                        <div *ngIf="f.department.errors.required">Choose Department</div>
+                                    </div> 
+                                </div>
+                                <div formGroupName="role">
+                                    <div class="col-md-12"> 
+                                        <label for="cp_name"></label>
+                                        <select required  [(ngModel)]="tech.role.roleid"  name="roleid" id="role" class="form-select rounded-pill" [ngClass]="{ 'is-invalid': submitted && form.get('role.roleid').hasError('required') }"
+                                        formControlName="roleid" >
+                                        <option value="" selected>Select Role</option>
+                                            <option *ngFor="let obj of rolearr" [value]="obj.roleid">{{obj.rolename}} </option>
+                                        </select>
+                                        <div *ngIf="form.get('role.roleid') && submitted" class="invalid-feedback">
+                                            <div *ngIf="form.get('role.roleid').hasError('required')">
+                                                <span >Role is required</span>
+                                            </div>
+                                        </div>
+                                    </div> 
+                                </div>
+                                <div class="col-md-12" *ngIf="managerflg">
+                                    <label for="cp_name"></label>
+                                    - <select required [(ngModel)]="tech.manager" [ngClass]="{ 'is-invalid': submitted && f.manager.errors }"
+                                        class="form-control rounded-pill" autocomplete="off" name="manager"
+                                        data-parsley-trigger="change" formControlName="manager" (change)="managerid($event)">
+                                        <option value="" selected>Select Manager</option>
+                                        <option *ngFor="let obj of managerarr" [value]="obj[0]">
+                                            {{obj[1]}} </option>
+                                    </select>
+                                    <div *ngIf="submitted && f.manager.errors" class="invalid-feedback">
+                                        <div *ngIf="f.manager.errors.required">Manager is required</div>
+                                    </div> 
+                                </div>
+
+                                <div class="col-md-12" *ngIf="teamleadflg">
+                                    <label for="teamlead"></label>
+                                    <select required [(ngModel)]="tech.teamlead" [ngClass]="{ 'is-invalid': submitted && f.teamlead.errors }"
+                                        class="form-control rounded-pill" autocomplete="off" name="teamlead"
+                                        data-parsley-trigger="change" formControlName="teamlead">
+                                        <option value="" selected>Select teamlead</option>
+                                        <option *ngFor="let obj of tlarr" [value]="obj[0]">
+                                            {{obj[1]}} </option>
+                                    </select>
+                                    <div *ngIf="submitted && f.teamlead.errors" class="invalid-feedback">
+                                        <div *ngIf="f.teamlead.errors.required">teamlead is required</div>
+                                    </div> 
+
+                                </div>  
+                            </div> 
+                        </div>
+
+                        <div class="form-group text-center" style="margin-top: 20px;padding: 10px;">
+                            <a (click)="form.reset()" class="btn btn-warning rounded-pill">Cancel</a>&nbsp;&nbsp;
+                            <button type="submit" name="btnSubmit" class="btn btn-info rounded-pill" value="Submit" >Submit</button>
+                        </div>
+                   </form>
+                </div>
+             </div>
+          </div>
+       </div>
+    </section>
+ </main>

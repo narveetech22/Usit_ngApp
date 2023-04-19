@@ -1,0 +1,6 @@
+<ngx-ui-loader></ngx-ui-loader> 
+<app-header *ngIf="!( _router.url === '/login' || _router.url === '/'  || _router.url === '/forgot-password'  || _router.url === '/change-password/:id')" ></app-header>
+<app-sidebar *ngIf="!( _router.url === '/login' || _router.url === '/'  || _router.url === '/forgot-password' || _router.url === '/change-password/:id')" ></app-sidebar>
+<router-outlet></router-outlet>
+<app-footer *ngIf="!( _router.url === '/login' || _router.url === '/'  || _router.url === '/forgot-password' || _router.url === '/change-password/:id')" ></app-footer>
+

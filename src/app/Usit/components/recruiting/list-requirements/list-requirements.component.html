@@ -1,0 +1,81 @@
+<main id="main" class="main">
+    <div class="pagetitle">
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/dashboard">Home</a></li>
+                <li class="breadcrumb-item">Recruiting</li>
+                <li class="breadcrumb-item active">Requirements</li>
+            </ol>
+        </nav>
+    </div>
+    <section class="section">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                            <div class="container-fluid">
+                                <h5 class="card-title">All Requirements</h5>
+                                <div class="navbar-nav ms-auto">
+                                    <div class="input-group mb-3">
+                                        <h5 class="card-title float-right" *ngIf="hasAcces!='Employee'"><a [routerLink]="['/register-recruiting']"><i _ngcontent-vqa-c41="" class="bi bi-plus-square-dotted"></i>&nbsp;New Requirement</a></h5>
+                                        <form class="search-form d-flex align-items-center" >
+                                            &nbsp;&nbsp;<input type="text"name="searchstring"
+                                                class="form-control"  placeholder="Search"
+                                                title="Enter search keyword" aria-label="query" [(ngModel)]="searchstring"
+                                                >
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
+                        <div class="clearfix"></div>
+                        <div class="row">
+                            <table class="table table-sm  table-light table-bordered table-responsive">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th>Requirement Number</th>
+                                        <th>Date</th>
+                                        <th>Job Title</th>
+                                        <th>Location</th>
+                                        <th>Ip/Vendor </th>
+                                        <th>Employement Type</th>
+                                        <th>Status</th>
+                                        <th *ngIf="hasAcces!='Employee'">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let data of entity | filter:searchstring  | paginate
+                                    : {
+                                        itemsPerPage: tableSize,
+                                        currentPage: page,
+                                        totalItems: count
+                                      };">
+                                        <td width="160px">{{data.reqnumber}}</td>
+                                        <td>{{data.postedon}}</td>
+                                        <td>{{data.jobtitle}} </td>
+                                        <td>{{data.location}}</td>
+                                        <td>{{data.vendor}}</td>
+                                        <td>{{data.employmenttype}} </td>
+                                        <td>{{data.status}}</td>
+                                        <td *ngIf="hasAcces!='Employee'"><a [routerLink]="['/edit-recruiting',data.requirementid]"> <i
+                                                    class="ri-edit-2-fill"></i> </a>&nbsp;
+                                            <a *ngIf="hasAcces=='Manager' || hasAcces=='Super Admin' || hasAcces=='Admin'" (click)="delete(data.requirementid)"
+                                                ng-confirm-click="You are about to overwrite your PUBLISHED content!! Are you SURE you want to publish?">
+                                                <i style="color:maroon" class="ri-delete-bin-fill "></i> </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="pagination justify-content-end">
+                                <pagination-controls previousLabel="Prev" nextLabel="Next"
+                                    (pageChange)="onTableDataChange($event)">
+                                </pagination-controls>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>

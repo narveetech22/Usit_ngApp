@@ -1,0 +1,32 @@
+<main id="main" class="main">
+    <div class="pagetitle">
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/dashboard">Home</a></li>
+                <li class="breadcrumb-item active">Consultants</li>
+                <li class="breadcrumb-item " ><a routerLink="/tree-grid/grid">tree-grid</a></li>
+                
+            </ol>
+        </nav>
+    </div>
+    <section class="section">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                           
+                        </nav>
+                        <div class="row">
+                                <ejs-treegrid [dataSource]='data' allowPaging='true' childMapping='subtasks'  [treeColumnIndex]='1'>
+                                </ejs-treegrid>
+                        </div>
+                    
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+

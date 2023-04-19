@@ -1,0 +1,166 @@
+<main id="main" class="main">
+  <div class="pagetitle">
+    <!-- <h1>Add New VMS</h1> -->
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/dashboard">Home</a></li>
+        <li class="breadcrumb-item">Recruiter</li>
+      </ol>
+    </nav>
+  </div>
+  <section class="section">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-body">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+              <div class="container-fluid">
+                <h5 class="card-title">Recruiter List</h5>
+                <div class="navbar-nav ms-auto">
+                  <div class="input-group mb-3">
+                    <!-- <h5 class="card-title" [routerLink]="['/upload-excel']" style="cursor:pointer" ><i class="ri-upload-2-fill"></i>Upload</h5> -->
+                    &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+                    <h5 class="card-title float-right"><a [routerLink]="['/register-recruiter']"><i
+                          _ngcontent-vqa-c41="" class="bi bi-plus-square-dotted"></i>&nbsp;New Recruiter</a></h5>
+                    <form class="search-form d-flex align-items-center">
+                      &nbsp;&nbsp;<input type="text" name="searchstring" class="form-control" placeholder="Search"
+                        title="Enter search keyword" [(ngModel)]="searchstring" aria-label="query">
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </nav>
+
+            <div class="clearfix"></div>
+            <div class="row">
+              <table class="table table-sm  table-light table-bordered table-responsive" oncopy="return false"
+                onpaste="return false" oncut="return false">
+                <thead class="thead-light">
+                  <tr>
+                    <th>Recruiter Name</th>
+                    <th>Phone Number</th>
+                    <th>Email</th>
+                    <th>Country</th>
+                    <th>State</th>
+                    <th>Fed-Id</th>
+                    <th *ngIf="hasAcces!='Employee' && hasAcces!='Team Lead'">Added By</th>
+                    <th *ngIf="hasAcces!='Employee' && hasAcces!='Team Lead'">Added On</th>
+                    <th>Status</th>
+                    <th> Action</th>
+                    <th *ngIf="hasAcces!='Employee'  && hasAcces!='Team Lead'">Approve/Reject</th>
+                  </tr>
+                </thead>
+                <tbody class="tbody">
+                  <tr *ngFor="let data of datarr | filter:searchstring | paginate
+                  : {
+                      itemsPerPage: tableSize,
+                      currentPage: page,
+                      totalItems: count
+                    };">
+                    <td>{{data.recruiter}}</td>
+                    <td>{{data.usnumber}} </td>
+                    <td>{{data.email}}</td>
+                    <td>{{data.country}}</td>
+                    <td>{{data.statename}} </td>
+                    <td>{{data.fedid}} </td>
+                    <td style="width:8%" *ngIf="hasAcces!='Employee' && hasAcces!='Team Lead'">
+                      {{data.fullname}}<br>({{data.pseudoname}})</td>
+                    <td style="width:3%" *ngIf="hasAcces!='Employee' && hasAcces!='Team Lead'">{{data.createddate}}
+                    </td>
+                    <td style="width:3%" *ngIf="hasAcces!='Employee'  && hasAcces!='Team Lead'">
+                      <ng-container
+                        *ngIf="data.status == 'Active'  ; then trueCondition else elseTemplate"></ng-container>
+                      <ng-template #trueCondition>
+                        <span class="badge bg-info text-dark" #closeModal (click)="edit(data)" data-bs-toggle="modal" data-dismiss="modal"
+                          data-bs-target="#verticle">Active</span>
+                      </ng-template>
+                      <ng-template #elseTemplate>
+                        <span class="badge bg-danger" (click)="edit(data)" data-bs-toggle="modal"
+                          data-bs-target="#verticle">In Active
+                        </span>
+                      </ng-template>
+                    </td>
+                    <td style="width:3%" *ngIf="hasAcces=='Employee'  || hasAcces=='Team Lead'">
+                      <ng-container
+                        *ngIf="data.status == 'Active'  ; then trueCondition else elseTemplate"></ng-container>
+                      <ng-template #trueCondition>
+                        <span class="badge bg-info text-dark">{{data.status}}</span>
+                      </ng-template>
+                      <ng-template #elseTemplate>
+                        <span class="badge bg-danger">{{data.status}}
+                        </span>
+                      </ng-template>
+                    </td>
+                    <td style="width:3%">
+                      <ng-container *ngIf="hasAcces!='Employee' ; then employee else higherole"></ng-container>
+                      <ng-template #employee>
+                        <a [routerLink]="['/edit-recruiter',data.id]"> <i class="ri-edit-2-fill"></i></a>&nbsp;
+                      </ng-template>
+                      <ng-template #higherole>
+                        <a  *ngIf="loginId==data.addedby " [routerLink]="['/edit-recruiter',data.id]"> <i class="ri-edit-2-fill"></i></a>&nbsp;
+                      </ng-template>
+                      <!-- <a [routerLink]="['/edit-recruiter',data.id]"> <i class="ri-edit-2-fill"></i> </a>&nbsp; -->
+                      <a *ngIf="hasAcces=='Super Admin'  || hasAcces=='Admin' || hasAcces=='Manager'"
+                        (click)="delete(data.id)"
+                        ng-confirm-click="You are about to overwrite your PUBLISHED content!! Are you SURE you want to publish?">
+                        <i style="color:maroon" class="ri-delete-bin-fill "></i> </a>
+                    </td>
+                    <td style="width:5%" *ngIf="hasAcces!='Employee' && hasAcces!='Team Lead'">
+                      <ng-container
+                        *ngIf="data.rec_stat == 'Initiated'  ; then trueCondition1 else elseTemplate1"></ng-container>
+                      <ng-template #trueCondition1>
+                        <span class="badge bg-info text-dark"
+                          (click)="action(data.id,data.recruitertype,'Approved')">{{data.rec_stat}}</span>
+                        &nbsp;
+                        <span class="badge bg-danger" (click)="action(data.id,data.recruitertype,'Rejected')"
+                          *ngIf="data.rec_stat!='Approved' ">Reject </span>
+                      </ng-template>
+                      <ng-template #elseTemplate1>
+                        <span class="badge bg-primary">{{data.rec_stat}}
+                        </span>
+                      </ng-template>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="pagination justify-content-end">
+              <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)">
+              </pagination-controls>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+<div class="modal fade" id="verticle" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Status Update</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="form" (ngSubmit)="updatestatus()">
+          <fieldset>
+            <div class="row">
+              <div class="form-group">
+                <label for="details">Reason for {{togglestatus}} Recruiter</label>
+                <textarea id="details" class="form-control" rows="3" data-parsley-trigger="change"
+                  formControlName="remarks" [ngClass]="{ 'is-invalid': submitted && f.remarks.errors }"
+                  [(ngModel)]="tech.remarks" name="remarks" maxlength="200"></textarea>
+                <div *ngIf="submitted && f.remarks.errors" class="invalid-feedback">
+                  <div *ngIf="f.remarks.errors.required">Please Enter Remarks</div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer ">
+              <input class="btn btn-info" type="submit" name="submit_reg" value="Update">
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
